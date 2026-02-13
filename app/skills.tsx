@@ -11,9 +11,11 @@ const technicalSkills = [
 ];
 
 const professionalSkills = [
-    { name: "Technical Leadership", description: "Executing complex projects with precision.", icon: Code },
+    { name: "Technical Leadership", description: "Executing complex projects with precision and problem-solving.", icon: Code },
     { name: "UI/UX Design", description: "Creating intuitive and premium user interfaces.", icon: Palette },
-    { name: "Collaboration", description: "Effective communication and team coordination.", icon: Briefcase },
+    { name: "Communication & Collaboration", description: "Strong verbal and written skills with active listening. Effective team coordination and independent work.", icon: Briefcase },
+    { name: "Customer Service", description: "Dedicated to delivering exceptional client experiences.", icon: Code },
+    { name: "Time Management", description: "Strong organizational and time management skills.", icon: Palette },
 ];
 
 const Skills = () => {
