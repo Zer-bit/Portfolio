@@ -2,27 +2,23 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { useTilt } from "./hooks/use-tilt";
 
 const projects = [
     {
         title: "Inspire Holdings Incorporated",
         description: "A comprehensive corporate website showcasing company services, portfolio, and client engagement features with modern design and seamless user experience.",
-        tech: ["Next.js", "Node.js", "Firebase", "EmailJS"],
+        tech: ["Next.js", "TypeScript", "Tailwind CSS", "Node.js", "Firebase", "EmailJS"],
         image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800",
+        link: "https://www.inspireholdings.ph/",
     },
     {
         title: "iPageant Inspire",
         description: "A dynamic pageant management platform featuring contestant profiles, event scheduling, and interactive voting system with real-time updates.",
-        tech: ["Next.js", "Node.js", "Firebase", "EmailJS"],
+        tech: ["Next.js", "TypeScript", "Tailwind CSS", "Node.js", "Firebase", "EmailJS"],
         image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800",
-    },
-    {
-        title: "Lumina Studio",
-        description: "A collaborative design platform for creative teams with real-time editing features.",
-        tech: ["Vue.js", "Firebase", "Framer Motion"],
-        image: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800",
+        link: "https://pageant-inspire.vercel.app/",
     },
 ];
 
@@ -70,13 +66,9 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
 
                 <div className="flex items-center gap-4">
                     <a
-                        href="#"
-                        className="p-2 bg-white/5 rounded-full hover:bg-violet-600 transition-all text-white hover:scale-110 hover:rotate-12 duration-300"
-                    >
-                        <Github size={20} />
-                    </a>
-                    <a
-                        href="#"
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="p-2 bg-white/5 rounded-full hover:bg-violet-600 transition-all text-white hover:scale-110 hover:-rotate-12 duration-300"
                     >
                         <ExternalLink size={20} />
