@@ -2,12 +2,14 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Code, Briefcase, Rocket, Cpu, Palette, Globe } from "lucide-react";
+import { Code, Briefcase, Rocket, Cpu, Palette, Globe, Smartphone, Shield } from "lucide-react";
 
 const technicalSkills = [
-    { name: "Frontend Development", icon: Globe, items: ["React", "Next.js", "TypeScript", "Tailwind CSS"] },
-    { name: "Backend & Cloud", icon: Cpu, items: ["Node.js", "Firebase", "MySQL", "EmailJS", "SSMS"] },
-    { name: "DevOps & Tools", icon: Rocket, items: ["Git", "Github", "Vercel", "Visual Studio Code 2022", "Visual Studio Code", "Antigravity", "Kiro", "NetBeans", "Unity", "Oracle Virtual Box"] },
+    { name: "Frontend Development", icon: Globe, items: ["HTML", "CSS", "JavaScript", "React", "Next.js", "TypeScript", "Tailwind CSS"] },
+    { name: "Mobile Development", icon: Smartphone, items: ["Flutter", "Dart"] },
+    { name: "Backend & Cloud", icon: Cpu, items: ["Node.js", "Firebase", "MySQL", "EmailJS", "SSMS", "APIs", "Google Apps Script"] },
+    { name: "DevOps & Tools", icon: Rocket, items: ["Git", "Github", "Vercel", "Visual Studio Code 2022", "Visual Studio Code", "NetBeans", "Unity", "Oracle Virtual Box"] },
+    { name: "Cybersecurity & OS", icon: Shield, items: ["Linux Kernel", "Kali Linux", "Ubuntu"] },
 ];
 
 const professionalSkills = [
