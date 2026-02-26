@@ -230,7 +230,7 @@ const Navbar = () => {
                                     <p className="text-[10px] text-violet-400 font-bold uppercase tracking-[0.3em] mb-2">Current Status</p>
                                     <div className="flex items-center gap-2">
                                         <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                                        <span className="text-sm font-medium text-white/60 tracking-wider uppercase">Rank S • Available for hire</span>
+                                        <span className="text-sm font-medium text-white/60 tracking-wider uppercase">Available for hire</span>
                                     </div>
                                 </div>
 

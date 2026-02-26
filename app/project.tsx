@@ -4,25 +4,54 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { useTilt } from "./hooks/use-tilt";
+import NotificationToast from "./notification-toast";
 
 const projects = [
     {
         title: "Inspire Holdings Incorporated",
         description: "A comprehensive corporate website showcasing company services, portfolio, and client engagement features with modern design and seamless user experience.",
         tech: ["Next.js", "TypeScript", "Tailwind CSS", "Node.js", "Firebase", "EmailJS"],
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800",
+        image: "/Images/IHI.png",
         link: "https://www.inspireholdings.ph/",
     },
     {
         title: "iPageant Inspire",
         description: "A dynamic pageant management platform featuring contestant profiles, event scheduling, and interactive voting system with real-time updates.",
         tech: ["Next.js", "TypeScript", "Tailwind CSS", "Node.js", "Firebase", "EmailJS"],
-        image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800",
+        image: "/Images/inspirepageant.png",
         link: "https://pageant-inspire.vercel.app/",
+    },
+    {
+        title: "SHS Club Management System",
+        description: "A centralized platform for managing student clubs, memberships, and school activities with administrative controls and real-time record tracking.",
+        tech: ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
+        image: "/Images/shsclub.png",
+        link: "#",
+    },
+    {
+        title: "jezsic",
+        description: "An advanced Android music player that supports offline playback, YouTube video browsing, and integrated MP3 conversion for a seamless offline listening experience.",
+        tech: ["Flutter", "Dart", "Android SDK", "YouTube Data API", "FFmpeg"],
+        image: "/Images/jezsic-img.png",
+        link: "#",
+    },
+    {
+        title: "Youtube mp3 API",
+        description: "A specialized API service designed to fetch and convert YouTube video data into high-quality MP3 formats, utilizing pure JavaScript and JSON for rapid data processing.",
+        tech: ["JavaScript", "JSON", "YouTube API", "REST API"],
+        image: "https://developers.google.com/static/youtube/images/yt-data-api-search_720.png",
+        link: "#",
+    },
+    {
+        title: "Inspire Book Slider",
+        description: "An interactive digital annual report featuring a sophisticated book-slider interface, providing an engaging and immersive reading experience for corporate disclosures.",
+        tech: ["Next.js", "TypeScript", "Framer Motion", "Tailwind CSS"],
+        image: "/Images/inspire-annual-report-img.png",
+        link: "https://inspire-book-slider.vercel.app/",
     },
 ];
 
-const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: number }) => {
+const ProjectCard = ({ project, index, onNotice }: { project: typeof projects[0]; index: number; onNotice: (msg: string) => void }) => {
     const { ref, style } = useTilt(8);
 
     return (
@@ -45,30 +74,48 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mix-blend-overlay" />
             </div>
 
-            <div className="p-8 relative">
+            <div className="p-8 relative flex-grow flex flex-col min-h-[280px]">
                 <h4 className="text-xl font-bold mb-3 group-hover:text-violet-400 transition-colors">
                     {project.title}
                 </h4>
-                <p className="text-gray-400 text-sm mb-6 line-clamp-2">
-                    {project.description}
-                </p>
 
-                <div className="flex flex-wrap gap-2 mb-8">
-                    {project.tech.map((t) => (
-                        <span
-                            key={t}
-                            className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 bg-violet-500/10 text-violet-400 rounded-full border border-violet-500/20 hover:bg-violet-500/20 transition-colors"
-                        >
-                            {t}
-                        </span>
-                    ))}
+                <div className="relative flex-grow">
+                    {/* Default View: Short description and tech tags */}
+                    <div className="group-hover:opacity-0 group-hover:invisible transition-all duration-300">
+                        <p className="text-gray-400 text-sm mb-6 line-clamp-2">
+                            {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-8">
+                            {project.tech.map((t) => (
+                                <span
+                                    key={t}
+                                    className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 bg-violet-500/10 text-violet-400 rounded-full border border-violet-500/20 hover:bg-violet-500/20 transition-colors"
+                                >
+                                    {t}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Hover View: Full description only, no tags */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto overflow-y-auto scrollbar-hide">
+                        <p className="text-gray-400 text-sm leading-relaxed">
+                            {project.description}
+                        </p>
+                    </div>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 mt-auto pt-4 border-t border-white/5 group-hover:border-violet-500/20 transition-colors">
                     <a
                         href={project.link}
-                        target="_blank"
+                        target={project.link === "#" ? "_self" : "_blank"}
                         rel="noopener noreferrer"
+                        onClick={(e) => {
+                            if (project.link === "#") {
+                                e.preventDefault();
+                                onNotice("This project is not deployed or published yet.");
+                            }
+                        }}
                         className="p-2 bg-white/5 rounded-full hover:bg-violet-600 transition-all text-white hover:scale-110 hover:-rotate-12 duration-300"
                     >
                         <ExternalLink size={20} />
@@ -83,8 +130,19 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
 };
 
 const Project = () => {
+    const [notification, setNotification] = React.useState({ isVisible: false, message: "" });
+
+    const showNotice = (message: string) => {
+        setNotification({ isVisible: true, message });
+    };
+
     return (
         <div id="projects" className="py-24 bg-black relative z-[10]">
+            <NotificationToast
+                isVisible={notification.isVisible}
+                message={notification.message}
+                onClose={() => setNotification({ ...notification, isVisible: false })}
+            />
             <div className="max-w-7xl mx-auto px-6">
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
                     <div>
@@ -98,7 +156,12 @@ const Project = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000">
                     {projects.map((project, i) => (
-                        <ProjectCard key={project.title} project={project} index={i} />
+                        <ProjectCard
+                            key={project.title}
+                            project={project}
+                            index={i}
+                            onNotice={showNotice}
+                        />
                     ))}
                 </div>
             </div>
