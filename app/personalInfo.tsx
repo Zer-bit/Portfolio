@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import TextScramble from "./text-scramble";
 import LiquidBlob from "./liquid-blob";
 
@@ -86,7 +86,7 @@ const PersonalInfo = () => {
                             transition={{ duration: 0.8, delay: 0.4 }}
                             className="text-2xl md:text-4xl font-light text-white/40 tracking-wide"
                         >
-                            Architecting <span className="text-white font-medium italic">Digital</span> Universes
+                            Architecting <span className="text-white font-medium italic">Digital</span> Universe
                         </motion.p>
                     </div>
 
@@ -96,24 +96,22 @@ const PersonalInfo = () => {
                         transition={{ delay: 0.6 }}
                         className="text-gray-400 text-lg mb-10 max-w-lg leading-relaxed"
                     >
-                        Crafting high-performance web applications with a focus on
-                        <span className="text-violet-300"> aesthetic excellence</span> and
-                        <span className="text-cyan-300"> technical precision</span>.
-                        Let's level up your digital presence.
+                        Developing cutting-edge <span className="text-violet-300">websites</span> and <span className="text-cyan-300">seamless applications</span>. Let's bridge the gap between imagination and a high-performance digital reality.
+                        <br />
+                        <span className="text-white font-bold inline-block mt-4 text-xl tracking-wider uppercase">Let's level <span className="text-gradient">UP!</span></span>
                     </motion.p>
 
-                    <div className="flex flex-wrap items-center gap-8">
-                        <motion.a
-                            href="#projects"
-                            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(139, 92, 246, 0.4)" }}
-                            whileTap={{ scale: 0.95 }}
-                            className="px-10 py-5 bg-violet-600 text-white font-bold rounded-2xl flex items-center gap-3 transition-all cursor-pointer shadow-xl shadow-violet-950/40 relative group overflow-hidden holographic-border"
-                        >
-                            <span className="relative z-10">Explore Work</span>
-                            <ArrowRight size={20} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-                            <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-cyan-500 to-violet-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[length:200%_auto] shimmer" />
-                        </motion.a>
-                    </div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: [0, 10, 0] }}
+                        transition={{
+                            y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+                            opacity: { duration: 0.8, delay: 1 }
+                        }}
+                        className="flex flex-col items-center justify-center w-12 h-12 rounded-full border border-violet-500/20 text-violet-500 pointer-events-none transition-colors group"
+                    >
+                        <ArrowDown size={24} />
+                    </motion.div>
                 </motion.div>
             </div>
         </div>
