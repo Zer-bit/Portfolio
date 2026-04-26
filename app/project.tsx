@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import { useTilt } from "./hooks/use-tilt";
 import NotificationToast from "./notification-toast";
 
@@ -13,6 +13,7 @@ const projects = [
         tech: ["Next.js", "TypeScript", "Tailwind CSS", "Node.js", "Firebase", "EmailJS"],
         image: "/Images/IHI.png",
         link: "https://www.inspireholdings.ph/",
+        accent: "#9cbd09",
     },
     {
         title: "iPageant Inspire",
@@ -20,6 +21,7 @@ const projects = [
         tech: ["Next.js", "TypeScript", "Tailwind CSS", "Node.js", "Firebase", "EmailJS"],
         image: "/Images/inspirepageant.png",
         link: "https://pageant-inspire.vercel.app/",
+        accent: "#0ea5e9",
     },
     {
         title: "SHS Club Management System",
@@ -27,6 +29,7 @@ const projects = [
         tech: ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
         image: "/Images/shsclub.png",
         link: "#",
+        accent: "#f97316",
     },
     {
         title: "jezsic",
@@ -34,6 +37,7 @@ const projects = [
         tech: ["Flutter", "Dart", "Android SDK", "YouTube Data API", "FFmpeg"],
         image: "/Images/jezsic-img.png",
         link: "#",
+        accent: "#9cbd09",
     },
     {
         title: "Youtube mp3 API",
@@ -41,6 +45,7 @@ const projects = [
         tech: ["JavaScript", "JSON", "YouTube API", "REST API"],
         image: "https://developers.google.com/static/youtube/images/yt-data-api-search_720.png",
         link: "#",
+        accent: "#0ea5e9",
     },
     {
         title: "Inspire Book Slider",
@@ -48,6 +53,7 @@ const projects = [
         tech: ["Next.js", "TypeScript", "Framer Motion", "Tailwind CSS"],
         image: "/Images/inspire-annual-report-img.png",
         link: "https://inspire-book-slider.vercel.app/",
+        accent: "#f97316",
     },
 ];
 
@@ -62,24 +68,35 @@ const ProjectCard = ({ project, index, onNotice }: { project: typeof projects[0]
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
             style={style}
-            className="group relative bg-white/80 rounded-3xl overflow-hidden border border-black/10 preserve-3d shadow-sm"
+            className="group relative bg-white/80 rounded-3xl overflow-hidden border border-black/10 preserve-3d shadow-sm hover:shadow-md transition-shadow duration-300"
         >
+            {/* Top accent line per project */}
+            <div className="h-1 w-full" style={{ backgroundColor: project.accent }} />
+
             <div className="aspect-video overflow-hidden relative">
                 <img
                     src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100"
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#9cbd09]/10 to-[#9cbd09]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: `linear-gradient(135deg, ${project.accent}15, ${project.accent}05)` }}
+                />
             </div>
 
             <div className="p-8 relative flex-grow flex flex-col min-h-[280px]">
-                <h4 className="text-xl font-bold mb-3 text-black group-hover:text-[#9cbd09] transition-colors">
+                <h4
+                    className="text-xl font-bold mb-3 text-black transition-colors duration-300"
+                    style={{ color: undefined }}
+                    onMouseEnter={e => (e.currentTarget.style.color = project.accent)}
+                    onMouseLeave={e => (e.currentTarget.style.color = '')}
+                >
                     {project.title}
                 </h4>
 
                 <div className="relative flex-grow">
-                    {/* Default View: Short description and tech tags */}
+                    {/* Default View */}
                     <div className="group-hover:opacity-0 group-hover:invisible transition-all duration-300">
                         <p className="text-gray-600 text-sm mb-6 line-clamp-2">
                             {project.description}
@@ -88,7 +105,12 @@ const ProjectCard = ({ project, index, onNotice }: { project: typeof projects[0]
                             {project.tech.map((t) => (
                                 <span
                                     key={t}
-                                    className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 bg-[#9cbd09]/10 text-[#9cbd09] rounded-full border border-[#9cbd09]/20 hover:bg-[#9cbd09]/20 transition-colors"
+                                    className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border transition-colors"
+                                    style={{
+                                        backgroundColor: `${project.accent}15`,
+                                        color: project.accent,
+                                        borderColor: `${project.accent}30`,
+                                    }}
                                 >
                                     {t}
                                 </span>
@@ -96,7 +118,7 @@ const ProjectCard = ({ project, index, onNotice }: { project: typeof projects[0]
                         </div>
                     </div>
 
-                    {/* Hover View: Full description only, no tags */}
+                    {/* Hover View */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto overflow-y-auto scrollbar-hide">
                         <p className="text-gray-600 text-sm leading-relaxed">
                             {project.description}
@@ -104,7 +126,7 @@ const ProjectCard = ({ project, index, onNotice }: { project: typeof projects[0]
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4 mt-auto pt-4 border-t border-black/10 group-hover:border-[#9cbd09]/20 transition-colors">
+                <div className="flex items-center gap-4 mt-auto pt-4 border-t border-black/10 transition-colors">
                     <a
                         href={project.link}
                         target={project.link === "#" ? "_self" : "_blank"}
@@ -115,10 +137,17 @@ const ProjectCard = ({ project, index, onNotice }: { project: typeof projects[0]
                                 onNotice("This project is not deployed or published yet.");
                             }
                         }}
-                        className="p-2 bg-black/5 rounded-full hover:bg-[#9cbd09] transition-all text-black hover:text-white hover:scale-110 duration-300"
+                        className="p-2 rounded-full transition-all duration-300 text-white hover:scale-110"
+                        style={{ backgroundColor: project.accent }}
                     >
-                        <ExternalLink size={20} />
+                        <ExternalLink size={18} />
                     </a>
+                    <span
+                        className="text-xs font-semibold uppercase tracking-wider"
+                        style={{ color: project.accent }}
+                    >
+                        {project.link === "#" ? "Coming Soon" : "Live Project"}
+                    </span>
                 </div>
             </div>
         </motion.div>

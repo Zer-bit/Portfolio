@@ -50,18 +50,42 @@ const PersonalInfo = () => {
                         transition={{ delay: 0.6 }}
                         className="text-gray-600 text-lg mb-10 max-w-lg leading-relaxed"
                     >
-                        Developing cutting-edge <span className="text-[#9cbd09] font-medium">websites</span> and <span className="text-[#9cbd09] font-medium">seamless applications</span>. Let's bridge the gap between imagination and a high-performance digital reality.
+                        Developing cutting-edge <span className="text-[#9cbd09] font-semibold">websites</span> and <span className="text-[#0ea5e9] font-semibold">seamless applications</span>. Let's bridge the gap between imagination and a high-performance digital reality.
                         <br />
-                        <span className="text-black font-bold inline-block mt-4 text-xl tracking-wider uppercase">Let's level <span className="text-gradient">UP!</span></span>
+                        <span className="text-black font-bold inline-block mt-4 text-xl tracking-wider uppercase">Let's level <span className="text-gradient-orange">UP!</span></span>
                     </motion.p>
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 1 }}
-                        className="flex flex-col items-center justify-center w-12 h-12 rounded-full border border-[#9cbd09]/30 text-[#9cbd09] pointer-events-none"
+                        className="flex items-center gap-4"
                     >
-                        <ArrowDown size={24} />
+                        {/* Primary CTA */}
+                        <a
+                            href="#contact"
+                            className="inline-flex items-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg shadow-[#f97316]/20 hover:shadow-[#f97316]/30 hover:scale-105"
+                        >
+                            Hire Me
+                        </a>
+                        {/* Secondary CTA */}
+                        <a
+                            href="#projects"
+                            className="inline-flex items-center gap-2 bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg shadow-[#0ea5e9]/20 hover:shadow-[#0ea5e9]/30 hover:scale-105"
+                        >
+                            View Work
+                        </a>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.8, delay: 1.2 }}
+                        className="flex flex-col items-start justify-center mt-10"
+                    >
+                        <div className="w-12 h-12 rounded-full border border-[#9cbd09]/30 text-[#9cbd09] flex items-center justify-center pointer-events-none">
+                            <ArrowDown size={24} />
+                        </div>
                     </motion.div>
                 </motion.div>
             </div>

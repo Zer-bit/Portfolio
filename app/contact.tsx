@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MessageSquare, Send, Loader2, CheckCircle2, Github, Linkedin, Instagram } from "lucide-react";
+import { Mail, Send, Loader2, CheckCircle2, Github, Linkedin, Instagram } from "lucide-react";
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyaTDnX4uuklVWAp6C9KwNT9pHzFhEoDd_IaTfxy_fqAk07hiICcjTREYr3-5dLXV4/exec";
 
@@ -49,7 +49,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                     <div>
                         <h2 className="text-[#9cbd09] font-medium tracking-widest mb-4 uppercase text-sm">Get in touch</h2>
-                        <h3 className="text-4xl md:text-5xl font-bold mb-8 text-black">Let's build something <span className="text-gradient">extraordinary</span>.</h3>
+                        <h3 className="text-4xl md:text-5xl font-bold mb-8 text-black">Let's build something <span className="text-gradient-orange">extraordinary</span>.</h3>
 
                         <p className="text-gray-600 text-lg mb-12">
                             Have a project in mind? Or just want to say hi? I'm always open to new opportunities and creative collaborations.
@@ -57,12 +57,14 @@ const Contact = () => {
 
                         <div className="space-y-6">
                             <div className="flex items-center gap-4 group">
-                                <div className="w-12 h-12 rounded-2xl bg-[#9cbd09]/10 flex items-center justify-center text-[#9cbd09] group-hover:bg-[#9cbd09] group-hover:text-white transition-all">
+                                <div className="w-12 h-12 rounded-2xl bg-[#0ea5e9]/10 flex items-center justify-center text-[#0ea5e9] group-hover:bg-[#0ea5e9] group-hover:text-white transition-all">
                                     <Mail size={24} />
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-500">Email me at</p>
-                                    <p className="font-medium text-black">jezermantilla263026@gmail.com</p>
+                                    <a href="mailto:jezermantilla263026@gmail.com" className="font-medium text-black hover:text-[#0ea5e9] transition-colors">
+                                        jezermantilla263026@gmail.com
+                                    </a>
                                 </div>
                             </div>
                             
@@ -70,9 +72,9 @@ const Contact = () => {
                                 <p className="text-sm text-gray-500 mb-6 uppercase tracking-widest font-medium">Find me on</p>
                                 <div className="flex items-center gap-6">
                                     {[
-                                        { Icon: Github, href: "https://github.com/Zer-bit", label: "Github" },
-                                        { Icon: Linkedin, href: "https://www.linkedin.com/in/jezer-parales-201488386", label: "LinkedIn" },
-                                        { Icon: Instagram, href: "https://www.instagram.com/zeretsui/", label: "Instagram" },
+                                        { Icon: Github, href: "https://github.com/Zer-bit", label: "Github", color: "#9cbd09" },
+                                        { Icon: Linkedin, href: "https://www.linkedin.com/in/jezer-parales-201488386", label: "LinkedIn", color: "#0ea5e9" },
+                                        { Icon: Instagram, href: "https://www.instagram.com/zeretsui/", label: "Instagram", color: "#f97316" },
                                         {
                                             Icon: () => (
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -80,7 +82,8 @@ const Contact = () => {
                                                 </svg>
                                             ),
                                             href: "viber://chat?number=+639763891702",
-                                            label: "Viber (+63 976 389 1702)"
+                                            label: "Viber (+63 976 389 1702)",
+                                            color: "#9cbd09"
                                         },
                                     ].map((social, i) => (
                                         <motion.a
@@ -89,7 +92,18 @@ const Contact = () => {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             whileHover={{ y: -5, scale: 1.1 }}
-                                            className="w-12 h-12 rounded-xl bg-black/5 flex items-center justify-center text-gray-600 hover:text-[#9cbd09] hover:bg-[#9cbd09]/10 transition-all"
+                                            className="w-12 h-12 rounded-xl bg-black/5 flex items-center justify-center text-gray-600 transition-all"
+                                            style={{
+                                                ['--hover-color' as any]: social.color,
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.color = social.color;
+                                                e.currentTarget.style.backgroundColor = `${social.color}15`;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.color = '';
+                                                e.currentTarget.style.backgroundColor = '';
+                                            }}
                                             title={social.label}
                                         >
                                             <social.Icon />
@@ -114,7 +128,7 @@ const Contact = () => {
                                 exit={{ opacity: 0 }}
                                 className="flex flex-col items-center justify-center py-12 text-center"
                             >
-                                <div className="w-20 h-20 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-6">
+                                <div className="w-20 h-20 bg-[#9cbd09]/10 text-[#9cbd09] rounded-full flex items-center justify-center mb-6">
                                     <CheckCircle2 size={48} />
                                 </div>
                                 <h4 className="text-2xl font-bold mb-2 text-black">Message Sent!</h4>
@@ -139,7 +153,7 @@ const Contact = () => {
                                             value={formData.name}
                                             onChange={handleChange}
                                             placeholder="John Doe"
-                                            className="w-full bg-white/80 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:border-[#9cbd09]/50 transition-colors text-black"
+                                            className="w-full bg-white/80 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:border-[#9cbd09] focus:ring-2 focus:ring-[#9cbd09]/20 transition-all text-black"
                                         />
                                     </div>
                                     <div className="space-y-2">
@@ -151,7 +165,7 @@ const Contact = () => {
                                             value={formData.email}
                                             onChange={handleChange}
                                             placeholder="john@gmail.com"
-                                            className="w-full bg-white/80 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:border-[#9cbd09]/50 transition-colors text-black"
+                                            className="w-full bg-white/80 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:border-[#0ea5e9] focus:ring-2 focus:ring-[#0ea5e9]/20 transition-all text-black"
                                         />
                                     </div>
                                 </div>
@@ -164,12 +178,12 @@ const Contact = () => {
                                         onChange={handleChange}
                                         rows={4}
                                         placeholder="Feel free to express yourself..."
-                                        className="w-full bg-white/80 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:border-[#9cbd09]/50 transition-colors resize-none text-black"
+                                        className="w-full bg-white/80 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:border-[#9cbd09] focus:ring-2 focus:ring-[#9cbd09]/20 transition-all resize-none text-black"
                                     />
                                 </div>
                                 <button
                                     disabled={status === "loading"}
-                                    className="w-full py-4 bg-[#9cbd09] hover:bg-[#7a9a07] text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#9cbd09]/20 disabled:opacity-50 disabled:cursor-not-allowed group"
+                                    className="w-full py-4 bg-[#f97316] hover:bg-[#ea580c] text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#f97316]/20 hover:shadow-[#f97316]/30 disabled:opacity-50 disabled:cursor-not-allowed group"
                                 >
                                     {status === "loading" ? (
                                         <>Sending... <Loader2 size={18} className="animate-spin" /></>

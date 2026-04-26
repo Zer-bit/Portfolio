@@ -6,6 +6,10 @@
     --accent: #9cbd09;
     --accent-dark: #7a9a07;
     --accent-light: #b8d42e;
+    --blue: #0ea5e9;
+    --blue-dark: #0284c7;
+    --orange: #f97316;
+    --orange-dark: #ea580c;
 }
 
 body {
@@ -34,6 +38,16 @@ body {
     .text-gradient {
         @apply bg-clip-text text-transparent;
         background-image: linear-gradient(135deg, #9cbd09, #7a9a07);
+    }
+
+    .text-gradient-blue {
+        @apply bg-clip-text text-transparent;
+        background-image: linear-gradient(135deg, #0ea5e9, #0284c7);
+    }
+
+    .text-gradient-orange {
+        @apply bg-clip-text text-transparent;
+        background-image: linear-gradient(135deg, #f97316, #ea580c);
     }
 
     .border-gradient {
