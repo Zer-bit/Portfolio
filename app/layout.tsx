@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Starfield from "./starfield";
-import Spotlight from "./spotlight";
 import Navbar from "./navbar";
-import MagneticCursor from "./magnetic-cursor";
 import ScrollProgress from "./scroll-progress";
-import ParticleNetwork from "./particle-network";
 
 export const metadata: Metadata = {
     title: "Jezer Parales | Portfolio",
@@ -19,12 +15,8 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className="scroll-smooth">
-            <body className="antialiased bg-black text-white selection:bg-violet-500/30 overflow-x-hidden">
-                <MagneticCursor />
+            <body className="antialiased bg-[#f0f0f0] text-[#111111] selection:bg-[#9cbd09]/30 overflow-x-hidden">
                 <ScrollProgress />
-                <ParticleNetwork />
-                <Starfield />
-                <Spotlight />
                 <Navbar />
                 <div className="relative z-10 w-full overflow-x-hidden">
                     {children}

@@ -34,7 +34,7 @@ const ScrollProgress = () => {
                         cx="32"
                         cy="32"
                         r="28"
-                        stroke="rgba(139, 92, 246, 0.1)"
+                        stroke="rgba(156, 189, 9, 0.2)"
                         strokeWidth="3"
                         fill="none"
                     />
@@ -43,7 +43,7 @@ const ScrollProgress = () => {
                         cx="32"
                         cy="32"
                         r="28"
-                        stroke="url(#gradient)"
+                        stroke="#9cbd09"
                         strokeWidth="3"
                         fill="none"
                         strokeLinecap="round"
@@ -53,18 +53,11 @@ const ScrollProgress = () => {
                         }}
                         transition={{ duration: 0.1 }}
                     />
-                    <defs>
-                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#8b5cf6" />
-                            <stop offset="50%" stopColor="#06b6d4" />
-                            <stop offset="100%" stopColor="#8b5cf6" />
-                        </linearGradient>
-                    </defs>
                 </svg>
 
                 {/* Percentage text */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-xs font-bold text-violet-400">
+                    <span className="text-xs font-bold text-[#9cbd09]">
                         {Math.round(scrollProgress)}%
                     </span>
                 </div>

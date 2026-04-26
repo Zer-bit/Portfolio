@@ -6,7 +6,7 @@ import Footer from "./footer";
 
 export default function Home() {
     return (
-        <main className="min-h-screen bg-black">
+        <main className="min-h-screen bg-[#f0f0f0]">
             <PersonalInfo />
             <Skills />
             <Project />

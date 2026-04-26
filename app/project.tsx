@@ -62,34 +62,33 @@ const ProjectCard = ({ project, index, onNotice }: { project: typeof projects[0]
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
             style={style}
-            className="group relative bg-white/5 rounded-3xl overflow-hidden holographic-border preserve-3d"
+            className="group relative bg-white/80 rounded-3xl overflow-hidden border border-black/10 preserve-3d shadow-sm"
         >
             <div className="aspect-video overflow-hidden relative">
                 <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100"
                 />
-                {/* Glitch overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-violet-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mix-blend-overlay" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#9cbd09]/10 to-[#9cbd09]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
 
             <div className="p-8 relative flex-grow flex flex-col min-h-[280px]">
-                <h4 className="text-xl font-bold mb-3 group-hover:text-violet-400 transition-colors">
+                <h4 className="text-xl font-bold mb-3 text-black group-hover:text-[#9cbd09] transition-colors">
                     {project.title}
                 </h4>
 
                 <div className="relative flex-grow">
                     {/* Default View: Short description and tech tags */}
                     <div className="group-hover:opacity-0 group-hover:invisible transition-all duration-300">
-                        <p className="text-gray-400 text-sm mb-6 line-clamp-2">
+                        <p className="text-gray-600 text-sm mb-6 line-clamp-2">
                             {project.description}
                         </p>
                         <div className="flex flex-wrap gap-2 mb-8">
                             {project.tech.map((t) => (
                                 <span
                                     key={t}
-                                    className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 bg-violet-500/10 text-violet-400 rounded-full border border-violet-500/20 hover:bg-violet-500/20 transition-colors"
+                                    className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 bg-[#9cbd09]/10 text-[#9cbd09] rounded-full border border-[#9cbd09]/20 hover:bg-[#9cbd09]/20 transition-colors"
                                 >
                                     {t}
                                 </span>
@@ -99,13 +98,13 @@ const ProjectCard = ({ project, index, onNotice }: { project: typeof projects[0]
 
                     {/* Hover View: Full description only, no tags */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto overflow-y-auto scrollbar-hide">
-                        <p className="text-gray-400 text-sm leading-relaxed">
+                        <p className="text-gray-600 text-sm leading-relaxed">
                             {project.description}
                         </p>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4 mt-auto pt-4 border-t border-white/5 group-hover:border-violet-500/20 transition-colors">
+                <div className="flex items-center gap-4 mt-auto pt-4 border-t border-black/10 group-hover:border-[#9cbd09]/20 transition-colors">
                     <a
                         href={project.link}
                         target={project.link === "#" ? "_self" : "_blank"}
@@ -116,14 +115,11 @@ const ProjectCard = ({ project, index, onNotice }: { project: typeof projects[0]
                                 onNotice("This project is not deployed or published yet.");
                             }
                         }}
-                        className="p-2 bg-white/5 rounded-full hover:bg-violet-600 transition-all text-white hover:scale-110 hover:-rotate-12 duration-300"
+                        className="p-2 bg-black/5 rounded-full hover:bg-[#9cbd09] transition-all text-black hover:text-white hover:scale-110 duration-300"
                     >
                         <ExternalLink size={20} />
                     </a>
                 </div>
-
-                {/* Shimmer effect on hover */}
-                <div className="absolute inset-0 shimmer opacity-0 group-hover:opacity-100 pointer-events-none rounded-3xl" />
             </div>
         </motion.div>
     );
@@ -137,7 +133,7 @@ const Project = () => {
     };
 
     return (
-        <div id="projects" className="py-24 bg-black relative z-[10]">
+        <div id="projects" className="py-24 bg-[#f0f0f0] relative z-[10]">
             <NotificationToast
                 isVisible={notification.isVisible}
                 message={notification.message}
@@ -146,10 +142,10 @@ const Project = () => {
             <div className="max-w-7xl mx-auto px-6">
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
                     <div>
-                        <h2 className="text-violet-500 font-medium tracking-widest mb-4 uppercase text-sm">Case Studies</h2>
-                        <h3 className="text-4xl md:text-5xl font-bold">Featured <span className="text-gradient">Projects</span></h3>
+                        <h2 className="text-[#9cbd09] font-medium tracking-widest mb-4 uppercase text-sm">Case Studies</h2>
+                        <h3 className="text-4xl md:text-5xl font-bold text-black">Featured <span className="text-gradient">Projects</span></h3>
                     </div>
-                    <p className="text-gray-400 max-w-sm">
+                    <p className="text-gray-600 max-w-sm">
                         A selection of my recent work exploring the intersection of design and technology.
                     </p>
                 </div>
