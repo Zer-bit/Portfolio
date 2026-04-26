@@ -3,8 +3,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
-import { useTilt } from "./hooks/use-tilt";
-import NotificationToast from "./notification-toast";
+import { useTilt } from "../../hooks/use-tilt";
+import NotificationToast from "../ui/notification-toast";
 
 const projects = [
     {

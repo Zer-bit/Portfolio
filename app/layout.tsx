@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "./navbar";
-import ScrollProgress from "./scroll-progress";
+import Navbar from "./components/layout/navbar";
+import ScrollProgress from "./components/ui/scroll-progress";
 
 export const metadata: Metadata = {
     title: "Jezer Parales | Portfolio",
