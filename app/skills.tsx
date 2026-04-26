@@ -45,7 +45,6 @@ const Skills = () => {
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1 }}
                                     className="bg-white/80 p-6 rounded-2xl border border-black/10 hover:scale-[1.02] transition-all duration-300 group shadow-sm"
-                                    style={{ borderLeft: `4px solid ${category.color}` }}
                                 >
                                     <div className="flex items-center gap-4 mb-4">
                                         <category.icon style={{ color: category.color }} size={20} />

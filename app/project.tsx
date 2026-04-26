@@ -70,9 +70,6 @@ const ProjectCard = ({ project, index, onNotice }: { project: typeof projects[0]
             style={style}
             className="group relative bg-white/80 rounded-3xl overflow-hidden border border-black/10 preserve-3d shadow-sm hover:shadow-md transition-shadow duration-300"
         >
-            {/* Top accent line per project */}
-            <div className="h-1 w-full" style={{ backgroundColor: project.accent }} />
-
             <div className="aspect-video overflow-hidden relative">
                 <img
                     src={project.image}
