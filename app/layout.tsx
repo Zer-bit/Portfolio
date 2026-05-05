@@ -3,6 +3,7 @@ import { Press_Start_2P } from "next/font/google";
 import "./styles/globals.css";
 import GameLayout from "./components/layout/game-layout";
 import PageTransition from "./components/layout/PageTransition";
+import { ProgressTrackerProvider } from "./lib/progress-tracker";
 
 /**
  * "Press Start 2P" loaded via next/font/google.
@@ -29,11 +30,13 @@ export default function RootLayout({
     return (
         <html lang="en" className={`scroll-smooth ${pressStart2P.variable}`}>
             <body className="antialiased overflow-x-hidden">
-                <GameLayout theme="day">
-                    <PageTransition>
-                        {children}
-                    </PageTransition>
-                </GameLayout>
+                <ProgressTrackerProvider>
+                    <GameLayout theme="day">
+                        <PageTransition>
+                            {children}
+                        </PageTransition>
+                    </GameLayout>
+                </ProgressTrackerProvider>
             </body>
         </html>
     );

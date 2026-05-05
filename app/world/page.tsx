@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import GameMap from "../components/game/GameMap";
-import { NAV_LINKS } from "../lib/constants";
+import WorldPageContent from "./WorldPageContent";
 
 export const metadata: Metadata = {
   title: "Jezer Parales | World Map",
@@ -8,9 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function WorldPage() {
-  return (
-    <main>
-      <GameMap routes={NAV_LINKS} />
-    </main>
-  );
+  return <WorldPageContent />;
 }

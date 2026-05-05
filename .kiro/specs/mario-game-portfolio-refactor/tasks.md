@@ -142,7 +142,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Render a pixel-art styled 404 message using `.pixel-text`, `dayTheme` color tokens, and existing `PixelButton` with a "Go Home" link to `/`
   - _Requirements: 2.10, 18.3_
 
-- [ ] 16. Implement optional Progress Tracker
+- [x] 16. Implement optional Progress Tracker
   - Create `app/lib/progress-tracker.tsx` (React Context + `localStorage`) that records visited routes
   - Provide a `useProgressTracker` hook returning `{ visitedRoutes: string[], markVisited: (route: string) => void }`
   - Wrap the app in the `ProgressTrackerProvider` inside `app/layout.tsx`
@@ -160,14 +160,14 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Add Next.js `metadata` export with title "Jezer Parales | Settings"
   - _Requirements: 2.9, 16.1, 16.2, 16.3, 16.4, 18.3_
 
-- [-] 18. Accessibility and metadata audit
+- [x] 18. Accessibility and metadata audit
   - Verify all new interactive elements (`LevelNode`, `LevelCard`, navigation links) have descriptive `aria-label` attributes
   - Verify all new page routes have a unique `<title>` via Next.js `metadata` exports
   - Verify keyboard navigation (Tab, Enter, Space) works for all new interactive elements
   - Verify no existing `aria-label`, `role`, or `aria-hidden` attributes were modified
   - _Requirements: 18.1, 18.2, 18.3, 18.4, 18.5_
 
-- [~] 19. Final checkpoint — Build and verify
+- [x] 19. Final checkpoint — Build and verify
   - Run `next build` to confirm zero TypeScript errors and successful static generation of all project slugs
   - Ensure all tests pass, ask the user if questions arise.
 

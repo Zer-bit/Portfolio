@@ -38,6 +38,8 @@ import ScrollProgress from "../ui/scroll-progress";
 import Footer from "../layout/footer";
 import { Cloud, Block } from "../game/index";
 import PlayerHUD from "../game/PlayerHUD";
+import { useProgressTracker } from "../../lib/progress-tracker";
+import { usePathname } from "next/navigation";
 
 // ---------------------------------------------------------------------------
 // Context
@@ -117,6 +119,30 @@ export interface GameLayoutProps {
 }
 
 // ---------------------------------------------------------------------------
+// RouteTracker — marks the current route as visited on every navigation
+// ---------------------------------------------------------------------------
+
+/**
+ * RouteTracker — invisible component that calls `markVisited` whenever the
+ * pathname changes. Placed inside `GameLayout` so it runs on every page
+ * without modifying any existing component.
+ *
+ * @satisfies Requirement 15.1 — Records each visited route
+ * @satisfies Requirement 15.2 — Persisted via ProgressTrackerProvider → localStorage
+ * @satisfies Requirement 15.5 — Does not modify any existing component's state or props
+ */
+function RouteTracker() {
+  const pathname = usePathname();
+  const { markVisited } = useProgressTracker();
+
+  useEffect(() => {
+    markVisited(pathname);
+  }, [pathname, markVisited]);
+
+  return null;
+}
+
+// ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 
@@ -170,6 +196,12 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
   };
 
   // -------------------------------------------------------------------------
+  // Progress tracker — coin count for PlayerHUD
+  // -------------------------------------------------------------------------
+
+  const { visitedRoutes } = useProgressTracker();
+
+  // -------------------------------------------------------------------------
   // Scroll tracking
   // -------------------------------------------------------------------------
 
@@ -216,6 +248,8 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
 
   return (
     <GameLayoutContext.Provider value={{ theme, scrollY: scrollYValue }}>
+      {/* Route tracker — records current pathname in ProgressTracker */}
+      <RouteTracker />
       {/* Root element — receives all theme CSS custom properties */}
       <div
         style={{
@@ -296,7 +330,7 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
         {/* ------------------------------------------------------------------ */}
         {/* Persistent PlayerHUD — fixed overlay, zIndex.hud (40)              */}
         {/* ------------------------------------------------------------------ */}
-        <PlayerHUD />
+        <PlayerHUD coins={visitedRoutes.length} />
 
         {/* ------------------------------------------------------------------ */}
         {/* Page content — sits above parallax layers                           */}
