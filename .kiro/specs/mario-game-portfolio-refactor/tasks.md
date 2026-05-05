@@ -65,19 +65,19 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Preserve all existing visual styles, pixel-art borders, hover effects, and responsive behavior without modification
   - _Requirements: 13.1, 13.2, 13.3, 17.3_
 
-- [-] 6. Create the Landing Page (Start Screen)
+- [x] 6. Create the Landing Page (Start Screen)
   - Replace `app/page.tsx` content with a render of `<StartScreen>` as the primary content
   - Ensure the page is wrapped in `GameLayout` via the root `app/layout.tsx` (already in place)
   - Add Next.js `metadata` export with a unique `<title>` (e.g., "Jezer Parales | Start")
   - _Requirements: 2.1, 3.1, 3.6, 18.3_
 
-- [~] 7. Create the World Map page
+- [x] 7. Create the World Map page
   - Create `app/world/page.tsx` rendering `<GameMap>` with the full routes array
   - Wrap in `GameLayout` (inherited from root layout)
   - Add Next.js `metadata` export with title "Jezer Parales | World Map"
   - _Requirements: 2.2, 4.1, 4.6, 18.3_
 
-- [~] 8. Create the About page
+- [-] 8. Create the About page
   - Create `app/about/page.tsx`
   - Display developer name, bio, and avatar using `.pixel-text` and existing `PixelCard` components
   - Present personal attributes (role, availability, location) as gamified stat labels using existing theme color tokens
