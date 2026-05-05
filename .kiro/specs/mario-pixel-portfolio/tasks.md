@@ -34,7 +34,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Add JSDoc comments on all exports
   - **Requirement:** 15, 19
 
-- [-] 4. Implement `styles/pixel.css` — Pixel-Art CSS Foundation
+- [x] 4. Implement `styles/pixel.css` — Pixel-Art CSS Foundation
   - Add `@import url(...)` for "Press Start 2P" from Google Fonts
   - Apply `image-rendering: pixelated; image-rendering: crisp-edges;` to all `img` and `canvas` elements
   - Define CSS custom properties `--pixel-border` (2px solid) and `--pixel-border-emphasis` (4px double)
@@ -44,20 +44,20 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Import `pixel.css` in `app/styles/globals.css`
   - **Requirement:** 2, 16
 
-- [~] 5. Implement `hooks/use-animation.ts` — Animation Hook
+- [x] 5. Implement `hooks/use-animation.ts` — Animation Hook
   - Accept `preset: AnimationPresetName` parameter
   - Look up the corresponding variant from `lib/animations.ts` presets map
   - Return object with `variants`, `initial: "hidden"`, `animate: "visible"`, and `transition` ready to spread onto a `motion.*` element
   - Export `useAnimation` as named export with JSDoc comment
   - **Requirement:** 15, 19
 
-- [~] 6. Implement `hooks/use-sound.ts` — Sound Hook Stub
+- [x] 6. Implement `hooks/use-sound.ts` — Sound Hook Stub
   - Define interface with `playBounce`, `playCoin`, `playPipe` methods (all `() => void`)
   - Return no-op implementations for all three methods
   - Export `useSound` as named export with JSDoc comment noting it is a stub
   - **Requirement:** 20
 
-- [~] 7. Implement `components/ui/pixel-button.tsx` — PixelButton
+- [-] 7. Implement `components/ui/pixel-button.tsx` — PixelButton
   - Define `PixelButtonProps` interface extending `React.ButtonHTMLAttributes<HTMLButtonElement>` with `variant`, `size`, and `animation` props
   - Create variant map for `brick`, `coin`, `pipe` using color tokens from `lib/theme.ts`
   - Create size map for `sm`, `md`, `lg` using `pixelGrid` values from `lib/theme.ts`
