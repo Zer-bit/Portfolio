@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "./styles/globals.css";
 import Navbar from "./components/layout/navbar";
 import ScrollProgress from "./components/ui/scroll-progress";
 
