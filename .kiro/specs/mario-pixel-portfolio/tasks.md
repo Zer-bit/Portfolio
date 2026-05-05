@@ -104,7 +104,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Add JSDoc comment
   - **Requirement:** 6, 17
 
-- [-] 12. Implement `components/game/cloud.tsx` — Cloud Component
+- [x] 12. Implement `components/game/cloud.tsx` — Cloud Component
   - Render pixel-art cloud shape using CSS or SVG (white/light blue pixel blocks)
   - Accept `size` prop (`"sm" | "md" | "lg"`) and `style` prop for positioning
   - Apply `floatVariant` from `lib/animations.ts` continuously via `motion.div`
@@ -112,7 +112,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Add JSDoc comment
   - **Requirement:** 6, 17
 
-- [~] 13. Implement `components/game/hud.tsx` — HUD Component
+- [x] 13. Implement `components/game/hud.tsx` — HUD Component
   - Accept `score`, `coins`, and `worldLabel` props (worldLabel default: `"PORTFOLIO-1"`)
   - Render pixel-art styled bar with score counter, coin counter (Coin component + number), and world label
   - Apply `.pixel-text` class and theme coin/text colors from `lib/theme.ts`
@@ -120,7 +120,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Add JSDoc comment
   - **Requirement:** 6, 17
 
-- [~] 14. Implement `components/layout/game-layout.tsx` — GameLayout
+- [-] 14. Implement `components/layout/game-layout.tsx` — GameLayout
   - Define `GameLayoutContext` with `theme: "day" | "night"` and `scrollY: number`
   - Accept `theme` prop (default: `"day"`) and `children`
   - Apply active theme's CSS custom properties to root `div` element
