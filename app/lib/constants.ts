@@ -38,10 +38,24 @@ export const CONTACT_INFO = {
 export const APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbyaTDnX4uuklVWAp6C9KwNT9pHzFhEoDd_IaTfxy_fqAk07hiICcjTREYr3-5dLXV4/exec";
 
+// Route Constants
+export const ROUTES = {
+  home: "/",
+  world: "/world",
+  about: "/about",
+  projects: "/projects",
+  skills: "/skills",
+  experience: "/experience",
+  contact: "/contact",
+  settings: "/settings",
+} as const;
+
 // Navigation Links
 export const NAV_LINKS = [
-  { name: "Home", href: "#home", id: "home" },
-  { name: "Skills", href: "#skills", id: "skills" },
-  { name: "Projects", href: "#projects", id: "projects" },
-  { name: "Contact", href: "#contact", id: "contact" },
+  { name: "World", href: ROUTES.world, id: "world" },
+  { name: "About", href: ROUTES.about, id: "about" },
+  { name: "Skills", href: ROUTES.skills, id: "skills" },
+  { name: "Projects", href: ROUTES.projects, id: "projects" },
+  { name: "Experience", href: ROUTES.experience, id: "experience" },
+  { name: "Contact", href: ROUTES.contact, id: "contact" },
 ] as const;
