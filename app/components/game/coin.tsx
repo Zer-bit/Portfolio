@@ -61,6 +61,7 @@ export function CoinComponent({ size = 24 }: CoinProps) {
         xmlns="http://www.w3.org/2000/svg"
         aria-label="Coin"
         role="img"
+        style={{ imageRendering: "pixelated" }}
       >
         {/* Main coin body — gold (#f8b800) */}
         <rect x="1" y="0" width="6" height="8" fill="#f8b800" />

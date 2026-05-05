@@ -97,6 +97,7 @@ export function CloudComponent({ size = "md", style }: CloudProps) {
         xmlns="http://www.w3.org/2000/svg"
         aria-label="Cloud"
         role="img"
+        style={{ imageRendering: "pixelated" }}
       >
         {/* Cloud body — white */}
         <rect x="4" y="8" width="24" height="8" fill="#ffffff" />

@@ -41,7 +41,7 @@ import React from "react";
 export interface PixelContainerProps {
   fullWidth?: boolean;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
   children: React.ReactNode;
 }
 

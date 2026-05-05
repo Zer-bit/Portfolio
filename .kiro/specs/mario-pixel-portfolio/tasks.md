@@ -236,7 +236,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Remove hardcoded `bg-[#f0f0f0]` background (now handled by GameLayout)
   - **Requirement:** 7, 18
 
-- [-] 26. Responsive design audit and pixel scaling
+- [x] 26. Responsive design audit and pixel scaling
   - Verify all sections render without horizontal scrollbars at 320px viewport width
   - Confirm pixel font scales down 25% on mobile (< 768px) with minimum 10px rendered size
   - Confirm project grid is 3-col (≥1024px), 2-col (≥768px), 1-col (mobile)
@@ -244,7 +244,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Confirm all pixel-art images and sprites have `image-rendering: pixelated` applied
   - **Requirement:** 16
 
-- [~] 27. Performance audit
+- [-] 27. Performance audit
   - Confirm all game components (Coin, Block, Cloud, HUD) use `next/dynamic` with `{ ssr: false }`
   - Confirm `will-change: transform` is applied to all parallax layers in GameLayout
   - Confirm all project images use `<Image>` from `next/image`

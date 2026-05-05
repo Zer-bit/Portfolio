@@ -57,6 +57,7 @@ function QuestionBlockSVG({ size }: { size: number }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Question block"
       role="img"
+      style={{ imageRendering: "pixelated" }}
     >
       {/* Main body */}
       <rect width="16" height="16" fill="#d07030" />
@@ -97,6 +98,7 @@ function BrickBlockSVG({ size }: { size: number }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Brick block"
       role="img"
+      style={{ imageRendering: "pixelated" }}
     >
       {/* Main body */}
       <rect width="16" height="16" fill="#d07030" />

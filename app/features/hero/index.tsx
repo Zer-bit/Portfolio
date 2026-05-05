@@ -293,12 +293,12 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* ── Right column: Mario sprite ── */}
+        {/* ── Right column: Mario sprite (hidden on very small screens to prevent overflow) ── */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="flex justify-center lg:justify-end items-center"
+          className="hidden sm:flex justify-center lg:justify-end items-center"
           aria-hidden="true"
         >
           <motion.div
@@ -308,6 +308,7 @@ export default function HeroSection() {
               repeat: Infinity,
               ease: "easeInOut",
             }}
+            className="max-w-full"
           >
             <MarioSprite />
           </motion.div>
