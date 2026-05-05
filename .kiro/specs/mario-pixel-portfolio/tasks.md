@@ -14,7 +14,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Create empty index files for new directories: `app/components/game/`, `app/features/hero/`, `app/features/skills/`, `app/features/projects/`, `app/features/contact/`
   - **Requirement:** 18
 
-- [-] 2. Implement `lib/theme.ts` — Centralized Theme System
+- [x] 2. Implement `lib/theme.ts` — Centralized Theme System
   - Define `ThemeType` TypeScript interface with `colors` (sky, ground, brick, coin, pipe, mario, text, bg, border) and `name` fields
   - Implement `dayTheme` object with all Day_Theme color tokens: sky `#5c94fc`, ground `#c84b0c`, brick `#d07030`, coin `#f8b800`, pipe `#00a800`, mario `#e40058`, text `#ffffff`
   - Implement `nightTheme` object as a complete alternative palette conforming to `ThemeType`
@@ -23,7 +23,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Add JSDoc comments on all exports
   - **Requirement:** 1, 19, 20
 
-- [~] 3. Implement `lib/animations.ts` — Animation Presets
+- [x] 3. Implement `lib/animations.ts` — Animation Presets
   - Import `Variants` type from `framer-motion`
   - Implement `bounceVariant`: Y axis 0 → -8 → 0, spring easing, `repeat: Infinity`
   - Implement `floatVariant`: Y axis 0 → -6 → 0, 3-second duration, `repeat: Infinity`, ease `"easeInOut"`
@@ -34,7 +34,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Add JSDoc comments on all exports
   - **Requirement:** 15, 19
 
-- [~] 4. Implement `styles/pixel.css` — Pixel-Art CSS Foundation
+- [-] 4. Implement `styles/pixel.css` — Pixel-Art CSS Foundation
   - Add `@import url(...)` for "Press Start 2P" from Google Fonts
   - Apply `image-rendering: pixelated; image-rendering: crisp-edges;` to all `img` and `canvas` elements
   - Define CSS custom properties `--pixel-border` (2px solid) and `--pixel-border-emphasis` (4px double)

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./pixel.css";
 
 :root {
     --background: #f0f0f0;
