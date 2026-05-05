@@ -1,8 +1,6 @@
 /* pixel.css — Pixel-Art CSS Foundation */
 /* Provides global pixel-rendering utilities, pixel font, border tokens, and utility classes */
-
-/* ─── Google Fonts: Press Start 2P ─────────────────────────────────────────── */
-@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+/* Note: Google Fonts @import for "Press Start 2P" is in globals.css (must precede all rules) */
 
 /* ─── Pixel Image Rendering ─────────────────────────────────────────────────── */
 /* Requirement 2.1, 16.2 — prevent blurring on non-integer scale factors */

@@ -244,7 +244,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Confirm all pixel-art images and sprites have `image-rendering: pixelated` applied
   - **Requirement:** 16
 
-- [-] 27. Performance audit
+- [x] 27. Performance audit
   - Confirm all game components (Coin, Block, Cloud, HUD) use `next/dynamic` with `{ ssr: false }`
   - Confirm `will-change: transform` is applied to all parallax layers in GameLayout
   - Confirm all project images use `<Image>` from `next/image`
