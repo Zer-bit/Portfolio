@@ -117,14 +117,14 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Add Next.js `metadata` export with title "Jezer Parales | Skills"
   - _Requirements: 2.6, 7.1, 7.2, 7.3, 18.3_
 
-- [-] 12. Create the Experience page
+- [x] 12. Create the Experience page
   - Create `app/experience/page.tsx`
   - Render experience entries from `app/lib/data.ts` in a vertical timeline layout using existing `PixelCard` components
   - Use `.pixel-text` for all headings and labels; use only existing theme color tokens
   - Add Next.js `metadata` export with title "Jezer Parales | Experience"
   - _Requirements: 2.7, 8.1, 8.2, 8.3, 8.4, 8.5, 18.3_
 
-- [~] 13. Create the Contact page
+- [-] 13. Create the Contact page
   - Create `app/contact/page.tsx`
   - Render the existing `<ContactSection>` feature component from `app/features/contact/index.tsx` without modification
   - Add Next.js `metadata` export with title "Jezer Parales | Contact"

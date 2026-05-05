@@ -6,6 +6,8 @@
  * Client component that renders work experience entries as a vertical
  * game-progression timeline using PixelCard components and Framer Motion
  * entrance animations.
+ *
+ * Requirements: 8.1, 8.2, 8.3, 8.4, 8.5
  */
 
 import { motion } from "framer-motion";
@@ -49,7 +51,7 @@ export function ExperienceContent() {
             >
               {/* Timeline dot */}
               <div
-                className="absolute left-2 top-6 w-4 h-4 -translate-x-1/2 pixel-shadow"
+                className="absolute left-2 top-6 w-4 h-4 -translate-x-1/2"
                 style={{
                   backgroundColor: entry.accent,
                   border: `2px solid ${dayTheme.colors.border}`,
@@ -58,46 +60,45 @@ export function ExperienceContent() {
               />
 
               <div aria-label={`${entry.jobTitle} at ${entry.company}`}>
-              <PixelCard
-                variant="elevated"
-                style={{
-                  borderLeft: `4px solid ${entry.accent}`,
-                  padding: "24px",
-                  backgroundColor: dayTheme.colors.sky,
-                }}
-              >
-                {/* Job title */}
-                <h2
-                  className="pixel-text text-xs md:text-sm mb-2"
-                  style={{ color: dayTheme.colors.coin }}
+                <PixelCard
+                  variant="elevated"
+                  style={{
+                    borderLeft: `4px solid ${entry.accent}`,
+                    padding: "24px",
+                  }}
                 >
-                  {entry.jobTitle}
-                </h2>
+                  {/* Job title */}
+                  <h2
+                    className="pixel-text text-xs md:text-sm mb-2"
+                    style={{ color: dayTheme.colors.coin }}
+                  >
+                    {entry.jobTitle}
+                  </h2>
 
-                {/* Company */}
-                <h3
-                  className="pixel-text text-xs mb-2"
-                  style={{ color: dayTheme.colors.text }}
-                >
-                  {entry.company}
-                </h3>
+                  {/* Company */}
+                  <h3
+                    className="pixel-text text-xs mb-2"
+                    style={{ color: dayTheme.colors.text }}
+                  >
+                    {entry.company}
+                  </h3>
 
-                {/* Date range */}
-                <p
-                  className="pixel-text text-xs mb-4"
-                  style={{ color: dayTheme.colors.pipe }}
-                >
-                  {entry.startDate} – {entry.endDate}
-                </p>
+                  {/* Date range */}
+                  <p
+                    className="pixel-text text-xs mb-4"
+                    style={{ color: dayTheme.colors.pipe }}
+                  >
+                    {entry.startDate} – {entry.endDate}
+                  </p>
 
-                {/* Description */}
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ color: dayTheme.colors.text }}
-                >
-                  {entry.description}
-                </p>
-              </PixelCard>
+                  {/* Description */}
+                  <p
+                    className="text-sm leading-relaxed"
+                    style={{ color: dayTheme.colors.text }}
+                  >
+                    {entry.description}
+                  </p>
+                </PixelCard>
               </div>
             </motion.div>
           ))}
