@@ -34,7 +34,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
     - Export as both named `GameMapComponent` and `default` dynamic (`next/dynamic`, `ssr: false`)
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.7, 12.1, 14.1, 18.2, 19.4_
 
-  - [-] 2.3 Create `app/components/game/LevelCard.tsx`
+  - [x] 2.3 Create `app/components/game/LevelCard.tsx`
     - Accept a `project` prop (type from `app/lib/data.ts` `projects` array)
     - Display project title, tech stack tags, accent color, and thumbnail image using existing `PixelCard` styling
     - On click, navigate to `/projects/[slug]` using the `toSlug` function
@@ -43,7 +43,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
     - Export as both named `LevelCardComponent` and `default` dynamic (`next/dynamic`, `ssr: false`)
     - _Requirements: 5.1, 5.2, 5.3, 5.7, 12.1, 14.1, 18.2_
 
-  - [~] 2.4 Create `app/components/game/PlayerHUD.tsx`
+  - [-] 2.4 Create `app/components/game/PlayerHUD.tsx`
     - Use the existing `HUD` component from `app/components/game/hud.tsx` as the rendering primitive
     - Read the current pathname via `usePathname()` and map it to a world label string (e.g., `/` → `"WORLD-1"`, `/world` → `"WORLD-2"`, etc.)
     - Position with `zIndex.hud` (value: 40) from `app/lib/theme.ts`
