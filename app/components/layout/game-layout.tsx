@@ -37,7 +37,6 @@ import Navbar from "../layout/navbar";
 import ScrollProgress from "../ui/scroll-progress";
 import Footer from "../layout/footer";
 import { Cloud, Block } from "../game/index";
-import PlayerHUD from "../game/PlayerHUD";
 import { useProgressTracker } from "../../lib/progress-tracker";
 import { usePathname } from "next/navigation";
 
@@ -180,6 +179,8 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
   // -------------------------------------------------------------------------
 
   const activeTheme = theme === "night" ? nightTheme : dayTheme;
+  const pathname = usePathname();
+  const isLanding = pathname === "/";
 
   // CSS custom properties derived from the active theme palette.
   const themeVars: React.CSSProperties = {
@@ -197,10 +198,6 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
 
   // -------------------------------------------------------------------------
   // Progress tracker — coin count for PlayerHUD
-  // -------------------------------------------------------------------------
-
-  const { visitedRoutes } = useProgressTracker();
-
   // -------------------------------------------------------------------------
   // Scroll tracking
   // -------------------------------------------------------------------------
@@ -328,11 +325,6 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
         </motion.div>
 
         {/* ------------------------------------------------------------------ */}
-        {/* Persistent PlayerHUD — fixed overlay, zIndex.hud (40)              */}
-        {/* ------------------------------------------------------------------ */}
-        <PlayerHUD coins={visitedRoutes.length} />
-
-        {/* ------------------------------------------------------------------ */}
         {/* Page content — sits above parallax layers                           */}
         {/* ------------------------------------------------------------------ */}
         <div
@@ -343,13 +335,8 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
         >
           <ScrollProgress />
           <Navbar />
-          {/*
-            paddingTop clears the two fixed headers:
-            - PlayerHUD: 48px (fixed height)
-            - Navbar: ~56px (top: 48px + py-4 + content)
-            Total: ~104px. Use 112px for a small breathing gap.
-          */}
-          <main style={{ paddingTop: "112px" }}>{children}</main>
+          {/* h-14 = 56px — clears the single merged navbar. Landing page (/) has no navbar so no offset needed. */}
+          <main style={{ paddingTop: isLanding ? "0" : "56px", minHeight: "100vh" }}>{children}</main>
           <Footer />
         </div>
       </div>

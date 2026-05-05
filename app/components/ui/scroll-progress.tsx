@@ -52,7 +52,8 @@ const ScrollProgress = () => {
       const winHeightPx =
         document.documentElement.scrollHeight -
         document.documentElement.clientHeight;
-      const scrolled = (scrollPx / winHeightPx) * 100;
+      // Guard against division by zero when page doesn't scroll
+      const scrolled = winHeightPx > 0 ? (scrollPx / winHeightPx) * 100 : 0;
       setScrollProgress(scrolled);
     };
 

@@ -107,7 +107,15 @@ export const GameMapComponent: React.FC<GameMapProps> = ({
   return (
     <section
       aria-label="World Map — choose a level"
-      style={{ padding: "32px 16px", maxWidth: "960px", margin: "0 auto" }}
+      style={{
+        padding: "40px 24px 80px",
+        maxWidth: "1000px",
+        margin: "0 auto",
+        minHeight: "calc(100vh - 56px)", // fill viewport below navbar
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
     >
       {/* Section heading */}
       <motion.h2
@@ -214,12 +222,11 @@ export const GameMapComponent: React.FC<GameMapProps> = ({
                       className="pixel-text"
                       style={{
                         display: "inline-block",
-                        marginTop: "12px",
+                        marginTop: "10px",
                         color: dayTheme.colors.coin,
-                        fontSize: "8px",
-                        letterSpacing: "0.1em",
-                        border: `1px solid ${dayTheme.colors.coin}`,
-                        padding: "2px 6px",
+                        fontSize: "7px",
+                        letterSpacing: "0.12em",
+                        opacity: 0.8,
                       }}
                       aria-label="Level completed"
                     >
