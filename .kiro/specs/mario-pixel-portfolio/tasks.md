@@ -151,7 +151,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Preserve all nav links, href values, and anchor-link behavior
   - **Requirement:** 13
 
-- [-] 17. Restyle `components/layout/footer.tsx` — Footer
+- [x] 17. Restyle `components/layout/footer.tsx` — Footer
   - Apply `.pixel-text` class to "JEZER." logo
   - Apply theme coin color to the "." in the logo
   - Add a row of `<Block variant="brick">` components along the top edge of the footer
@@ -159,21 +159,21 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Preserve copyright text content
   - **Requirement:** 14
 
-- [~] 18. Restyle `components/ui/scroll-progress.tsx` — ScrollProgress
+- [x] 18. Restyle `components/ui/scroll-progress.tsx` — ScrollProgress
   - Replace `strokeLinecap="round"` with `strokeLinecap="square"` for pixel-art styling
   - Apply theme coin color to the progress stroke and theme border color to the background circle
   - When `scrollProgress >= 100`, render `<Coin>` or a pixel star SVG instead of the percentage text
   - Preserve existing scroll tracking logic and fixed positioning
   - **Requirement:** 14
 
-- [~] 19. Restyle `components/ui/notification-toast.tsx` — NotificationToast
+- [x] 19. Restyle `components/ui/notification-toast.tsx` — NotificationToast
   - Replace `<AlertCircle>` icon with `<Coin>` component
   - Apply `.pixel-shadow` and 2px solid pixel border to the toast container
   - Apply `.pixel-text` class to the message text
   - Preserve auto-close timer (1300ms), progress bar animation, and close button behavior
   - **Requirement:** 11
 
-- [~] 20. Implement `features/hero/index.tsx` — Hero Section
+- [-] 20. Implement `features/hero/index.tsx` — Hero Section
   - Migrate logic from `app/components/sections/hero.tsx`
   - Display "Jezer Parales" name using `.pixel-text` font styled as a Mario title card
   - Add pixel-art character sprite (SVG or PNG sprite sheet) positioned right on desktop, centered on mobile

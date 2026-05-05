@@ -2,7 +2,9 @@
 
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { AlertCircle, X } from "lucide-react";
+import { X } from "lucide-react";
+import Coin from "../game/coin";
+import { dayTheme } from "../../lib/theme";
 
 interface NotificationToastProps {
     isVisible: boolean;
@@ -31,7 +33,10 @@ const NotificationToast = ({ isVisible, message, onClose }: NotificationToastPro
             className="fixed inset-0 z-[100] flex items-center justify-center p-6 pointer-events-none"
         >
             <div className="relative group max-w-md w-full pointer-events-auto">
-                <div className="relative bg-white/95 backdrop-blur-2xl border border-black/10 rounded-2xl p-6 shadow-2xl flex flex-col items-center text-center overflow-hidden">
+                <div
+                    className="relative bg-white pixel-shadow flex flex-col items-center text-center overflow-hidden p-6"
+                    style={{ border: `2px solid ${dayTheme.colors.border}` }}
+                >
                     <button
                         onClick={onClose}
                         className="absolute top-4 right-4 text-gray-500 hover:text-black transition-colors"
@@ -39,10 +44,10 @@ const NotificationToast = ({ isVisible, message, onClose }: NotificationToastPro
                         <X size={18} />
                     </button>
 
-                    <div className="w-16 h-16 bg-[#9cbd09]/10 rounded-full flex items-center justify-center text-[#9cbd09] mb-4">
-                        <AlertCircle size={32} />
+                    <div className="w-16 h-16 flex items-center justify-center mb-4">
+                        <Coin size={20} />
                     </div>
-                    <p className="text-gray-600 text-sm leading-relaxed">
+                    <p className="pixel-text text-gray-600 text-sm leading-relaxed">
                         {message}
                     </p>
 
