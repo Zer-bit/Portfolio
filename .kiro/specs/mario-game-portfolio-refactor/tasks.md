@@ -25,7 +25,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
     - Export as both named `StartScreenComponent` and `default` dynamic (`next/dynamic`, `ssr: false`)
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 14.1_
 
-  - [-] 2.2 Create `app/components/game/GameMap.tsx`
+  - [x] 2.2 Create `app/components/game/GameMap.tsx`
     - Accept a `routes` prop (array from `ROUTES` constant) and render each as a `LevelNode`
     - Style each `LevelNode` using existing `PixelCard` or `PixelButton` — no new CSS classes or color values
     - Wire each `LevelNode` click to navigate to its corresponding route using Next.js `<Link>`
@@ -34,7 +34,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
     - Export as both named `GameMapComponent` and `default` dynamic (`next/dynamic`, `ssr: false`)
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.7, 12.1, 14.1, 18.2, 19.4_
 
-  - [~] 2.3 Create `app/components/game/LevelCard.tsx`
+  - [-] 2.3 Create `app/components/game/LevelCard.tsx`
     - Accept a `project` prop (type from `app/lib/data.ts` `projects` array)
     - Display project title, tech stack tags, accent color, and thumbnail image using existing `PixelCard` styling
     - On click, navigate to `/projects/[slug]` using the `toSlug` function
