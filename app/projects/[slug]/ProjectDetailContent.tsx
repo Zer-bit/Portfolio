@@ -16,54 +16,33 @@ import { ROUTES } from "../../lib/constants";
 import { dayTheme } from "../../lib/theme";
 import { PixelButton } from "../../components/ui/pixel-button";
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
 interface ProjectDetailContentProps {
   slug: string;
 }
 
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
-
-/**
- * ProjectDetailContent — Renders the full project detail or a "Level Not Found"
- * fallback based on the provided slug.
- *
- * @param props.slug - The kebab-case slug derived from the project title.
- */
 export function ProjectDetailContent({ slug }: ProjectDetailContentProps) {
   const router = useRouter();
   const project = projects.find((p) => toSlug(p.title) === slug);
 
-  // -------------------------------------------------------------------------
   // Level Not Found
-  // -------------------------------------------------------------------------
-
   if (!project) {
     return (
       <div
         className="flex flex-col items-center justify-center min-h-[60vh] gap-8 px-6 py-16"
         aria-label="Level not found"
       >
-        {/* Pixel-art "Level Not Found" heading */}
         <h1
           className="pixel-text text-lg md:text-2xl text-center"
           style={{ color: dayTheme.colors.coin }}
         >
           ✕ LEVEL NOT FOUND
         </h1>
-
         <p
           className="pixel-text text-xs text-center"
           style={{ color: dayTheme.colors.text }}
         >
           THIS STAGE DOES NOT EXIST
         </p>
-
-        {/* Back to Projects */}
         <PixelButton
           variant="pipe"
           onClick={() => router.push(ROUTES.projects)}
@@ -75,17 +54,11 @@ export function ProjectDetailContent({ slug }: ProjectDetailContentProps) {
     );
   }
 
-  // -------------------------------------------------------------------------
-  // Project Detail
-  // -------------------------------------------------------------------------
-
   const hasLiveLink = project.link !== "#";
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-16">
-      {/* ------------------------------------------------------------------ */}
-      {/* Project Title                                                        */}
-      {/* ------------------------------------------------------------------ */}
+      {/* Project Title */}
       <h1
         className="pixel-text text-base md:text-xl mb-8 text-center"
         style={{ color: dayTheme.colors.coin }}
@@ -94,11 +67,9 @@ export function ProjectDetailContent({ slug }: ProjectDetailContentProps) {
         {project.title.toUpperCase()}
       </h1>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* Thumbnail                                                            */}
-      {/* ------------------------------------------------------------------ */}
+      {/* Thumbnail */}
       <div
-        className="pixel-shadow mb-8 overflow-hidden"
+        className="mb-8 overflow-hidden"
         style={{
           border: `4px solid ${dayTheme.colors.border}`,
           backgroundColor: dayTheme.colors.ground,
@@ -115,11 +86,9 @@ export function ProjectDetailContent({ slug }: ProjectDetailContentProps) {
         />
       </div>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* Description                                                          */}
-      {/* ------------------------------------------------------------------ */}
+      {/* Description */}
       <div
-        className="pixel-shadow mb-8 p-6"
+        className="mb-8 p-6"
         style={{
           border: `2px solid ${dayTheme.colors.border}`,
           backgroundColor: "rgba(0,0,0,0.3)",
@@ -139,11 +108,9 @@ export function ProjectDetailContent({ slug }: ProjectDetailContentProps) {
         </p>
       </div>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* Tech Stack                                                           */}
-      {/* ------------------------------------------------------------------ */}
+      {/* Tech Stack */}
       <div
-        className="pixel-shadow mb-8 p-6"
+        className="mb-8 p-6"
         style={{
           border: `2px solid ${dayTheme.colors.border}`,
           backgroundColor: "rgba(0,0,0,0.3)",
@@ -170,11 +137,8 @@ export function ProjectDetailContent({ slug }: ProjectDetailContentProps) {
         </div>
       </div>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* Action Buttons                                                       */}
-      {/* ------------------------------------------------------------------ */}
+      {/* Action Buttons */}
       <div className="flex flex-wrap gap-4 justify-center">
-        {/* Live link — only shown when project has a real URL */}
         {hasLiveLink && (
           <a
             href={project.link}
@@ -187,8 +151,6 @@ export function ProjectDetailContent({ slug }: ProjectDetailContentProps) {
             </PixelButton>
           </a>
         )}
-
-        {/* Back to Projects */}
         <PixelButton
           variant="pipe"
           size="md"

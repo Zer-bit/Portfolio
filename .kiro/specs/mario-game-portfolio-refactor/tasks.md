@@ -93,7 +93,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
     - Add Next.js `metadata` export with title "Jezer Parales | Projects"
     - _Requirements: 2.4, 5.1, 5.7, 17.1, 18.3_
 
-  - [-] 9.2 Create `app/projects/[slug]/page.tsx`
+  - [x] 9.2 Create `app/projects/[slug]/page.tsx`
     - Implement `generateStaticParams` that maps each project title to its kebab-case slug using `toSlug`
     - Look up the matching project by slug; if not found, render a pixel-art "Level Not Found" message using `.pixel-text` and `dayTheme` colors
     - Display full project description, tech stack, live link, and thumbnail for the matched project
@@ -102,7 +102,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
     - Add Next.js `metadata` export with the project title
     - _Requirements: 2.4, 5.3, 5.4, 5.5, 5.6, 5.8, 14.2, 17.1, 18.3_
 
-  - [~] 9.3 Write unit tests for `toSlug` utility function
+  - [-] 9.3 Write unit tests for `toSlug` utility function
     - Test that spaces become hyphens, uppercase becomes lowercase, special characters are stripped
     - Test that `generateStaticParams` output matches `toSlug` applied to each project title
     - _Requirements: 19.1, 5.3_

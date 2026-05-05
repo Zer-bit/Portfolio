@@ -2,22 +2,14 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { projects, toSlug } from "../../lib/data";
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
+import { dayTheme } from "../../lib/theme";
 
 interface ProjectDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
-// ---------------------------------------------------------------------------
-// Static Params Generation
-// ---------------------------------------------------------------------------
-
 /**
  * Generates static params for all project slugs at build time.
- * Maps each project title to its kebab-case slug via `toSlug`.
  * Requirements: 5.8, 17.5, 19.1
  */
 export function generateStaticParams() {
@@ -25,10 +17,6 @@ export function generateStaticParams() {
     slug: toSlug(project.title),
   }));
 }
-
-// ---------------------------------------------------------------------------
-// Metadata
-// ---------------------------------------------------------------------------
 
 /**
  * Generates page metadata with the project title.
@@ -46,10 +34,6 @@ export async function generateMetadata({
   };
 }
 
-// ---------------------------------------------------------------------------
-// Dynamic Content Component (ssr: false)
-// ---------------------------------------------------------------------------
-
 /**
  * Lazy-loaded client component for the project detail content.
  * Uses next/dynamic with ssr:false per Requirement 14.2.
@@ -62,17 +46,9 @@ const ProjectDetailContent = dynamic(
   { ssr: false }
 );
 
-// ---------------------------------------------------------------------------
-// Page
-// ---------------------------------------------------------------------------
-
 /**
  * ProjectDetailPage — Dynamic route `/projects/[slug]`
- *
- * Looks up the project by slug and renders the full detail view, or a
- * pixel-art "Level Not Found" fallback if no match is found.
- *
- * Requirements: 2.4, 2.5, 5.3, 5.4, 5.5, 5.6, 5.8, 14.2, 17.1, 18.3
+ * Requirements: 2.4, 5.3, 5.4, 5.5, 5.6, 5.8, 14.2, 17.1, 18.3
  */
 export default async function ProjectDetailPage({
   params,
@@ -83,7 +59,7 @@ export default async function ProjectDetailPage({
     <Suspense
       fallback={
         <div className="flex items-center justify-center min-h-[60vh]">
-          <p className="pixel-text" style={{ color: "#f8b800" }}>
+          <p className="pixel-text" style={{ color: dayTheme.colors.coin }}>
             LOADING...
           </p>
         </div>
