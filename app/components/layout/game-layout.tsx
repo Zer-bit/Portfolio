@@ -37,6 +37,7 @@ import Navbar from "../layout/navbar";
 import ScrollProgress from "../ui/scroll-progress";
 import Footer from "../layout/footer";
 import { Cloud, Block } from "../game/index";
+import PlayerHUD from "../game/PlayerHUD";
 
 // ---------------------------------------------------------------------------
 // Context
@@ -291,6 +292,11 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
             <Block key={i} variant="brick" size={32} />
           ))}
         </motion.div>
+
+        {/* ------------------------------------------------------------------ */}
+        {/* Persistent PlayerHUD — fixed overlay, zIndex.hud (40)              */}
+        {/* ------------------------------------------------------------------ */}
+        <PlayerHUD />
 
         {/* ------------------------------------------------------------------ */}
         {/* Page content — sits above parallax layers                           */}

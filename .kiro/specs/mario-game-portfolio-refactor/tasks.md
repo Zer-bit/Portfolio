@@ -54,7 +54,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Update `app/components/game/index.ts` to export `StartScreen`, `GameMap`, `LevelCard`, and `PlayerHUD` alongside existing exports
   - _Requirements: 12.5, 12.6_
 
-- [-] 4. Update GameLayout to include PlayerHUD
+- [x] 4. Update GameLayout to include PlayerHUD
   - Import and render `<PlayerHUD>` inside `app/components/layout/game-layout.tsx`, positioned above the `<Navbar>` or within the page content wrapper
   - Ensure `PlayerHUD` appears on every page without per-page configuration
   - _Requirements: 10.1, 10.5_
