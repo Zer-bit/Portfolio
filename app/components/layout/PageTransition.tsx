@@ -8,13 +8,13 @@
  * pathname so Next.js App Router route changes trigger the animation.
  *
  * Animation: simple opacity fade with a 300ms ease-out duration (≤ 400ms).
- * No new animation values are introduced to `app/lib/animations.ts`.
  *
  * Requirements: 11.1, 11.2, 11.3, 11.4
  */
 
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 
 interface PageTransitionProps {
   children: React.ReactNode;
@@ -24,7 +24,7 @@ interface PageTransitionProps {
  * Framer Motion variants for the page-level fade transition.
  * Duration is 300ms — well within the 400ms ceiling from Requirement 11.4.
  */
-const pageVariants = {
+const pageVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -47,7 +47,6 @@ export default function PageTransition({ children }: PageTransitionProps) {
         initial="hidden"
         animate="visible"
         exit="exit"
-        // Ensure the wrapper doesn't interfere with layout
         style={{ width: '100%' }}
       >
         {children}

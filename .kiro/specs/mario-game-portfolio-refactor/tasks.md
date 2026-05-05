@@ -130,14 +130,14 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Add Next.js `metadata` export with title "Jezer Parales | Contact"
   - _Requirements: 2.8, 9.1, 9.2, 9.3, 18.3_
 
-- [-] 14. Implement page transition animations
+- [x] 14. Implement page transition animations
   - Create a `PageTransition` client component (or use a layout wrapper) that wraps `{children}` in a Framer Motion `motion.div` with a fade or slide animation using only existing presets from `app/lib/animations.ts` or Framer Motion built-in variants
   - Ensure transition duration does not exceed 400ms
   - Apply `PageTransition` in `app/layout.tsx` around `{children}` so all routes benefit
   - Do not modify any existing per-component animations
   - _Requirements: 11.1, 11.2, 11.3, 11.4_
 
-- [~] 15. Create the 404 Not Found page
+- [-] 15. Create the 404 Not Found page
   - Create `app/not-found.tsx`
   - Render a pixel-art styled 404 message using `.pixel-text`, `dayTheme` color tokens, and existing `PixelButton` with a "Go Home" link to `/`
   - _Requirements: 2.10, 18.3_

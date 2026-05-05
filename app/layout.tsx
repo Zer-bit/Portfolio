@@ -30,7 +30,9 @@ export default function RootLayout({
         <html lang="en" className={`scroll-smooth ${pressStart2P.variable}`}>
             <body className="antialiased overflow-x-hidden">
                 <GameLayout theme="day">
-                    {children}
+                    <PageTransition>
+                        {children}
+                    </PageTransition>
                 </GameLayout>
             </body>
         </html>
