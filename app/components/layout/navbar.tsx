@@ -70,17 +70,17 @@ const Navbar = () => {
   }, [isOpen]);
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-[10000] pointer-events-none">
+    <nav className="fixed left-0 w-full z-[10000] pointer-events-none" style={{ top: "48px" }}>
       <motion.div
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={`w-full transition-all duration-500 pointer-events-auto ${
           isOpen
-            ? "bg-white py-6 border-b-2 border-black"
+            ? "bg-white py-4 border-b-2 border-black"
             : scrolled
-            ? "bg-white/90 backdrop-blur-2xl py-4 border-b-2 border-black shadow-lg"
-            : "bg-transparent py-6"
+            ? "bg-white/90 backdrop-blur-2xl py-3 border-b-2 border-black shadow-lg"
+            : "bg-transparent py-4"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative z-[10001]">
@@ -173,7 +173,7 @@ const Navbar = () => {
         >
           {/* Mario decorative brick block row at the top of the overlay */}
           <div
-            className="flex items-center gap-0 pt-20 px-4 pb-2"
+            className="flex items-center gap-0 pt-16 px-4 pb-2"
             style={{ borderBottom: `2px solid ${dayTheme.colors.border}` }}
           >
             {Array.from({ length: 8 }).map((_, i) => (

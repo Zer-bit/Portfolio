@@ -71,6 +71,8 @@ export const HUDComponent: React.FC<HUDProps> = ({
         display: "flex",
         gap: "32px",
         alignItems: "flex-start",
+        height: "48px",          // fixed height so navbar and main can offset reliably
+        boxSizing: "border-box",
       }}
       role="status"
       aria-label="Game HUD"

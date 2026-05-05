@@ -343,8 +343,13 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
         >
           <ScrollProgress />
           <Navbar />
-          {/* pt-32 (128px) clears the fixed PlayerHUD (~48px) + fixed Navbar (~72px) */}
-          <main style={{ paddingTop: "128px" }}>{children}</main>
+          {/*
+            paddingTop clears the two fixed headers:
+            - PlayerHUD: 48px (fixed height)
+            - Navbar: ~56px (top: 48px + py-4 + content)
+            Total: ~104px. Use 112px for a small breathing gap.
+          */}
+          <main style={{ paddingTop: "112px" }}>{children}</main>
           <Footer />
         </div>
       </div>
