@@ -18,7 +18,7 @@ import { PixelCard } from "../components/ui/pixel-card";
 
 export function ExperienceContent() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16">
+    <div className="max-w-3xl mx-auto px-6 pb-16 pt-8">
       {/* Page heading */}
       <div className="mb-12 text-center">
         <h1

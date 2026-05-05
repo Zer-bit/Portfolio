@@ -30,9 +30,8 @@ export const bounceVariant: Variants = {
   animate: {
     y: [0, -8, 0],
     transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 10,
+      duration: 0.6,
+      ease: "easeInOut",
       repeat: Infinity,
       repeatType: "loop",
     },

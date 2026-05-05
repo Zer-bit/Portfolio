@@ -101,7 +101,7 @@ export function SettingsContent() {
   const activeColors = theme === "night" ? nightTheme.colors : dayTheme.colors;
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-16">
+    <div className="max-w-2xl mx-auto px-6 pb-16 pt-8">
       {/* Page heading */}
       <div className="mb-12 text-center">
         <h1

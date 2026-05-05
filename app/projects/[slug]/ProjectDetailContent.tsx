@@ -28,7 +28,7 @@ export function ProjectDetailContent({ slug }: ProjectDetailContentProps) {
   if (!project) {
     return (
       <div
-        className="flex flex-col items-center justify-center min-h-[60vh] gap-8 px-6 py-16"
+        className="flex flex-col items-center justify-center min-h-[60vh] gap-8 px-6 pb-16 pt-8"
         aria-label="Level not found"
       >
         <h1
@@ -57,7 +57,7 @@ export function ProjectDetailContent({ slug }: ProjectDetailContentProps) {
   const hasLiveLink = project.link !== "#";
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-16">
+    <div className="max-w-4xl mx-auto px-6 pb-16 pt-8">
       {/* Project Title */}
       <h1
         className="pixel-text text-base md:text-xl mb-8 text-center"
