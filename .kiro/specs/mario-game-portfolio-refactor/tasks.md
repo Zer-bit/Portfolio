@@ -86,7 +86,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Add Next.js `metadata` export with title "Jezer Parales | About"
   - _Requirements: 2.3, 6.1, 6.2, 6.3, 6.4, 6.5, 18.3_
 
-- [ ] 9. Create the Projects page and dynamic Project Detail page
+- [x] 9. Create the Projects page and dynamic Project Detail page
   - [x] 9.1 Create `app/projects/page.tsx`
     - Import all projects from `app/lib/data.ts` and render each as a `<LevelCard>` component
     - Manage `NotificationToast` state for coming-soon projects
@@ -102,16 +102,16 @@ Implementation language: **TypeScript / Next.js (App Router)**
     - Add Next.js `metadata` export with the project title
     - _Requirements: 2.4, 5.3, 5.4, 5.5, 5.6, 5.8, 14.2, 17.1, 18.3_
 
-  - [-] 9.3 Write unit tests for `toSlug` utility function
+  - [x] 9.3 Write unit tests for `toSlug` utility function
     - Test that spaces become hyphens, uppercase becomes lowercase, special characters are stripped
     - Test that `generateStaticParams` output matches `toSlug` applied to each project title
     - _Requirements: 19.1, 5.3_
 
-- [~] 10. Checkpoint — Ensure all tests pass
+- [x] 10. Checkpoint — Ensure all tests pass
   - Run `next build` to verify no TypeScript or build errors
   - Ensure all tests pass, ask the user if questions arise.
 
-- [~] 11. Create the Skills page
+- [-] 11. Create the Skills page
   - Create `app/skills/page.tsx`
   - Render the existing `<Skills>` feature component from `app/features/skills/index.tsx` without modification
   - Add Next.js `metadata` export with title "Jezer Parales | Skills"

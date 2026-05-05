@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { projects, toSlug } from "../../lib/data";
 import { dayTheme } from "../../lib/theme";
+import ProjectDetailWrapper from "./ProjectDetailWrapper";
 
 interface ProjectDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -35,18 +35,6 @@ export async function generateMetadata({
 }
 
 /**
- * Lazy-loaded client component for the project detail content.
- * Uses next/dynamic with ssr:false per Requirement 14.2.
- */
-const ProjectDetailContent = dynamic(
-  () =>
-    import("./ProjectDetailContent").then((mod) => ({
-      default: mod.ProjectDetailContent,
-    })),
-  { ssr: false }
-);
-
-/**
  * ProjectDetailPage — Dynamic route `/projects/[slug]`
  * Requirements: 2.4, 5.3, 5.4, 5.5, 5.6, 5.8, 14.2, 17.1, 18.3
  */
@@ -65,7 +53,7 @@ export default async function ProjectDetailPage({
         </div>
       }
     >
-      <ProjectDetailContent slug={slug} />
+      <ProjectDetailWrapper slug={slug} />
     </Suspense>
   );
 }
