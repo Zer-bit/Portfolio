@@ -22,6 +22,7 @@
 "use client";
 
 import { useState } from "react";
+import type React from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { bounceVariant } from "../../lib/animations";
@@ -125,7 +126,7 @@ function BrickBlockSVG({ size }: { size: number }) {
  * @param props.variant - `"question"` for the `?` block, `"brick"` for the brick block
  * @param props.size    - Rendered width/height in pixels (default: 32)
  */
-export function BlockComponent({ variant, size = 32 }: BlockProps) {
+export const BlockComponent: React.FC<BlockProps> = ({ variant, size = 32 }) => {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleClick = () => {
@@ -161,10 +162,7 @@ export function BlockComponent({ variant, size = 32 }: BlockProps) {
       )}
     </motion.div>
   );
-}
-
-// ---------------------------------------------------------------------------
-// Default export — dynamic import wrapper (no SSR)
+};
 // ---------------------------------------------------------------------------
 
 /**

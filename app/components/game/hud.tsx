@@ -19,6 +19,7 @@
 
 "use client";
 
+import type React from "react";
 import dynamic from "next/dynamic";
 import { dayTheme } from "../../lib/theme";
 import Coin from "./coin";
@@ -57,11 +58,11 @@ interface HUDProps {
  * @param props.coins      - Coin count (default: 0)
  * @param props.worldLabel - World label string (default: "PORTFOLIO-1")
  */
-export function HUDComponent({
+export const HUDComponent: React.FC<HUDProps> = ({
   score = 0,
   coins = 0,
   worldLabel = "PORTFOLIO-1",
-}: HUDProps) {
+}) => {
   return (
     <div
       style={{
@@ -120,7 +121,7 @@ export function HUDComponent({
       </div>
     </div>
   );
-}
+};
 
 // ---------------------------------------------------------------------------
 // Default export — dynamic import wrapper (no SSR)

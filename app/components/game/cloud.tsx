@@ -23,6 +23,7 @@
 
 "use client";
 
+import type React from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { floatVariant } from "../../lib/animations";
@@ -80,7 +81,7 @@ const sizeMap: Record<NonNullable<CloudProps["size"]>, { width: number; height: 
  * @satisfies Requirement 6.4  — Cloud renders pixel-art shape with float animation
  * @satisfies Requirement 17.1 — Loaded via next/dynamic with ssr:false
  */
-export function CloudComponent({ size = "md", style }: CloudProps) {
+export const CloudComponent: React.FC<CloudProps> = ({ size = "md", style }) => {
   const { width, height } = sizeMap[size];
 
   return (
@@ -110,7 +111,7 @@ export function CloudComponent({ size = "md", style }: CloudProps) {
       </svg>
     </motion.div>
   );
-}
+};
 
 // ---------------------------------------------------------------------------
 // Default export — dynamic import wrapper (no SSR)

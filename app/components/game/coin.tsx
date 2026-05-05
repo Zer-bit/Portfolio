@@ -19,6 +19,7 @@
 
 "use client";
 
+import type React from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { spinVariant } from "../../lib/animations";
@@ -46,7 +47,7 @@ interface CoinProps {
  *
  * @param props.size - Rendered width/height in pixels (default: 24)
  */
-export function CoinComponent({ size = 24 }: CoinProps) {
+export const CoinComponent: React.FC<CoinProps> = ({ size = 24 }) => {
   return (
     <motion.div
       variants={spinVariant}
@@ -74,12 +75,11 @@ export function CoinComponent({ size = 24 }: CoinProps) {
       </svg>
     </motion.div>
   );
-}
+};
 
 // ---------------------------------------------------------------------------
 // Default export — dynamic import wrapper (no SSR)
 // ---------------------------------------------------------------------------
-
 /**
  * Dynamically imported Coin component with `{ ssr: false }`.
  *

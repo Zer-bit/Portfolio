@@ -29,8 +29,8 @@ import { dayTheme } from "../../lib/theme";
 // Dynamic imports (ssr: false) for game components
 // ---------------------------------------------------------------------------
 
-const Block = dynamic<React.ComponentProps<typeof import("../../components/game/block").BlockComponent>>(
-  () => import("../../components/game/block").then((mod) => mod.BlockComponent as React.ComponentType<React.ComponentProps<typeof mod.BlockComponent>>),
+const Block = dynamic(
+  () => import("../../components/game/block").then((mod) => ({ default: mod.BlockComponent })),
   { ssr: false }
 );
 
