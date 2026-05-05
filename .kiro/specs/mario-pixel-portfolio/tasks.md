@@ -141,7 +141,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Export `SectionWrapper` with JSDoc comment
   - **Requirement:** 8, 19
 
-- [-] 16. Restyle `components/layout/navbar.tsx` — Navbar
+- [x] 16. Restyle `components/layout/navbar.tsx` — Navbar
   - Replace `<Sparkles>` icon with `<Coin size={16}>` in the logo area
   - Apply `.pixel-text` class to the "JEZER." logo text
   - Replace `layoutId="activeNav"` highlight with a pixel-art block cursor (2px solid bottom border using theme coin color)
@@ -151,7 +151,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Preserve all nav links, href values, and anchor-link behavior
   - **Requirement:** 13
 
-- [~] 17. Restyle `components/layout/footer.tsx` — Footer
+- [-] 17. Restyle `components/layout/footer.tsx` — Footer
   - Apply `.pixel-text` class to "JEZER." logo
   - Apply theme coin color to the "." in the logo
   - Add a row of `<Block variant="brick">` components along the top edge of the footer
