@@ -124,13 +124,13 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Add Next.js `metadata` export with title "Jezer Parales | Experience"
   - _Requirements: 2.7, 8.1, 8.2, 8.3, 8.4, 8.5, 18.3_
 
-- [-] 13. Create the Contact page
+- [x] 13. Create the Contact page
   - Create `app/contact/page.tsx`
   - Render the existing `<ContactSection>` feature component from `app/features/contact/index.tsx` without modification
   - Add Next.js `metadata` export with title "Jezer Parales | Contact"
   - _Requirements: 2.8, 9.1, 9.2, 9.3, 18.3_
 
-- [~] 14. Implement page transition animations
+- [-] 14. Implement page transition animations
   - Create a `PageTransition` client component (or use a layout wrapper) that wraps `{children}` in a Framer Motion `motion.div` with a fade or slide animation using only existing presets from `app/lib/animations.ts` or Framer Motion built-in variants
   - Ensure transition duration does not exceed 400ms
   - Apply `PageTransition` in `app/layout.tsx` around `{children}` so all routes benefit

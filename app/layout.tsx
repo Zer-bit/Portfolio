@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Press_Start_2P } from "next/font/google";
 import "./styles/globals.css";
 import GameLayout from "./components/layout/game-layout";
+import PageTransition from "./components/layout/PageTransition";
 
 /**
  * "Press Start 2P" loaded via next/font/google.
