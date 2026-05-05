@@ -96,7 +96,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Add JSDoc comment
   - **Requirement:** 6, 17
 
-- [-] 11. Implement `components/game/block.tsx` — Block Component
+- [x] 11. Implement `components/game/block.tsx` — Block Component
   - Accept `variant: "question" | "brick"` and `size` props
   - Render pixel-art SVG for each variant: `?` block (brown/orange with `?` character) and brick block (brick pattern)
   - On click of `variant="question"`: trigger `bounceVariant` animation via local state
@@ -104,7 +104,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Add JSDoc comment
   - **Requirement:** 6, 17
 
-- [~] 12. Implement `components/game/cloud.tsx` — Cloud Component
+- [-] 12. Implement `components/game/cloud.tsx` — Cloud Component
   - Render pixel-art cloud shape using CSS or SVG (white/light blue pixel blocks)
   - Accept `size` prop (`"sm" | "md" | "lg"`) and `style` prop for positioning
   - Apply `floatVariant` from `lib/animations.ts` continuously via `motion.div`
