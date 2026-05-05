@@ -229,14 +229,14 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Preserve existing `<Metadata>`, `scroll-smooth`, and `overflow-x-hidden` settings
   - **Requirement:** 2, 7
 
-- [-] 25. Update `app/page.tsx` — Main Page
+- [x] 25. Update `app/page.tsx` — Main Page
   - Replace imports from `app/components/sections/*` with imports from `app/features/*/index`
   - Replace `<Footer>` import source to `app/components/layout/footer`
   - Ensure section order is preserved: Hero → Skills → Projects → Contact → Footer
   - Remove hardcoded `bg-[#f0f0f0]` background (now handled by GameLayout)
   - **Requirement:** 7, 18
 
-- [~] 26. Responsive design audit and pixel scaling
+- [-] 26. Responsive design audit and pixel scaling
   - Verify all sections render without horizontal scrollbars at 320px viewport width
   - Confirm pixel font scales down 25% on mobile (< 768px) with minimum 10px rendered size
   - Confirm project grid is 3-col (≥1024px), 2-col (≥768px), 1-col (mobile)
