@@ -17,7 +17,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Add experience data array to `app/lib/data.ts` (job title, company, dates, description) so the ExperiencePage has a single data source
   - _Requirements: 13.4, 17.1, 17.2, 17.3, 19.1, 19.2_
 
-- [ ] 2. Create new game components
+- [x] 2. Create new game components
   - [x] 2.1 Create `app/components/game/StartScreen.tsx`
     - Render developer name "JEZER PARALES" using `.pixel-text` class and `dayTheme.colors.coin`
     - Render a "PRESS START" `<PixelButton variant="coin">` that navigates to `/world` using Next.js `useRouter`
@@ -43,18 +43,18 @@ Implementation language: **TypeScript / Next.js (App Router)**
     - Export as both named `LevelCardComponent` and `default` dynamic (`next/dynamic`, `ssr: false`)
     - _Requirements: 5.1, 5.2, 5.3, 5.7, 12.1, 14.1, 18.2_
 
-  - [-] 2.4 Create `app/components/game/PlayerHUD.tsx`
+  - [x] 2.4 Create `app/components/game/PlayerHUD.tsx`
     - Use the existing `HUD` component from `app/components/game/hud.tsx` as the rendering primitive
     - Read the current pathname via `usePathname()` and map it to a world label string (e.g., `/` → `"WORLD-1"`, `/world` → `"WORLD-2"`, etc.)
     - Position with `zIndex.hud` (value: 40) from `app/lib/theme.ts`
     - Export as both named `PlayerHUDComponent` and `default` dynamic (`next/dynamic`, `ssr: false`)
     - _Requirements: 10.1, 10.2, 10.3, 10.5, 12.1, 14.1_
 
-- [~] 3. Update game component index exports
+- [x] 3. Update game component index exports
   - Update `app/components/game/index.ts` to export `StartScreen`, `GameMap`, `LevelCard`, and `PlayerHUD` alongside existing exports
   - _Requirements: 12.5, 12.6_
 
-- [~] 4. Update GameLayout to include PlayerHUD
+- [-] 4. Update GameLayout to include PlayerHUD
   - Import and render `<PlayerHUD>` inside `app/components/layout/game-layout.tsx`, positioned above the `<Navbar>` or within the page content wrapper
   - Ensure `PlayerHUD` appears on every page without per-page configuration
   - _Requirements: 10.1, 10.5_

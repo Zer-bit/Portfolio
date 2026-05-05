@@ -9,3 +9,4 @@ export { default as GameMap, GameMapComponent } from "./GameMap";
 export type { GameMapProps, RouteEntry } from "./GameMap";
 export { default as LevelCard, LevelCardComponent } from "./LevelCard";
 export type { LevelCardProps } from "./LevelCard";
+export { default as PlayerHUD, PlayerHUDComponent } from "./PlayerHUD";
