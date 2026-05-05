@@ -2,3 +2,4 @@
 
 export { default as Coin, CoinComponent } from "./coin";
 export { default as Block, BlockComponent } from "./block";
+export { default as Cloud, CloudComponent } from "./cloud";
