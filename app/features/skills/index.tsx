@@ -20,7 +20,7 @@
  * ```
  */
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { Code, Briefcase } from "lucide-react";
 import { PixelCard } from "../../components/ui/pixel-card";
 import { PixelButton } from "../../components/ui/pixel-button";
@@ -33,9 +33,9 @@ import { dayTheme } from "../../lib/theme";
 // ---------------------------------------------------------------------------
 
 /** Fade-up variant used for each staggered card wrapper. */
-const cardVariant = {
+const cardVariant: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  visible: { opacity: 1, y: 0 },
 };
 
 // ---------------------------------------------------------------------------
@@ -97,7 +97,7 @@ export default function Skills() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
                 >
                   <PixelCard variant="elevated" className="p-6">
                     {/* Power-up icon badge + category name */}
@@ -167,7 +167,7 @@ export default function Skills() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
                 >
                   <PixelCard variant="default" className="p-6">
                     <div className="flex items-start gap-5">

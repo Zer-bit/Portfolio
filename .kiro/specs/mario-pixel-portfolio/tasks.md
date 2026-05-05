@@ -185,7 +185,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Wrap section in `<SectionWrapper id="home">`
   - **Requirement:** 9
 
-- [-] 21. Implement `features/skills/index.tsx` — Skills Section
+- [x] 21. Implement `features/skills/index.tsx` — Skills Section
   - Migrate logic from `app/components/sections/skills.tsx`
   - Import `technicalSkills` and `professionalSkills` from `lib/data.ts` (no data changes)
   - Render each technical skill category as `<PixelCard variant="elevated">` with power-up icon badge
@@ -195,7 +195,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Wrap section in `<SectionWrapper id="skills">`
   - **Requirement:** 10
 
-- [~] 22. Implement `features/projects/index.tsx` — Projects Section
+- [-] 22. Implement `features/projects/index.tsx` — Projects Section
   - Migrate logic from `app/components/sections/projects.tsx`
   - Import `projects` from `lib/data.ts` (no data changes)
   - Replace `bg-white/80 rounded-3xl` card with `<PixelCard variant="elevated">`
