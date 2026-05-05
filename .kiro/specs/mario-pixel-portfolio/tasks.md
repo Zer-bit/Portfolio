@@ -209,7 +209,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Wrap section in `<SectionWrapper id="projects">`
   - **Requirement:** 11, 17
 
-- [-] 23. Implement `features/contact/index.tsx` — Contact Section
+- [x] 23. Implement `features/contact/index.tsx` — Contact Section
   - Migrate logic from `app/components/sections/contact.tsx`
   - Replace `bg-white/80 rounded-[2rem]` form container with `<PixelCard variant="elevated">`
   - Apply `.pixel-shadow` and theme border tokens to all form inputs (name, email, message)
@@ -222,7 +222,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Wrap section in `<SectionWrapper id="contact">`
   - **Requirement:** 12
 
-- [~] 24. Update `app/layout.tsx` — Root Layout
+- [-] 24. Update `app/layout.tsx` — Root Layout
   - Add Google Fonts import for "Press Start 2P" via `next/font/google` or `<link>` tag
   - Import `GameLayout` and wrap the body content with `<GameLayout theme="day">`
   - Update CSS import path from `"./globals.css"` to `"./styles/globals.css"`
