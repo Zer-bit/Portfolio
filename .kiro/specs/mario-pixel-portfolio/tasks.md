@@ -173,7 +173,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Preserve auto-close timer (1300ms), progress bar animation, and close button behavior
   - **Requirement:** 11
 
-- [-] 20. Implement `features/hero/index.tsx` — Hero Section
+- [x] 20. Implement `features/hero/index.tsx` — Hero Section
   - Migrate logic from `app/components/sections/hero.tsx`
   - Display "Jezer Parales" name using `.pixel-text` font styled as a Mario title card
   - Add pixel-art character sprite (SVG or PNG sprite sheet) positioned right on desktop, centered on mobile
@@ -185,7 +185,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Wrap section in `<SectionWrapper id="home">`
   - **Requirement:** 9
 
-- [~] 21. Implement `features/skills/index.tsx` — Skills Section
+- [-] 21. Implement `features/skills/index.tsx` — Skills Section
   - Migrate logic from `app/components/sections/skills.tsx`
   - Import `technicalSkills` and `professionalSkills` from `lib/data.ts` (no data changes)
   - Render each technical skill category as `<PixelCard variant="elevated">` with power-up icon badge
