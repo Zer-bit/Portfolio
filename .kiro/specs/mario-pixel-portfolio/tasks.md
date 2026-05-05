@@ -57,7 +57,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Export `useSound` as named export with JSDoc comment noting it is a stub
   - **Requirement:** 20
 
-- [-] 7. Implement `components/ui/pixel-button.tsx` — PixelButton
+- [x] 7. Implement `components/ui/pixel-button.tsx` — PixelButton
   - Define `PixelButtonProps` interface extending `React.ButtonHTMLAttributes<HTMLButtonElement>` with `variant`, `size`, and `animation` props
   - Create variant map for `brick`, `coin`, `pipe` using color tokens from `lib/theme.ts`
   - Create size map for `sm`, `md`, `lg` using `pixelGrid` values from `lib/theme.ts`
@@ -70,7 +70,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Export `PixelButton` with JSDoc comment
   - **Requirement:** 3, 19
 
-- [~] 8. Implement `components/ui/pixel-card.tsx` — PixelCard
+- [x] 8. Implement `components/ui/pixel-card.tsx` — PixelCard
   - Define `PixelCardProps` interface with `variant`, `animation`, `className`, `style`, and `children` props
   - Create variant map for `default`, `elevated`, `flat` using theme border and shadow tokens
   - Apply `.pixel-shadow` by default; remove it for `variant="flat"`
@@ -80,7 +80,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Export `PixelCard` with JSDoc comment
   - **Requirement:** 4, 19
 
-- [~] 9. Implement `components/ui/pixel-container.tsx` — PixelContainer
+- [x] 9. Implement `components/ui/pixel-container.tsx` — PixelContainer
   - Define `PixelContainerProps` interface with `fullWidth`, `className`, `as`, and `children` props
   - Apply `max-w-[1280px] mx-auto px-6 md:px-8` by default
   - Remove `max-w-[1280px]` when `fullWidth={true}`, retain padding
@@ -88,7 +88,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Export `PixelContainer` with JSDoc comment
   - **Requirement:** 5, 19
 
-- [~] 10. Implement `components/game/coin.tsx` — Coin Component
+- [-] 10. Implement `components/game/coin.tsx` — Coin Component
   - Create pixel-art SVG coin (yellow/gold square with pixel highlight details)
   - Accept `size` prop (default: 24)
   - Apply `spinVariant` from `lib/animations.ts` via `motion.div` wrapper for continuous spin
