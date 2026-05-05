@@ -59,7 +59,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Ensure `PlayerHUD` appears on every page without per-page configuration
   - _Requirements: 10.1, 10.5_
 
-- [~] 5. Update Navbar for multi-page routing
+- [-] 5. Update Navbar for multi-page routing
   - Replace anchor `href` values in `navLinks` with Next.js `<Link>` components using the new route paths from `NAV_LINKS` in `app/lib/constants.ts`
   - Use `usePathname()` to determine the active route and apply the coin-color bottom border to the matching link
   - Preserve all existing visual styles, pixel-art borders, hover effects, and responsive behavior without modification

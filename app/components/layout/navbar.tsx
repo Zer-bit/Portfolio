@@ -20,11 +20,14 @@
  * ```
  */
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X, Github, Linkedin, Instagram } from "lucide-react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { dayTheme } from "../../lib/theme";
+import { NAV_LINKS } from "../../lib/constants";
 
 // Dynamic imports for game components (ssr: false per Requirement 17.1)
 const Coin = dynamic(
@@ -44,9 +47,9 @@ const Block = dynamic(
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeLink, setActiveLink] = useState("home");
+  const pathname = usePathname();
 
-  // Scroll detection — preserves transparent → opaque transition (Requirement 13.4)
+  // Scroll detection — preserves transparent → opaque transition
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -66,14 +69,6 @@ const Navbar = () => {
       document.body.style.overflow = "auto";
     };
   }, [isOpen]);
-
-  // All nav links preserved (Requirement 13.1)
-  const navLinks = [
-    { name: "Home", href: "#home", id: "home" },
-    { name: "Skills", href: "#skills", id: "skills" },
-    { name: "Projects", href: "#projects", id: "projects" },
-    { name: "Contact", href: "#contact", id: "contact" },
-  ];
 
   return (
     <nav className="fixed top-0 left-0 w-full z-[10000] pointer-events-none">
@@ -114,27 +109,29 @@ const Navbar = () => {
             className="hidden md:flex items-center gap-2 bg-white/80 backdrop-blur-xl px-6 py-3"
             style={{ border: `2px solid ${dayTheme.colors.border}` }}
           >
-            {navLinks.map((link, i) => (
-              <motion.a
+            {NAV_LINKS.map((link, i) => (
+              <motion.div
                 key={link.name}
-                href={link.href}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                onClick={() => setActiveLink(link.id)}
-                className="relative px-4 py-2 text-sm font-semibold text-gray-600 hover:text-black transition-colors cursor-pointer pixel-text"
-                style={
-                  activeLink === link.id
-                    ? {
-                        // Pixel-art block cursor: 2px solid bottom border (Requirement 13.3)
-                        borderBottom: `2px solid ${dayTheme.colors.coin}`,
-                        color: "#000",
-                      }
-                    : {}
-                }
               >
-                {link.name}
-              </motion.a>
+                <Link
+                  href={link.href}
+                  className="relative px-4 py-2 text-sm font-semibold text-gray-600 hover:text-black transition-colors cursor-pointer pixel-text block"
+                  style={
+                    pathname === link.href
+                      ? {
+                          // Pixel-art block cursor: 2px solid bottom border (Requirement 13.3)
+                          borderBottom: `2px solid ${dayTheme.colors.coin}`,
+                          color: "#000",
+                        }
+                      : {}
+                  }
+                >
+                  {link.name}
+                </Link>
+              </motion.div>
             ))}
           </div>
 
@@ -185,7 +182,7 @@ const Navbar = () => {
 
           {/* Navigation Links — pixel-text, minimum 32px font (Requirement 13.6) */}
           <div className="relative z-10 flex flex-col space-y-4 px-10 pt-8">
-            {navLinks.map((link, i) => (
+            {NAV_LINKS.map((link, i) => (
               <motion.div
                 key={link.name}
                 initial={{ opacity: 0, x: 50 }}
@@ -197,10 +194,9 @@ const Navbar = () => {
                 }}
                 className="group relative"
               >
-                <a
+                <Link
                   href={link.href}
                   onClick={() => {
-                    setActiveLink(link.id);
                     setIsOpen(false);
                   }}
                   className="relative block uppercase pixel-text hover:opacity-70 transition-opacity duration-200"
@@ -208,18 +204,18 @@ const Navbar = () => {
                     // Minimum 32px rendered font size (Requirement 13.6)
                     fontSize: "32px",
                     color:
-                      activeLink === link.id
+                      pathname === link.href
                         ? dayTheme.colors.coin
                         : dayTheme.colors.border,
                     borderBottom:
-                      activeLink === link.id
+                      pathname === link.href
                         ? `2px solid ${dayTheme.colors.coin}`
                         : "none",
                     paddingBottom: "4px",
                   }}
                 >
                   {link.name}
-                </a>
+                </Link>
               </motion.div>
             ))}
           </div>
