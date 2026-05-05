@@ -151,7 +151,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Do not modify any existing component's internal state or props
   - _Requirements: 15.1, 15.2, 15.3, 15.4, 15.5_
 
-- [ ] 17. Create the optional Settings page
+- [-] 17. Create the optional Settings page
   - Create `app/settings/page.tsx`
   - Render a pixel-art settings panel using existing `PixelCard` and `PixelButton` components
   - Provide a theme toggle (day/night) that updates the `theme` prop passed to `GameLayout` via a shared context or state lifted to `app/layout.tsx`
