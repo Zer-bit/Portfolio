@@ -88,7 +88,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Export `PixelContainer` with JSDoc comment
   - **Requirement:** 5, 19
 
-- [-] 10. Implement `components/game/coin.tsx` — Coin Component
+- [x] 10. Implement `components/game/coin.tsx` — Coin Component
   - Create pixel-art SVG coin (yellow/gold square with pixel highlight details)
   - Accept `size` prop (default: 24)
   - Apply `spinVariant` from `lib/animations.ts` via `motion.div` wrapper for continuous spin
@@ -96,7 +96,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Add JSDoc comment
   - **Requirement:** 6, 17
 
-- [~] 11. Implement `components/game/block.tsx` — Block Component
+- [-] 11. Implement `components/game/block.tsx` — Block Component
   - Accept `variant: "question" | "brick"` and `size` props
   - Render pixel-art SVG for each variant: `?` block (brown/orange with `?` character) and brick block (brick pattern)
   - On click of `variant="question"`: trigger `bounceVariant` animation via local state
