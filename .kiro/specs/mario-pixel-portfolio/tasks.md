@@ -120,7 +120,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Add JSDoc comment
   - **Requirement:** 6, 17
 
-- [-] 14. Implement `components/layout/game-layout.tsx` — GameLayout
+- [x] 14. Implement `components/layout/game-layout.tsx` — GameLayout
   - Define `GameLayoutContext` with `theme: "day" | "night"` and `scrollY: number`
   - Accept `theme` prop (default: `"day"`) and `children`
   - Apply active theme's CSS custom properties to root `div` element
@@ -132,7 +132,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Export `GameLayoutContext` and `GameLayout` with JSDoc comments
   - **Requirement:** 7, 17, 20
 
-- [~] 15. Implement `components/layout/section-wrapper.tsx` — SectionWrapper
+- [-] 15. Implement `components/layout/section-wrapper.tsx` — SectionWrapper
   - Accept `id`, `className`, `background`, and `children` props
   - Apply `py-16 md:py-24` padding
   - Apply `fade-up` entrance animation via `useAnimation("fade-up")` + `whileInView={{ once: true }}`
