@@ -222,14 +222,14 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Wrap section in `<SectionWrapper id="contact">`
   - **Requirement:** 12
 
-- [-] 24. Update `app/layout.tsx` — Root Layout
+- [x] 24. Update `app/layout.tsx` — Root Layout
   - Add Google Fonts import for "Press Start 2P" via `next/font/google` or `<link>` tag
   - Import `GameLayout` and wrap the body content with `<GameLayout theme="day">`
   - Update CSS import path from `"./globals.css"` to `"./styles/globals.css"`
   - Preserve existing `<Metadata>`, `scroll-smooth`, and `overflow-x-hidden` settings
   - **Requirement:** 2, 7
 
-- [~] 25. Update `app/page.tsx` — Main Page
+- [-] 25. Update `app/page.tsx` — Main Page
   - Replace imports from `app/components/sections/*` with imports from `app/features/*/index`
   - Replace `<Footer>` import source to `app/components/layout/footer`
   - Ensure section order is preserved: Hero → Skills → Projects → Contact → Footer
