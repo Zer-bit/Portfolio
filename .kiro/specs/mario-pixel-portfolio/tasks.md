@@ -132,7 +132,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Export `GameLayoutContext` and `GameLayout` with JSDoc comments
   - **Requirement:** 7, 17, 20
 
-- [-] 15. Implement `components/layout/section-wrapper.tsx` — SectionWrapper
+- [x] 15. Implement `components/layout/section-wrapper.tsx` — SectionWrapper
   - Accept `id`, `className`, `background`, and `children` props
   - Apply `py-16 md:py-24` padding
   - Apply `fade-up` entrance animation via `useAnimation("fade-up")` + `whileInView={{ once: true }}`
@@ -141,7 +141,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Export `SectionWrapper` with JSDoc comment
   - **Requirement:** 8, 19
 
-- [~] 16. Restyle `components/layout/navbar.tsx` — Navbar
+- [-] 16. Restyle `components/layout/navbar.tsx` — Navbar
   - Replace `<Sparkles>` icon with `<Coin size={16}>` in the logo area
   - Apply `.pixel-text` class to the "JEZER." logo text
   - Replace `layoutId="activeNav"` highlight with a pixel-art block cursor (2px solid bottom border using theme coin color)
