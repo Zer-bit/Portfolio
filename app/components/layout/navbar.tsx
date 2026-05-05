@@ -8,7 +8,6 @@
  * Key design decisions:
  * - Logo uses `<Coin size={16}>` + "JEZER." in `.pixel-text` class
  * - Active link indicator: 2px solid bottom border using `dayTheme.colors.coin` (#f8b800)
- *   instead of the previous Framer Motion `layoutId="activeNav"` highlight
  * - Scroll background: transparent → opaque transition preserved
  * - Mobile menu: pixel borders, `.pixel-text` on link text, brick block decorative row,
  *   minimum 32px font size for nav links
@@ -29,7 +28,7 @@ import { usePathname } from "next/navigation";
 import { dayTheme } from "../../lib/theme";
 import { NAV_LINKS } from "../../lib/constants";
 
-// Dynamic imports for game components (ssr: false per Requirement 17.1)
+// Dynamic imports for game components (ssr: false per Requirement 14.1)
 const Coin = dynamic(
   () => import("../game/coin").then((mod) => ({ default: mod.CoinComponent })),
   { ssr: false }
@@ -85,23 +84,25 @@ const Navbar = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative z-[10001]">
-          {/* Logo — Coin icon + "JEZER." in pixel-text (Requirement 13.2) */}
+          {/* Logo — Coin icon + "JEZER." in pixel-text */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             whileHover={{ scale: 1.05 }}
             className="relative group cursor-pointer"
           >
-            <div className="relative flex items-center gap-2">
-              <Coin size={16} />
-              <span
-                className="pixel-text text-lg"
-                style={{ color: dayTheme.colors.border }}
-              >
-                JEZER
-                <span style={{ color: dayTheme.colors.coin }}>.</span>
-              </span>
-            </div>
+            <Link href="/" style={{ textDecoration: "none" }}>
+              <div className="relative flex items-center gap-2">
+                <Coin size={16} />
+                <span
+                  className="pixel-text text-lg"
+                  style={{ color: dayTheme.colors.border }}
+                >
+                  JEZER
+                  <span style={{ color: dayTheme.colors.coin }}>.</span>
+                </span>
+              </div>
+            </Link>
           </motion.div>
 
           {/* Desktop Nav */}
@@ -122,7 +123,6 @@ const Navbar = () => {
                   style={
                     pathname === link.href
                       ? {
-                          // Pixel-art block cursor: 2px solid bottom border (Requirement 13.3)
                           borderBottom: `2px solid ${dayTheme.colors.coin}`,
                           color: "#000",
                         }
@@ -161,7 +161,7 @@ const Navbar = () => {
         </div>
       </motion.div>
 
-      {/* Mobile Nav Overlay — pixel borders, pixel-text, Mario decorative elements (Requirement 13.5, 13.6) */}
+      {/* Mobile Nav Overlay */}
       {isOpen && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -180,7 +180,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Navigation Links — pixel-text, minimum 32px font (Requirement 13.6) */}
+          {/* Navigation Links */}
           <div className="relative z-10 flex flex-col space-y-4 px-10 pt-8">
             {NAV_LINKS.map((link, i) => (
               <motion.div
@@ -196,12 +196,9 @@ const Navbar = () => {
               >
                 <Link
                   href={link.href}
-                  onClick={() => {
-                    setIsOpen(false);
-                  }}
+                  onClick={() => setIsOpen(false)}
                   className="relative block uppercase pixel-text hover:opacity-70 transition-opacity duration-200"
                   style={{
-                    // Minimum 32px rendered font size (Requirement 13.6)
                     fontSize: "32px",
                     color:
                       pathname === link.href
@@ -220,7 +217,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Bottom Info Section — social links preserved (Requirement 13.1) */}
+          {/* Bottom Info Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

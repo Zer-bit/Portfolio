@@ -1,15 +1,15 @@
-import HeroSection from "./features/hero/index";
-import Skills from "./features/skills/index";
-import ProjectsSection from "./features/projects/index";
-import ContactSection from "./features/contact/index";
+import type { Metadata } from "next";
+import StartScreen from "./components/game/StartScreen";
+
+export const metadata: Metadata = {
+  title: "Jezer Parales | Start",
+  description: "Welcome to Jezer Parales' Mario-themed portfolio. Press Start to begin.",
+};
 
 export default function Home() {
   return (
     <main>
-      <HeroSection />
-      <Skills />
-      <ProjectsSection />
-      <ContactSection />
+      <StartScreen />
     </main>
   );
 }
