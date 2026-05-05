@@ -195,7 +195,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Wrap section in `<SectionWrapper id="skills">`
   - **Requirement:** 10
 
-- [-] 22. Implement `features/projects/index.tsx` — Projects Section
+- [x] 22. Implement `features/projects/index.tsx` — Projects Section
   - Migrate logic from `app/components/sections/projects.tsx`
   - Import `projects` from `lib/data.ts` (no data changes)
   - Replace `bg-white/80 rounded-3xl` card with `<PixelCard variant="elevated">`
@@ -209,7 +209,7 @@ Tasks are ordered by dependency — foundation first, then primitives, then layo
   - Wrap section in `<SectionWrapper id="projects">`
   - **Requirement:** 11, 17
 
-- [~] 23. Implement `features/contact/index.tsx` — Contact Section
+- [-] 23. Implement `features/contact/index.tsx` — Contact Section
   - Migrate logic from `app/components/sections/contact.tsx`
   - Replace `bg-white/80 rounded-[2rem]` form container with `<PixelCard variant="elevated">`
   - Apply `.pixel-shadow` and theme border tokens to all form inputs (name, email, message)
