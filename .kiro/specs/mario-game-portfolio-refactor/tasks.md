@@ -111,13 +111,13 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Run `next build` to verify no TypeScript or build errors
   - Ensure all tests pass, ask the user if questions arise.
 
-- [-] 11. Create the Skills page
+- [x] 11. Create the Skills page
   - Create `app/skills/page.tsx`
   - Render the existing `<Skills>` feature component from `app/features/skills/index.tsx` without modification
   - Add Next.js `metadata` export with title "Jezer Parales | Skills"
   - _Requirements: 2.6, 7.1, 7.2, 7.3, 18.3_
 
-- [~] 12. Create the Experience page
+- [-] 12. Create the Experience page
   - Create `app/experience/page.tsx`
   - Render experience entries from `app/lib/data.ts` in a vertical timeline layout using existing `PixelCard` components
   - Use `.pixel-text` for all headings and labels; use only existing theme color tokens
