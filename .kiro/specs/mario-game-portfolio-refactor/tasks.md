@@ -77,7 +77,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Add Next.js `metadata` export with title "Jezer Parales | World Map"
   - _Requirements: 2.2, 4.1, 4.6, 18.3_
 
-- [-] 8. Create the About page
+- [x] 8. Create the About page
   - Create `app/about/page.tsx`
   - Display developer name, bio, and avatar using `.pixel-text` and existing `PixelCard` components
   - Present personal attributes (role, availability, location) as gamified stat labels using existing theme color tokens
@@ -87,7 +87,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - _Requirements: 2.3, 6.1, 6.2, 6.3, 6.4, 6.5, 18.3_
 
 - [ ] 9. Create the Projects page and dynamic Project Detail page
-  - [~] 9.1 Create `app/projects/page.tsx`
+  - [x] 9.1 Create `app/projects/page.tsx`
     - Import all projects from `app/lib/data.ts` and render each as a `<LevelCard>` component
     - Manage `NotificationToast` state for coming-soon projects
     - Add Next.js `metadata` export with title "Jezer Parales | Projects"
