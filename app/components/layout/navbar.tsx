@@ -91,7 +91,7 @@ const Navbar = () => {
             whileHover={{ scale: 1.05 }}
             className="relative group cursor-pointer"
           >
-            <Link href="/" style={{ textDecoration: "none" }}>
+            <Link href="/" aria-label="JEZER. — go to home page" style={{ textDecoration: "none" }}>
               <div className="relative flex items-center gap-2">
                 <Coin size={16} />
                 <span
@@ -119,6 +119,7 @@ const Navbar = () => {
               >
                 <Link
                   href={link.href}
+                  aria-label={`Navigate to ${link.name}`}
                   className="relative px-4 py-2 text-sm font-semibold text-gray-600 hover:text-black transition-colors cursor-pointer pixel-text block"
                   style={
                     pathname === link.href
@@ -197,6 +198,7 @@ const Navbar = () => {
                 <Link
                   href={link.href}
                   onClick={() => setIsOpen(false)}
+                  aria-label={`Navigate to ${link.name}`}
                   className="relative block uppercase pixel-text hover:opacity-70 transition-opacity duration-200"
                   style={{
                     fontSize: "32px",
@@ -259,14 +261,16 @@ const Navbar = () => {
 
               <div className="flex items-center gap-5">
                 {[
-                  { Icon: Github, href: "https://github.com/Zer-bit" },
+                  { Icon: Github, href: "https://github.com/Zer-bit", label: "GitHub profile" },
                   {
                     Icon: Linkedin,
                     href: "https://www.linkedin.com/in/jezer-parales-201488386",
+                    label: "LinkedIn profile",
                   },
                   {
                     Icon: Instagram,
                     href: "https://www.instagram.com/zeretsui/",
+                    label: "Instagram profile",
                   },
                 ].map((social, i) => (
                   <a
@@ -274,6 +278,7 @@ const Navbar = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={social.label}
                     className="w-10 h-10 flex items-center justify-center transition-all"
                     style={{
                       border: `2px solid ${dayTheme.colors.border}`,
@@ -300,6 +305,7 @@ const Navbar = () => {
                 {/* Viber social link preserved */}
                 <a
                   href="viber://chat?number=+639763891702"
+                  aria-label="Viber contact"
                   className="w-10 h-10 flex items-center justify-center transition-all"
                   style={{
                     border: `2px solid ${dayTheme.colors.border}`,

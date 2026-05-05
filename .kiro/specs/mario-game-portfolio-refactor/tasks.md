@@ -137,7 +137,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Do not modify any existing per-component animations
   - _Requirements: 11.1, 11.2, 11.3, 11.4_
 
-- [-] 15. Create the 404 Not Found page
+- [x] 15. Create the 404 Not Found page
   - Create `app/not-found.tsx`
   - Render a pixel-art styled 404 message using `.pixel-text`, `dayTheme` color tokens, and existing `PixelButton` with a "Go Home" link to `/`
   - _Requirements: 2.10, 18.3_
@@ -160,7 +160,7 @@ Implementation language: **TypeScript / Next.js (App Router)**
   - Add Next.js `metadata` export with title "Jezer Parales | Settings"
   - _Requirements: 2.9, 16.1, 16.2, 16.3, 16.4, 18.3_
 
-- [~] 18. Accessibility and metadata audit
+- [-] 18. Accessibility and metadata audit
   - Verify all new interactive elements (`LevelNode`, `LevelCard`, navigation links) have descriptive `aria-label` attributes
   - Verify all new page routes have a unique `<title>` via Next.js `metadata` exports
   - Verify keyboard navigation (Tab, Enter, Space) works for all new interactive elements
