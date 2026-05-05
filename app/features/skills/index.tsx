@@ -24,7 +24,6 @@ import { motion, type Variants } from "framer-motion";
 import { Code, Briefcase } from "lucide-react";
 import { PixelCard } from "../../components/ui/pixel-card";
 import { PixelButton } from "../../components/ui/pixel-button";
-import { SectionWrapper } from "../../components/layout/section-wrapper";
 import { technicalSkills, professionalSkills } from "../../lib/data";
 import { dayTheme } from "../../lib/theme";
 
@@ -56,7 +55,7 @@ const cardVariant: Variants = {
  */
 export default function Skills() {
   return (
-    <SectionWrapper id="skills">
+    <section id="skills" className="py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section heading */}
         <div className="text-center mb-16">
@@ -207,6 +206,6 @@ export default function Skills() {
 
         </div>
       </div>
-    </SectionWrapper>
+    </section>
   );
 }

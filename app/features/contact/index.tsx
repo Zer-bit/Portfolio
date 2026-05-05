@@ -25,7 +25,6 @@ import { motion } from "framer-motion";
 import { Mail, Github, Linkedin, Instagram } from "lucide-react";
 import { PixelCard } from "../../components/ui/pixel-card";
 import { PixelButton } from "../../components/ui/pixel-button";
-import { SectionWrapper } from "../../components/layout/section-wrapper";
 import { dayTheme } from "../../lib/theme";
 import dynamic from "next/dynamic";
 
@@ -184,7 +183,10 @@ export function ContactSection() {
   // -------------------------------------------------------------------------
 
   return (
-    <SectionWrapper id="contact">
+    <section
+      id="contact"
+      className="py-16 md:py-24"
+    >
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
@@ -436,7 +438,7 @@ export function ContactSection() {
 
         </div>
       </div>
-    </SectionWrapper>
+    </section>
   );
 }
 
