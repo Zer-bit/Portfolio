@@ -79,13 +79,13 @@ export const technicalSkills = [
   {
     name: "Mobile Development",
     icon: Smartphone,
-    items: ["Flutter", "Dart"],
+    items: ["Flutter", "Dart", "React Native"],
     color: COLORS.secondary.blue,
   },
   {
     name: "Backend & Cloud",
     icon: Cpu,
-    items: ["Node.js", "Firebase", "MySQL", "EmailJS", "SSMS", "APIs", "Google Apps Script"],
+    items: ["Node.js", "C#", "Firebase", "Supabase", "PostgreSQL", "MySQL"],
     color: COLORS.accent.orange,
   },
   {
@@ -95,11 +95,14 @@ export const technicalSkills = [
       "Git",
       "Github",
       "Vercel",
-      "Visual Studio Code 2022",
+      "EmailJS",
+      "Google Apps Script",
+      "SSMS",
+      "Visual Studio 2022",
       "Visual Studio Code",
       "NetBeans",
       "Unity",
-      "Oracle Virtual Box",
+      "Oracle VirtualBox",
     ],
     color: COLORS.secondary.blue,
   },
@@ -143,6 +146,13 @@ export const professionalSkills = [
     description: "Strong organizational and time management skills.",
     icon: Palette,
     color: COLORS.primary.green,
+  },
+  {
+    name: "Adaptability",
+    description:
+      "Quick to learn and adapt to new technologies, tools, and challenges. If I don't know something, I'll figure it out.",
+    icon: Rocket,
+    color: COLORS.secondary.blue,
   },
 ];
 

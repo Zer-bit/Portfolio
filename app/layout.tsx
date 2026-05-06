@@ -29,7 +29,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={`scroll-smooth ${pressStart2P.variable}`}>
+        <html lang="en" data-scroll-behavior="smooth" className={pressStart2P.variable}>
             <body className="antialiased overflow-x-hidden">
                 <ProgressTrackerProvider>
                     <ThemeProvider>

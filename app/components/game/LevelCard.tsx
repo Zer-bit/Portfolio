@@ -23,7 +23,7 @@
  * ```
  */
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -34,7 +34,6 @@ import { dayTheme } from "../../lib/theme";
 import { ROUTES } from "../../lib/constants";
 import PixelCard from "../ui/pixel-card";
 import PixelButton from "../ui/pixel-button";
-import NotificationToast from "../ui/notification-toast";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -67,19 +66,12 @@ export interface LevelCardProps {
  */
 export function LevelCardComponent({ project }: LevelCardProps) {
   const router = useRouter();
-  const [toastVisible, setToastVisible] = useState(false);
-
   const isComingSoon = project.link === "#";
   const slug = toSlug(project.title);
   const projectPath = `${ROUTES.projects}/${slug}`;
 
-  const handleClick = () => {
-    if (isComingSoon) {
-      setToastVisible(true);
-    } else {
-      router.push(projectPath);
-    }
-  };
+  // All cards navigate to the detail page regardless of live link status.
+  const handleClick = () => router.push(projectPath);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -89,27 +81,15 @@ export function LevelCardComponent({ project }: LevelCardProps) {
   };
 
   return (
-    <>
-      {/* Notification toast for coming-soon projects */}
-      <NotificationToast
-        isVisible={toastVisible}
-        message="Coming Soon! This project is not yet deployed."
-        onClose={() => setToastVisible(false)}
-      />
-
-      <div
-        role="button"
-        tabIndex={0}
-        aria-label={`View project: ${project.title}${isComingSoon ? " (coming soon)" : ""}`}
-        onClick={handleClick}
-        onKeyDown={handleKeyDown}
-        className="cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-        style={
-          {
-            "--tw-ring-color": project.accent,
-          } as React.CSSProperties
-        }
-      >
+    <div
+      role="button"
+      tabIndex={0}
+      aria-label={`View project: ${project.title}${isComingSoon ? " (coming soon)" : ""}`}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      className="cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+      style={{ "--tw-ring-color": project.accent } as React.CSSProperties}
+    >
         <PixelCard
           variant="elevated"
           className="group relative overflow-hidden flex flex-col h-full"
@@ -161,7 +141,7 @@ export function LevelCardComponent({ project }: LevelCardProps) {
               ))}
             </div>
 
-            {/* Footer: navigate or coming-soon indicator */}
+            {/* Footer: always "View Project" since all cards navigate to detail page */}
             <div
               className="flex items-center gap-3 mt-auto pt-4"
               style={{ borderTop: `1px solid ${dayTheme.colors.border}` }}
@@ -169,18 +149,17 @@ export function LevelCardComponent({ project }: LevelCardProps) {
               <span
                 className="pixel-text flex items-center gap-1"
                 style={{
-                  color: isComingSoon ? dayTheme.colors.brick : project.accent,
+                  color: project.accent,
                   fontSize: "10px",
                 }}
               >
                 <ExternalLink size={10} />
-                {isComingSoon ? "Coming Soon" : "View Project"}
+                View Project
               </span>
             </div>
           </div>
         </PixelCard>
       </div>
-    </>
   );
 }
 

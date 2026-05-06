@@ -20,14 +20,9 @@ import { useProgressTracker } from "../lib/progress-tracker";
 export default function WorldPageContent() {
   const { visitedRoutes } = useProgressTracker();
 
-  // Keep all NAV_LINKS including "World" so it appears on the map.
-  // Exclude /world from the completed set so it doesn't show ★ CLEAR
-  // while you're currently on the world map page.
-  const completedRoutes = visitedRoutes.filter((r) => r !== "/world");
-
   return (
     <main>
-      <GameMap routes={NAV_LINKS} visitedRoutes={completedRoutes} />
+      <GameMap routes={NAV_LINKS} visitedRoutes={visitedRoutes} />
     </main>
   );
 }
