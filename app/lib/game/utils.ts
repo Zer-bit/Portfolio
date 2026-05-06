@@ -225,85 +225,110 @@ export function layoutLevel(
   const enemies: Enemy[] = [];
 
   // -------------------------------------------------------------------------
-  // Ground platform — full width, 32 px tall, flush with the bottom edge.
+  // Ground platform — full width, flush with the bottom edge.
   // -------------------------------------------------------------------------
   const groundY = canvasHeight - PLATFORM_HEIGHT_GROUND;
   const ground = createPlatform(0, groundY, canvasWidth, PLATFORM_HEIGHT_GROUND, true);
   platforms.push(ground);
 
   // -------------------------------------------------------------------------
-  // Floating platforms — 4 platforms at proportional positions.
-  //
-  // Heights are distributed across the upper 60 % of the canvas so the player
-  // can reach every platform with a single jump from the ground or from another
-  // platform.
-  //
-  // Layout (all values are fractions of canvas dimensions):
-  //   P1: x=0.05, y=0.65, w=0.20
-  //   P2: x=0.35, y=0.50, w=0.20
-  //   P3: x=0.60, y=0.35, w=0.20
-  //   P4: x=0.20, y=0.25, w=0.20
+  // Jump height calculation (used for mobile staircase layout).
+  // Physics: jumpVelocity = 550 * scale, gravity = 1200 * scale
+  // Max jump height = v² / (2g) = 550² / (2 * 1200) * scale ≈ 126 * scale px
   // -------------------------------------------------------------------------
-  const floatingDefs: Array<{ xFrac: number; yFrac: number; wFrac: number }> = [
-    { xFrac: 0.05, yFrac: 0.65, wFrac: 0.20 },
-    { xFrac: 0.35, yFrac: 0.50, wFrac: 0.20 },
-    { xFrac: 0.60, yFrac: 0.35, wFrac: 0.20 },
-    { xFrac: 0.20, yFrac: 0.25, wFrac: 0.20 },
-  ];
+  const scale = canvasHeight / 450;
+  const maxJumpPx = (550 * 550) / (2 * 1200) * scale;
+  const safeStep = Math.round(maxJumpPx * 0.68);
 
-  const floatingPlatforms: Platform[] = floatingDefs.map(({ xFrac, yFrac, wFrac }) =>
-    createPlatform(
-      Math.round(xFrac * canvasWidth),
-      Math.round(yFrac * canvasHeight),
-      Math.round(wFrac * canvasWidth),
-      PLATFORM_HEIGHT_FLOATING,
-      false
-    )
-  );
+  // Mobile: canvas narrower than 500px logical width
+  const isMobileLayout = canvasWidth < 500;
+
+  // Platform width: wider on mobile so they're easier to land on
+  const platW = isMobileLayout
+    ? Math.round(Math.max(canvasWidth * 0.28, 64))
+    : Math.round(canvasWidth * 0.20);
+
+  let floatingPlatforms: Platform[];
+
+  if (isMobileLayout) {
+    // -----------------------------------------------------------------------
+    // MOBILE — staircase layout: each platform is exactly one safe jump above
+    // the previous, alternating left/right so the player chains jumps.
+    // -----------------------------------------------------------------------
+    const minY = Math.round(canvasHeight * 0.08);
+
+    const p1Y = Math.max(minY, groundY - safeStep);
+    const p2Y = Math.max(minY, p1Y - safeStep);
+    const p3Y = Math.max(minY, p2Y - safeStep);
+    const p4Y = Math.max(minY, p3Y - safeStep);
+
+    const mobileDefs: Array<{ x: number; y: number }> = [
+      { x: Math.round(canvasWidth * 0.04), y: p1Y },           // low-left
+      { x: Math.round(canvasWidth * 0.55), y: p2Y },           // mid-right
+      { x: Math.round(canvasWidth * 0.18), y: p3Y },           // mid-left
+      { x: Math.round(canvasWidth * 0.58), y: p4Y },           // high-right
+    ];
+
+    floatingPlatforms = mobileDefs.map(({ x, y }) =>
+      createPlatform(x, y, platW, PLATFORM_HEIGHT_FLOATING, false)
+    );
+  } else {
+    // -----------------------------------------------------------------------
+    // DESKTOP — original proportional layout with varied heights.
+    // -----------------------------------------------------------------------
+    const desktopDefs: Array<{ xFrac: number; yFrac: number }> = [
+      { xFrac: 0.05, yFrac: 0.65 },
+      { xFrac: 0.35, yFrac: 0.50 },
+      { xFrac: 0.60, yFrac: 0.35 },
+      { xFrac: 0.20, yFrac: 0.25 },
+    ];
+
+    floatingPlatforms = desktopDefs.map(({ xFrac, yFrac }) =>
+      createPlatform(
+        Math.round(xFrac * canvasWidth),
+        Math.round(yFrac * canvasHeight),
+        platW,
+        PLATFORM_HEIGHT_FLOATING,
+        false
+      )
+    );
+  }
+
   platforms.push(...floatingPlatforms);
 
   // -------------------------------------------------------------------------
-  // Coins — 2 coins on each of the first 3 floating platforms + 1 on the 4th.
-  // Total: 7 coins (≥ 5 required).
-  //
-  // Each coin is placed centred horizontally on its platform, slightly above
-  // the platform surface so it is visually distinct.
+  // Coins — 2 per platform (1 on the last), placed just above the surface.
   // -------------------------------------------------------------------------
   const coinOffsets: Array<{ platIndex: number; xOffsetFrac: number }> = [
-    // Platform 0 (P1)
     { platIndex: 0, xOffsetFrac: 0.25 },
     { platIndex: 0, xOffsetFrac: 0.65 },
-    // Platform 1 (P2)
     { platIndex: 1, xOffsetFrac: 0.25 },
     { platIndex: 1, xOffsetFrac: 0.65 },
-    // Platform 2 (P3)
     { platIndex: 2, xOffsetFrac: 0.25 },
     { platIndex: 2, xOffsetFrac: 0.65 },
-    // Platform 3 (P4)
     { platIndex: 3, xOffsetFrac: 0.45 },
   ];
 
   for (const { platIndex, xOffsetFrac } of coinOffsets) {
     const plat = floatingPlatforms[platIndex];
     const coinX = Math.round(plat.x + xOffsetFrac * plat.width - COIN_SIZE / 2);
-    // Place coin 8 px above the platform surface.
-    const coinY = plat.y - COIN_SIZE - 8;
+    const coinY = plat.y - COIN_SIZE - 6;
     coins.push(createCoin(coinX, coinY));
   }
 
   // -------------------------------------------------------------------------
-  // Enemy — 1 enemy on the ground platform, starting near the centre.
+  // Enemy — on the ground, right side, away from player start.
   // -------------------------------------------------------------------------
-  const enemyX = Math.round(canvasWidth * 0.55);
+  const enemyX = Math.round(canvasWidth * 0.60);
   const enemyY = groundY - ENEMY_SIZE;
   enemies.push(createEnemy(enemyX, enemyY));
 
   // -------------------------------------------------------------------------
-  // Player start — above the ground platform, near the left edge.
+  // Player start — left edge, just above ground.
   // -------------------------------------------------------------------------
   const playerStart = {
     x: Math.round(canvasWidth * 0.05),
-    y: groundY - 48, // 48 px above ground (player height is typically 32–48 px)
+    y: groundY - 48,
   };
 
   return { platforms, coins, enemies, playerStart };

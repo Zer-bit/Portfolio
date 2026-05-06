@@ -117,6 +117,30 @@ interface SubmitState {
 }
 
 // ---------------------------------------------------------------------------
+// Physics tuning constants
+// ---------------------------------------------------------------------------
+
+/**
+ * DESKTOP jump velocity (px/s, negative = upward).
+ * Applied when canvasWidth >= 500px.
+ * Increase the absolute value to jump higher on desktop.
+ */
+const JUMP_VELOCITY_DESKTOP = -600;
+
+/**
+ * MOBILE jump velocity (px/s, negative = upward).
+ * Applied when canvasWidth < 500px.
+ * Edit this value to tune jump height specifically for mobile without
+ * affecting the desktop experience.
+ */
+const JUMP_VELOCITY_MOBILE = -700;
+
+/** Returns the correct jump velocity for the current canvas width. */
+function getJumpVelocity(canvasWidth: number): number {
+  return canvasWidth < 500 ? JUMP_VELOCITY_MOBILE : JUMP_VELOCITY_DESKTOP;
+}
+
+// ---------------------------------------------------------------------------
 // Module-level helpers
 // ---------------------------------------------------------------------------
 
@@ -320,8 +344,8 @@ export default function MarioGame(): React.ReactElement {
     // }
     try {
       lsSaveScore(sanitized, finalScore);
-      setSubmitState({ playerName: "", loading: false, error: null, submitted: true });
-      setOverlayState({ type: "none" });
+      setSubmitState({ playerName: "", loading: false, error: null, submitted: false });
+      setOverlayState({ type: "start" });
       void fetchLeaderboard();
     } catch (err) {
       setSubmitState((prev) => ({
@@ -362,8 +386,8 @@ export default function MarioGame(): React.ReactElement {
   };
 
   const handlePlayAgain = (): void => {
-    setOverlayState({ type: "none" });
     setSubmitState({ playerName: "", loading: false, error: null, submitted: false });
+    setOverlayState({ type: "none" });
     const container = containerRef.current;
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
@@ -477,7 +501,7 @@ export default function MarioGame(): React.ReactElement {
         if (gs.inputState.jumpBufferMs > 0) {
           if (gs.player.isGrounded) {
             // Scale jump velocity with canvas height so platforms stay reachable
-            gs.player = { ...applyJump(gs.player), vy: -550 * physScale };
+            gs.player = { ...applyJump(gs.player), vy: getJumpVelocity(gs.canvasWidth) * physScale };
             gs.inputState.jumpBufferMs = 0; // consumed
           } else {
             gs.inputState.jumpBufferMs -= dt * 1000; // tick down (ms)

@@ -110,6 +110,9 @@ const Navbar = () => {
   const { theme, toggleTheme } = useThemeContext();
   const worldLabel = getWorldLabel(pathname);
 
+  // Game is only accessible from the world map, not the top nav
+  const navLinks = NAV_LINKS.filter((link) => link.id !== "game");
+
   // Hide the entire navbar on the landing page — it appears after "PRESS START"
   const isLanding = pathname === "/";
 
@@ -172,7 +175,7 @@ const Navbar = () => {
                 backgroundColor: "rgba(255,255,255,0.08)",
               }}
             >
-              {NAV_LINKS.map((link, i) => (
+              {navLinks.map((link, i) => (
                 <motion.div
                   key={link.name}
                   initial={{ opacity: 0, y: -8 }}
@@ -263,7 +266,7 @@ const Navbar = () => {
 
           {/* Navigation Links */}
           <div className="relative z-10 flex flex-col space-y-4 px-10 pt-8">
-            {NAV_LINKS.map((link, i) => (
+            {navLinks.map((link, i) => (
               <motion.div
                 key={link.name}
                 initial={{ opacity: 0, x: 50 }}
