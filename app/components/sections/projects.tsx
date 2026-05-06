@@ -33,7 +33,7 @@ const projects = [
     },
     {
         title: "jezsic",
-        description: "An advanced Android music player that supports offline playback, YouTube video browsing, and integrated MP3 conversion for a seamless offline listening experience.",
+        description: "An advanced Android music player that lets you browse YouTube videos — not to stream them, but to download and convert them into M4A or MP3 files. Once converted, you can listen to your saved tracks anytime, completely offline without needing an internet connection.",
         tech: ["Flutter", "Dart", "Android SDK", "YouTube Data API", "FFmpeg"],
         image: "/Images/jezsic-img.png",
         link: "#",
@@ -41,9 +41,9 @@ const projects = [
     },
     {
         title: "Youtube mp3 API",
-        description: "A specialized API service designed to fetch and convert YouTube video data into high-quality MP3 formats, utilizing pure JavaScript and JSON for rapid data processing.",
+        description: "A specialized API service designed to fetch and convert YouTube video data into high-quality MP3 or m4a formats, utilizing pure JavaScript and JSON for rapid data processing.",
         tech: ["JavaScript", "JSON", "YouTube API", "REST API"],
-        image: "https://developers.google.com/static/youtube/images/yt-data-api-search_720.png",
+        image: "/Images/youtube-mp3-api.svg",
         link: "#",
         accent: "#0ea5e9",
     },

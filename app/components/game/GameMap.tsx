@@ -73,12 +73,12 @@ export interface GameMapProps {
  * Keeps the world-map aesthetic without hardcoding strings in JSX.
  */
 const LEVEL_LABELS: Record<string, string> = {
-  about: "WORLD 1-1",
-  projects: "WORLD 1-2",
-  skills: "WORLD 1-3",
+  about:      "WORLD 1-1",
+  projects:   "WORLD 1-2",
+  skills:     "WORLD 1-3",
   experience: "WORLD 1-4",
-  contact: "WORLD 1-5",
-  game: "WORLD 1-6",
+  contact:    "WORLD 1-5",
+  game:       "WORLD 1-6",
 };
 
 // ---------------------------------------------------------------------------

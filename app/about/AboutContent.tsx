@@ -28,7 +28,7 @@ const DEVELOPER = {
   role: "Full Stack Developer",
   availability: "Available for Hire",
   location: "Philippines",
-  bio: "Passionate full-stack developer crafting pixel-perfect web experiences. Specializing in Next.js, TypeScript, and modern web technologies.",
+  bio: "I'm a passionate developer who genuinely loves programming — it's not just a career, it's a craft I enjoy every day. I specialize in building modern web applications, turning ideas into clean, functional, and engaging experiences on the web. Beyond that, I have a deep dream of becoming a game developer, combining my love for interactive design and code to create worlds that people can explore and enjoy.",
 } as const;
 
 // ---------------------------------------------------------------------------

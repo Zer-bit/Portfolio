@@ -1,36 +1,117 @@
+"use client";
+
 /**
- * useSound — Sound Hook Stub
+ * useSound — Mario-themed sound effects via Web Audio API
  *
- * Provides a stable interface for triggering Mario-themed sound effects.
- * All methods are no-ops in this stub implementation. Replace the bodies
- * with real Web Audio API calls when sound support is added.
+ * Generates retro 8-bit style sounds procedurally. Respects the
+ * `soundEnabled` preference from ThemeContext.
  */
 
-/** Shape returned by the useSound hook. */
+import { useRef, useCallback } from "react";
+import { useThemeContext } from "../lib/theme-context";
+
 export interface UseSoundReturn {
-  /** Play the bounce sound effect (e.g. block hit, jump). */
   playBounce: () => void;
-  /** Play the coin-collect sound effect. */
   playCoin: () => void;
-  /** Play the pipe-warp sound effect. */
   playPipe: () => void;
+  playClick: () => void;
 }
 
-/**
- * useSound
- *
- * Returns no-op sound-effect callbacks. This is a stub — wire up real
- * audio playback here when the sound system is implemented.
- *
- * @returns {UseSoundReturn} Object containing playBounce, playCoin, and playPipe methods.
- */
-export function useSound(): UseSoundReturn {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const noop = (): void => {};
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
 
-  return {
-    playBounce: noop,
-    playCoin: noop,
-    playPipe: noop,
-  };
+async function getCtx(ctxRef: React.MutableRefObject<AudioContext | null>): Promise<AudioContext | null> {
+  if (typeof window === "undefined") return null;
+  try {
+    if (!ctxRef.current) {
+      ctxRef.current = new AudioContext();
+    }
+    const ctx = ctxRef.current;
+    if (ctx.state === "suspended") {
+      await ctx.resume();
+    }
+    return ctx;
+  } catch {
+    return null;
+  }
+}
+
+function tone(
+  ctx: AudioContext,
+  freq: number,
+  startTime: number,
+  duration: number,
+  volume = 0.3,
+  type: OscillatorType = "square"
+) {
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, startTime);
+  gain.gain.setValueAtTime(volume, startTime);
+  gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+  osc.start(startTime);
+  osc.stop(startTime + duration + 0.01);
+}
+
+// ---------------------------------------------------------------------------
+// Hook
+// ---------------------------------------------------------------------------
+
+export function useSound(): UseSoundReturn {
+  const { soundEnabled } = useThemeContext();
+  // Use a ref so we don't recreate AudioContext on every render
+  const ctxRef = useRef<AudioContext | null>(null);
+  // Keep soundEnabled in a ref so callbacks always see the latest value
+  const enabledRef = useRef(soundEnabled);
+  enabledRef.current = soundEnabled;
+
+  const playBounce = useCallback(async () => {
+    if (!enabledRef.current) return;
+    const ctx = await getCtx(ctxRef);
+    if (!ctx) return;
+    const t = ctx.currentTime;
+    tone(ctx, 300, t,        0.08, 0.3);
+    tone(ctx, 500, t + 0.08, 0.1,  0.3);
+  }, []);
+
+  const playCoin = useCallback(async () => {
+    if (!enabledRef.current) return;
+    const ctx = await getCtx(ctxRef);
+    if (!ctx) return;
+    const t = ctx.currentTime;
+    tone(ctx, 988,  t,        0.08, 0.25);
+    tone(ctx, 1319, t + 0.08, 0.15, 0.2);
+  }, []);
+
+  const playPipe = useCallback(async () => {
+    if (!enabledRef.current) return;
+    const ctx = await getCtx(ctxRef);
+    if (!ctx) return;
+    const t = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = "square";
+    osc.frequency.setValueAtTime(600, t);
+    osc.frequency.exponentialRampToValueAtTime(80, t + 0.4);
+    gain.gain.setValueAtTime(0.25, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
+    osc.start(t);
+    osc.stop(t + 0.41);
+  }, []);
+
+  const playClick = useCallback(async () => {
+    if (!enabledRef.current) return;
+    const ctx = await getCtx(ctxRef);
+    if (!ctx) return;
+    const t = ctx.currentTime;
+    tone(ctx, 440, t, 0.07, 0.25);
+  }, []);
+
+  return { playBounce, playCoin, playPipe, playClick };
 }

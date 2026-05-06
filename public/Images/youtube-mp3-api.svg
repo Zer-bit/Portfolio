@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <!-- Background -->
+  <rect width="640" height="360" fill="#0f0f0f"/>
+  
+  <!-- Grid lines -->
+  <line x1="0" y1="120" x2="640" y2="120" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="0" y1="240" x2="640" y2="240" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="213" y1="0" x2="213" y2="360" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="427" y1="0" x2="427" y2="360" stroke="#1a1a1a" stroke-width="1"/>
+
+  <!-- YouTube logo background pill -->
+  <rect x="220" y="110" width="200" height="90" rx="18" fill="#FF0000"/>
+  
+  <!-- YouTube play triangle -->
+  <polygon points="295,130 295,180 345,155" fill="white"/>
+
+  <!-- Sound wave bars below logo -->
+  <rect x="240" y="225" width="12" height="30" rx="6" fill="#FF0000" opacity="0.9"/>
+  <rect x="260" y="215" width="12" height="50" rx="6" fill="#FF0000" opacity="0.8"/>
+  <rect x="280" y="205" width="12" height="60" rx="6" fill="#FF0000"/>
+  <rect x="300" y="218" width="12" height="44" rx="6" fill="#FF0000" opacity="0.85"/>
+  <rect x="320" y="210" width="12" height="55" rx="6" fill="#FF0000" opacity="0.9"/>
+  <rect x="340" y="222" width="12" height="35" rx="6" fill="#FF0000" opacity="0.75"/>
+  <rect x="360" y="215" width="12" height="48" rx="6" fill="#FF0000" opacity="0.8"/>
+  <rect x="380" y="228" width="12" height="28" rx="6" fill="#FF0000" opacity="0.7"/>
+
+  <!-- Label text -->
+  <text x="320" y="305" font-family="monospace" font-size="16" fill="#aaaaaa" text-anchor="middle" letter-spacing="3">YOUTUBE MP3 API</text>
+  <text x="320" y="328" font-family="monospace" font-size="11" fill="#555555" text-anchor="middle" letter-spacing="2">JavaScript · REST API · YouTube API</text>
+</svg>

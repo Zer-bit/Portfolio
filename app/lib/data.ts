@@ -42,7 +42,7 @@ export const projects = [
   {
     title: "jezsic",
     description:
-      "An advanced Android music player that supports offline playback, YouTube video browsing, and integrated MP3 conversion for a seamless offline listening experience.",
+      "An advanced Android music player that lets you browse YouTube videos — not to stream them, but to download and convert them into M4A or MP3 files. Once converted, you can listen to your saved tracks anytime, completely offline without needing an internet connection.",
     tech: ["Flutter", "Dart", "Android SDK", "YouTube Data API", "FFmpeg"],
     image: "/Images/jezsic-img.png",
     link: "#",
@@ -51,9 +51,9 @@ export const projects = [
   {
     title: "Youtube mp3 API",
     description:
-      "A specialized API service designed to fetch and convert YouTube video data into high-quality MP3 formats, utilizing pure JavaScript and JSON for rapid data processing.",
+      "A specialized API service designed to fetch and convert YouTube video data into high-quality MP3 or m4a formats, utilizing pure JavaScript and JSON for rapid data processing.",
     tech: ["JavaScript", "JSON", "YouTube API", "REST API"],
-    image: "https://developers.google.com/static/youtube/images/yt-data-api-search_720.png",
+    image: "/Images/youtube-mp3-api.svg",
     link: "#",
     accent: COLORS.secondary.blue,
   },
@@ -161,26 +161,26 @@ export const experience = [
   {
     jobTitle: "Full Stack Developer",
     company: "Inspire Holdings Incorporated",
-    startDate: "2024",
+    startDate: "2026",
     endDate: "Present",
     description:
       "Designed and developed full-stack web applications for corporate clients, including the company website and the iPageant platform. Built features using Next.js, TypeScript, Firebase, and Tailwind CSS. Collaborated directly with stakeholders to deliver polished, production-ready products.",
     accent: COLORS.primary.green,
   },
   {
-    jobTitle: "Freelance Web Developer",
+    jobTitle: "Freelance Web application Developer",
     company: "Self-Employed",
-    startDate: "2023",
+    startDate: "2024",
     endDate: "Present",
     description:
-      "Delivered custom web solutions for small businesses and personal projects. Responsibilities included UI/UX design, frontend development, backend integration, and deployment on Vercel. Projects include the Inspire Book Slider and various client landing pages.",
+      "Delivered custom webapp solutions for small businesses and personal projects. Responsibilities included UI/UX design, frontend development, backend integration, and deployment on Vercel, render, and railway. Projects include this portfolio and various client landing pages.",
     accent: COLORS.secondary.blue,
   },
   {
     jobTitle: "Mobile App Developer",
     company: "Personal Project",
-    startDate: "2023",
-    endDate: "2024",
+    startDate: "2025",
+    endDate: "Present",
     description:
       "Built jezsic, an Android music player using Flutter and Dart. Integrated the YouTube Data API for video browsing and implemented offline MP3 conversion via FFmpeg. Managed the full development lifecycle from design to release.",
     accent: COLORS.accent.orange,

@@ -55,8 +55,8 @@ export const ROUTES = {
 export const NAV_LINKS = [
   { name: "World", href: ROUTES.world, id: "world" },
   { name: "About", href: ROUTES.about, id: "about" },
-  { name: "Skills", href: ROUTES.skills, id: "skills" },
   { name: "Projects", href: ROUTES.projects, id: "projects" },
+  { name: "Skills", href: ROUTES.skills, id: "skills" },
   { name: "Experience", href: ROUTES.experience, id: "experience" },
   { name: "Contact", href: ROUTES.contact, id: "contact" },
   { name: "Game", href: ROUTES.game, id: "game" },

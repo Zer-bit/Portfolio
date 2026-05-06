@@ -503,6 +503,7 @@ export default function MarioGame(): React.ReactElement {
             // Scale jump velocity with canvas height so platforms stay reachable
             gs.player = { ...applyJump(gs.player), vy: getJumpVelocity(gs.canvasWidth) * physScale };
             gs.inputState.jumpBufferMs = 0; // consumed
+            soundRef.current.playBounce(); // jump sound
           } else {
             gs.inputState.jumpBufferMs -= dt * 1000; // tick down (ms)
             if (gs.inputState.jumpBufferMs < 0) gs.inputState.jumpBufferMs = 0;
@@ -621,6 +622,7 @@ export default function MarioGame(): React.ReactElement {
         if (gs.coins.length === 0) {
           gs.status = "levelComplete";
           const finalScore = gs.score;
+          soundRef.current.playPipe(); // level clear sound
           Promise.resolve().then(() => {
             setOverlayStateRef.current({ type: "submitScore", finalScore });
           });

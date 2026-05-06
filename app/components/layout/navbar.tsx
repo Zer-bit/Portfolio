@@ -10,7 +10,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, Github, Linkedin, Instagram } from "lucide-react";
+import { Menu, X, Github, Linkedin, Instagram, Settings } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -35,15 +35,15 @@ const Block = dynamic(
 // ---------------------------------------------------------------------------
 
 const WORLD_LABEL_MAP: Record<string, string> = {
-  "/":           "WORLD-1",
-  "/world":      "WORLD-2",
-  "/about":      "WORLD-3",
-  "/projects":   "WORLD-4",
-  "/skills":     "WORLD-5",
-  "/experience": "WORLD-6",
-  "/contact":    "WORLD-7",
-  "/settings":   "WORLD-8",
-  "/game":       "WORLD-9",
+  "/":           "WORLD 1-1",
+  "/world":      "WORLD MAP",
+  "/about":      "WORLD 1-1",
+  "/projects":   "WORLD 1-2",
+  "/skills":     "WORLD 1-3",
+  "/experience": "WORLD 1-4",
+  "/contact":    "WORLD 1-5",
+  "/game":       "WORLD 1-6",
+  "/settings":   "SETTINGS",
 };
 
 function getWorldLabel(pathname: string): string {
@@ -106,12 +106,21 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const { visitedRoutes } = useProgressTracker();
+  const { visitedRoutes, markVisited } = useProgressTracker();
   const { theme, toggleTheme } = useThemeContext();
   const worldLabel = getWorldLabel(pathname);
 
-  // Game is only accessible from the world map, not the top nav
-  const navLinks = NAV_LINKS.filter((link) => link.id !== "game");
+  // Mark the current page as visited whenever the route changes
+  useEffect(() => {
+    markVisited(pathname);
+  }, [pathname, markVisited]);
+
+  // Only count visits to known mapped routes (not 404s or random paths)
+  const knownRoutes = Object.keys(WORLD_LABEL_MAP);
+  const coins = visitedRoutes.filter((r) => knownRoutes.includes(r)).length;
+
+  // Game, About, and Projects are accessible from the world map, not the top nav
+  const navLinks = NAV_LINKS.filter((link) => !["game", "about", "projects"].includes(link.id));
 
   // Hide the entire navbar on the landing page — it appears after "PRESS START"
   const isLanding = pathname === "/";
@@ -145,8 +154,29 @@ const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14 relative z-[10001]">
 
-          {/* LEFT — HUD stats */}
-          <HUDStrip coins={visitedRoutes.length} worldLabel={worldLabel} />
+          {/* LEFT — theme toggle + HUD stats */}
+          <div className="flex items-center gap-3">
+            {/* Theme toggle button — far left corner */}
+            <motion.button
+              onClick={toggleTheme}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2 cursor-pointer outline-none pixel-text"
+              style={{
+                border: `2px solid rgba(255,255,255,0.2)`,
+                backgroundColor: "rgba(255,255,255,0.08)",
+                color: dayTheme.colors.coin,
+                fontSize: "12px",
+                lineHeight: 1,
+              }}
+              aria-label={`Switch to ${theme === "day" ? "night" : "day"} theme`}
+              title={`Switch to ${theme === "day" ? "night" : "day"} theme`}
+            >
+              {theme === "day" ? "🌙" : "☀"}
+            </motion.button>
+
+            <HUDStrip coins={coins} worldLabel={worldLabel} />
+          </div>
 
           {/* CENTER / RIGHT — Logo + desktop nav */}
           <div className="flex items-center gap-4">
@@ -200,24 +230,21 @@ const Navbar = () => {
               ))}
             </div>
 
-            {/* Theme toggle button */}
-            <motion.button
-              onClick={toggleTheme}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="p-2 cursor-pointer outline-none pixel-text"
-              style={{
-                border: `2px solid rgba(255,255,255,0.2)`,
-                backgroundColor: "rgba(255,255,255,0.08)",
-                color: dayTheme.colors.coin,
-                fontSize: "12px",
-                lineHeight: 1,
-              }}
-              aria-label={`Switch to ${theme === "day" ? "night" : "day"} theme`}
-              title={`Switch to ${theme === "day" ? "night" : "day"} theme`}
-            >
-              {theme === "day" ? "🌙" : "☀"}
-            </motion.button>
+            {/* Settings button */}
+            <Link href="/settings" aria-label="Go to settings page">
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="p-2 cursor-pointer hidden md:flex items-center justify-center"
+                style={{
+                  border: `2px solid rgba(255,255,255,0.2)`,
+                  backgroundColor: pathname === "/settings" ? `${dayTheme.colors.coin}22` : "rgba(255,255,255,0.08)",
+                  color: pathname === "/settings" ? dayTheme.colors.coin : "rgba(255,255,255,0.75)",
+                }}
+              >
+                <Settings size={14} />
+              </motion.div>
+            </Link>
 
             {/* Mobile menu button */}
             <div className="md:hidden">
@@ -323,6 +350,18 @@ const Navbar = () => {
               >
                 {theme === "day" ? "🌙 NIGHT MODE" : "☀ DAY MODE"}
               </button>
+
+              {/* Settings link in mobile menu */}
+              <Link
+                href="/settings"
+                onClick={() => setIsOpen(false)}
+                aria-label="Go to settings page"
+                className="pixel-text flex items-center gap-2"
+                style={{ fontSize: "9px", color: pathname === "/settings" ? dayTheme.colors.coin : "rgba(255,255,255,0.7)" }}
+              >
+                <Settings size={12} />
+                SETTINGS
+              </Link>
 
               <div className="flex items-center gap-4">
                 {[

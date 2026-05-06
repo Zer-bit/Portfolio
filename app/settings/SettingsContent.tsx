@@ -19,6 +19,7 @@ import { dayTheme, nightTheme } from "../lib/theme";
 import { PixelCard } from "../components/ui/pixel-card";
 import { PixelButton } from "../components/ui/pixel-button";
 import { useThemeContext } from "../lib/theme-context";
+import { useSound } from "../hooks/use-sound";
 
 // ---------------------------------------------------------------------------
 // SettingRow — a single labeled toggle row inside the settings panel
@@ -97,8 +98,21 @@ function SettingRow({
  */
 export function SettingsContent() {
   const { theme, toggleTheme, soundEnabled, toggleSound } = useThemeContext();
+  const { playClick, playCoin } = useSound();
 
   const activeColors = theme === "night" ? nightTheme.colors : dayTheme.colors;
+
+  const handleThemeToggle = () => {
+    playClick();
+    toggleTheme();
+  };
+
+  const handleSoundToggle = () => {
+    // Play coin sound before muting, or click when unmuting
+    if (!soundEnabled) playClick();
+    else playCoin();
+    toggleSound();
+  };
 
   return (
     <div className="max-w-2xl mx-auto px-6 pb-16 pt-8">
@@ -135,7 +149,7 @@ export function SettingsContent() {
           ariaLabel={`Switch to ${theme === "day" ? "night" : "day"} theme`}
           buttonLabel={theme === "day" ? "NIGHT MODE" : "DAY MODE"}
           variant="coin"
-          onToggle={toggleTheme}
+          onToggle={handleThemeToggle}
           activeColors={activeColors}
         />
 
@@ -146,7 +160,7 @@ export function SettingsContent() {
           ariaLabel={`Turn sound effects ${soundEnabled ? "off" : "on"}`}
           buttonLabel={soundEnabled ? "MUTE" : "UNMUTE"}
           variant="pipe"
-          onToggle={toggleSound}
+          onToggle={handleSoundToggle}
           activeColors={activeColors}
         />
       </PixelCard>
@@ -158,6 +172,88 @@ export function SettingsContent() {
       >
         SETTINGS ARE SAVED AUTOMATICALLY
       </p>
+
+      {/* Sound test panel */}
+      <PixelCard variant="elevated" style={{ padding: "24px", marginTop: "24px" }}>
+        <h2
+          className="pixel-text mb-4"
+          style={{ color: activeColors.mario, fontSize: "10px" }}
+        >
+          SOUND TEST
+        </h2>
+        <p
+          className="pixel-text mb-6"
+          style={{ color: activeColors.text, fontSize: "8px", opacity: 0.8 }}
+        >
+          TAP A BUTTON TO TEST AUDIO OUTPUT
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <PixelButton
+            variant="coin"
+            size="sm"
+            onClick={() => {
+              const ctx = new AudioContext();
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.type = "square";
+              osc.frequency.value = 988;
+              gain.gain.setValueAtTime(0.4, ctx.currentTime);
+              gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
+              osc.start(ctx.currentTime);
+              osc.stop(ctx.currentTime + 0.3);
+            }}
+            aria-label="Test coin sound"
+          >
+            ♪ COIN
+          </PixelButton>
+
+          <PixelButton
+            variant="pipe"
+            size="sm"
+            onClick={() => {
+              const ctx = new AudioContext();
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.type = "square";
+              osc.frequency.setValueAtTime(300, ctx.currentTime);
+              osc.frequency.exponentialRampToValueAtTime(500, ctx.currentTime + 0.15);
+              gain.gain.setValueAtTime(0.4, ctx.currentTime);
+              gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.2);
+              osc.start(ctx.currentTime);
+              osc.stop(ctx.currentTime + 0.2);
+            }}
+            aria-label="Test jump sound"
+          >
+            ↑ JUMP
+          </PixelButton>
+
+          <PixelButton
+            variant="brick"
+            size="sm"
+            onClick={() => {
+              const ctx = new AudioContext();
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.type = "square";
+              osc.frequency.setValueAtTime(600, ctx.currentTime);
+              osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.4);
+              gain.gain.setValueAtTime(0.4, ctx.currentTime);
+              gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.4);
+              osc.start(ctx.currentTime);
+              osc.stop(ctx.currentTime + 0.41);
+            }}
+            aria-label="Test pipe sound"
+          >
+            ↓ PIPE
+          </PixelButton>
+        </div>
+      </PixelCard>
     </div>
   );
 }
