@@ -105,6 +105,7 @@ interface GameState {
 type OverlayState =
   | { type: "none" }
   | { type: "start" }
+  | { type: "respawn"; livesLeft: number }
   | { type: "submitScore"; finalScore: number }
   | { type: "gameOver"; finalScore: number };
 
@@ -243,12 +244,13 @@ function renderFrame(ctx: CanvasRenderingContext2D, gs: GameState): void {
     ctx.fillRect(px + pw - 12, py + ph - 14, 10, 14);
   }
 
-  // 7. HUD overlay — score and lives
-  ctx.font = '10px "Press Start 2P", monospace';
+  // 7. HUD overlay — score and lives (font size scales with canvas width)
+  const hudFontSize = Math.max(6, Math.round(canvasWidth / 80));
+  ctx.font = `${hudFontSize}px "Press Start 2P", monospace`;
   ctx.fillStyle = "#ffffff";
   ctx.textBaseline = "top";
   ctx.fillText(`SCORE ${String(score).padStart(6, "0")}`, 8, 8);
-  ctx.fillText(`\u2665 \u00d7 ${lives}`, canvasWidth - 80, 8);
+  ctx.fillText(`\u2665 \u00d7 ${lives}`, canvasWidth - hudFontSize * 5.5, 8);
 }
 
 // ---------------------------------------------------------------------------
@@ -264,6 +266,7 @@ export default function MarioGame(): React.ReactElement {
   ) as React.MutableRefObject<GameState>;
   const rafRef = useRef<number | null>(null);
   const tickRef = useRef<((ts: number) => void) | null>(null);
+  const respawnTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Sound — captured in a ref to avoid stale closure issues in the game loop
   const sound = useSound();
@@ -286,6 +289,10 @@ export default function MarioGame(): React.ReactElement {
   // Keep setOverlayState accessible inside the tick closure via a ref
   const setOverlayStateRef = useRef(setOverlayState);
   setOverlayStateRef.current = setOverlayState;
+
+  // Keep handleRespawn accessible inside the tick closure via a ref
+  // (defined below, ref updated after definition)
+  const handleRespawnRef = useRef<(livesLeft: number) => void>(() => {});
 
   const setInput = (key: "left" | "right", value: boolean): void => {
     gameStateRef.current.inputState[key] = value;
@@ -361,7 +368,7 @@ export default function MarioGame(): React.ReactElement {
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
     const logicalWidth = container.clientWidth;
-    const logicalHeight = Math.round(logicalWidth * (9 / 16));
+    const logicalHeight = container.clientHeight || Math.round(logicalWidth * (9 / 16));
     const gs = initGameState(logicalWidth, logicalHeight);
     gameStateRef.current = gs;
     gameStateRef.current.status = "running";
@@ -371,7 +378,40 @@ export default function MarioGame(): React.ReactElement {
     }
   };
 
-  useEffect(() => {
+  const handleStart = (): void => {
+    setOverlayState({ type: "none" });
+    const container = containerRef.current;
+    const canvas = canvasRef.current;
+    if (!container || !canvas) return;
+    const logicalWidth = container.clientWidth;
+    const logicalHeight = container.clientHeight || Math.round(logicalWidth * (9 / 16));
+    const gs = initGameState(logicalWidth, logicalHeight);
+    gameStateRef.current = gs;
+    gameStateRef.current.status = "running";
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    if (tickRef.current) {
+      rafRef.current = requestAnimationFrame(tickRef.current);
+    }
+  };
+
+  // Respawn: reset the level but keep the current lives count, then restart the loop
+  const handleRespawn = (livesLeft: number): void => {
+    setOverlayState({ type: "none" });
+    const container = containerRef.current;
+    const canvas = canvasRef.current;
+    if (!container || !canvas) return;
+    const logicalWidth = container.clientWidth;
+    const logicalHeight = container.clientHeight || Math.round(logicalWidth * (9 / 16));
+    const gs = initGameState(logicalWidth, logicalHeight);
+    gs.lives = livesLeft; // carry over remaining lives
+    gameStateRef.current = gs;
+    gameStateRef.current.status = "running";
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    if (tickRef.current) {
+      rafRef.current = requestAnimationFrame(tickRef.current);
+    }
+  };
+  handleRespawnRef.current = handleRespawn;  useEffect(() => {
     const container = containerRef.current;
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
@@ -380,7 +420,7 @@ export default function MarioGame(): React.ReactElement {
 
     function setupCanvas(startImmediately = false): void {
       const logicalWidth = container!.clientWidth;
-      const logicalHeight = Math.round(logicalWidth * (9 / 16));
+      const logicalHeight = container!.clientHeight || Math.round(logicalWidth * (9 / 16));
       const dpr = window.devicePixelRatio ?? 1;
 
       canvas!.width = logicalWidth * dpr;
@@ -503,15 +543,13 @@ export default function MarioGame(): React.ReactElement {
               const finalLives = gs.lives;
               Promise.resolve().then(() => {
                 if (finalLives <= 0) {
-                  setOverlayStateRef.current({
-                    type: "gameOver",
-                    finalScore,
-                  });
+                  setOverlayStateRef.current({ type: "gameOver", finalScore });
                 } else {
-                  setOverlayStateRef.current({
-                    type: "submitScore",
-                    finalScore,
-                  });
+                  // Show "YOU DIED" briefly, then auto-respawn after 1.5s
+                  setOverlayStateRef.current({ type: "respawn", livesLeft: finalLives });
+                  respawnTimerRef.current = setTimeout(() => {
+                    handleRespawnRef.current(finalLives);
+                  }, 1500);
                 }
               });
               return;
@@ -545,7 +583,11 @@ export default function MarioGame(): React.ReactElement {
             if (finalLives <= 0) {
               setOverlayStateRef.current({ type: "gameOver", finalScore });
             } else {
-              setOverlayStateRef.current({ type: "submitScore", finalScore });
+              // Show "YOU DIED" briefly, then auto-respawn after 1.5s
+              setOverlayStateRef.current({ type: "respawn", livesLeft: finalLives });
+              respawnTimerRef.current = setTimeout(() => {
+                handleRespawnRef.current(finalLives);
+              }, 1500);
             }
           });
           return;
@@ -613,16 +655,19 @@ export default function MarioGame(): React.ReactElement {
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
 
-    // Detect mobile
-    setIsMobile(window.innerWidth < 768);
+    // Detect touch device (show on-screen controls for any touch-capable device)
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+    setIsMobile(isTouchDevice || window.innerWidth < 768);
 
     function handleResize(): void {
-      setIsMobile(window.innerWidth < 768);
+      const isTouch = window.matchMedia("(pointer: coarse)").matches;
+      setIsMobile(isTouch || window.innerWidth < 768);
     }
     window.addEventListener("resize", handleResize);
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (respawnTimerRef.current) clearTimeout(respawnTimerRef.current);
       clearTimeout(resizeTimeout);
       resizeObserver.disconnect();
       window.removeEventListener("keydown", handleKeyDown);
@@ -640,10 +685,17 @@ export default function MarioGame(): React.ReactElement {
   return (
     <div
       style={{
+        /*
+         * Responsive container:
+         * - Fill full width up to the viewport
+         * - Constrain height so the canvas never overflows the screen
+         *   (viewport height minus navbar 56px, title ~36px, controls ~72px, leaderboard)
+         * - 16:9 aspect ratio maintained via CSS aspect-ratio
+         */
         width: "100%",
-        maxWidth: "800px",
+        maxWidth: "min(100vw, calc((100vh - 220px) * 16 / 9))",
         margin: "0 auto",
-        padding: `${pixelGrid.px4}`,
+        padding: "0 4px",
       }}
     >
       <div
@@ -651,7 +703,7 @@ export default function MarioGame(): React.ReactElement {
         style={{
           position: "relative",
           width: "100%",
-          paddingBottom: "56.25%",
+          aspectRatio: "16 / 9",
         }}
       >
         <canvas
@@ -666,6 +718,129 @@ export default function MarioGame(): React.ReactElement {
             imageRendering: "pixelated",
           }}
         />
+        {overlayState.type === "start" && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Start Game"
+            style={{
+              position: "absolute",
+              top: 0, left: 0, right: 0, bottom: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "rgba(0,0,0,0.82)",
+              zIndex: zIndex.overlay,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: pixelGrid.px6,
+                padding: pixelGrid.px8,
+                border: `4px solid ${dayTheme.colors.coin}`,
+                background: dayTheme.colors.bg,
+                maxWidth: "340px",
+                width: "90%",
+              }}
+            >
+              {/* Pixel Mario icon */}
+              <div style={{ fontSize: "32px", lineHeight: 1 }}>🍄</div>
+
+              <h2
+                className="pixel-text"
+                style={{
+                  color: dayTheme.colors.coin,
+                  fontSize: "clamp(10px, 2.5vw, 16px)",
+                  textAlign: "center",
+                  margin: 0,
+                  lineHeight: 1.6,
+                }}
+              >
+                MARIO GAME
+              </h2>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: pixelGrid.px2,
+                  width: "100%",
+                }}
+              >
+                <p className="pixel-text" style={{ color: dayTheme.colors.text, fontSize: "7px", textAlign: "center", margin: 0 }}>
+                  ◀ ▶ — MOVE
+                </p>
+                <p className="pixel-text" style={{ color: dayTheme.colors.text, fontSize: "7px", textAlign: "center", margin: 0 }}>
+                  SPACE — JUMP
+                </p>
+                <p className="pixel-text" style={{ color: dayTheme.colors.text, fontSize: "7px", textAlign: "center", margin: 0 }}>
+                  COLLECT ALL COINS TO WIN
+                </p>
+              </div>
+
+              <button
+                aria-label="Start Game"
+                onClick={handleStart}
+                autoFocus
+                className="pixel-text pixel-shadow"
+                style={{
+                  padding: `${pixelGrid.px3} ${pixelGrid.px8}`,
+                  fontSize: "clamp(9px, 2vw, 12px)",
+                  background: dayTheme.colors.pipe,
+                  color: dayTheme.colors.text,
+                  border: `3px solid ${dayTheme.colors.border}`,
+                  cursor: "pointer",
+                  letterSpacing: "0.1em",
+                  width: "100%",
+                }}
+              >
+                ▶ START GAME
+              </button>
+            </div>
+          </div>
+        )}
+
+        {overlayState.type === "respawn" && (
+          <div
+            style={{
+              position: "absolute",
+              top: 0, left: 0, right: 0, bottom: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "rgba(0,0,0,0.7)",
+              zIndex: zIndex.overlay,
+              gap: pixelGrid.px4,
+            }}
+          >
+            <p
+              className="pixel-text"
+              style={{ color: dayTheme.colors.mario, fontSize: "clamp(14px, 3vw, 22px)", margin: 0 }}
+            >
+              YOU DIED
+            </p>
+            <p
+              className="pixel-text"
+              style={{ color: dayTheme.colors.coin, fontSize: "clamp(10px, 2vw, 14px)", margin: 0 }}
+            >
+              {Array.from({ length: overlayState.livesLeft }).map((_, i) => (
+                <span key={i}>♥ </span>
+              ))}
+            </p>
+            <p
+              className="pixel-text"
+              style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", margin: 0 }}
+            >
+              RESPAWNING...
+            </p>
+          </div>
+        )}
+
         {(overlayState.type === "submitScore" || overlayState.type === "gameOver") && (
           <div
             role="dialog"
@@ -806,11 +981,12 @@ export default function MarioGame(): React.ReactElement {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            padding: `${pixelGrid.px4}`,
-            marginTop: pixelGrid.px2,
+            padding: "4px 8px",
+            marginTop: "4px",
+            width: "100%",
           }}
         >
-          <div style={{ display: "flex", gap: pixelGrid.px2 }}>
+          <div style={{ display: "flex", gap: "8px" }}>
             <button
               onPointerDown={() => setInput("left", true)}
               onPointerUp={() => setInput("left", false)}
@@ -818,14 +994,16 @@ export default function MarioGame(): React.ReactElement {
               aria-label="Move left"
               className="pixel-text pixel-shadow"
               style={{
-                padding: `${pixelGrid.px3} ${pixelGrid.px4}`,
-                fontSize: "20px",
+                padding: "clamp(8px, 3vw, 16px) clamp(12px, 4vw, 24px)",
+                fontSize: "clamp(16px, 5vw, 28px)",
                 background: dayTheme.colors.brick,
                 color: dayTheme.colors.text,
                 border: `2px solid ${dayTheme.colors.border}`,
                 cursor: "pointer",
                 userSelect: "none",
                 touchAction: "none",
+                minWidth: "clamp(44px, 12vw, 72px)",
+                minHeight: "clamp(44px, 10vw, 64px)",
               }}
             >
               ◀
@@ -837,14 +1015,16 @@ export default function MarioGame(): React.ReactElement {
               aria-label="Move right"
               className="pixel-text pixel-shadow"
               style={{
-                padding: `${pixelGrid.px3} ${pixelGrid.px4}`,
-                fontSize: "20px",
+                padding: "clamp(8px, 3vw, 16px) clamp(12px, 4vw, 24px)",
+                fontSize: "clamp(16px, 5vw, 28px)",
                 background: dayTheme.colors.brick,
                 color: dayTheme.colors.text,
                 border: `2px solid ${dayTheme.colors.border}`,
                 cursor: "pointer",
                 userSelect: "none",
                 touchAction: "none",
+                minWidth: "clamp(44px, 12vw, 72px)",
+                minHeight: "clamp(44px, 10vw, 64px)",
               }}
             >
               ▶
@@ -857,14 +1037,16 @@ export default function MarioGame(): React.ReactElement {
             aria-label="Jump"
             className="pixel-text pixel-shadow"
             style={{
-              padding: `${pixelGrid.px3} ${pixelGrid.px4}`,
-              fontSize: "20px",
+              padding: "clamp(8px, 3vw, 16px) clamp(16px, 6vw, 36px)",
+              fontSize: "clamp(16px, 5vw, 28px)",
               background: dayTheme.colors.mario,
               color: dayTheme.colors.text,
               border: `2px solid ${dayTheme.colors.border}`,
               cursor: "pointer",
               userSelect: "none",
               touchAction: "none",
+              minWidth: "clamp(44px, 12vw, 72px)",
+              minHeight: "clamp(44px, 10vw, 64px)",
             }}
           >
             ▲
@@ -875,14 +1057,15 @@ export default function MarioGame(): React.ReactElement {
       <div
         style={{
           marginTop: pixelGrid.px4,
-          padding: `0 ${pixelGrid.px4}`,
+          padding: `0 ${pixelGrid.px2}`,
+          width: "100%",
         }}
       >
         <h3
           className="pixel-text"
           style={{
             color: dayTheme.colors.coin,
-            fontSize: "10px",
+            fontSize: "clamp(7px, 1.5vw, 10px)",
             marginBottom: pixelGrid.px4,
             textAlign: "center",
           }}

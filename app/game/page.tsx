@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { dayTheme, pixelGrid } from "../lib/theme";
+import { dayTheme } from "../lib/theme";
 
 const MarioGame = dynamic(
   () => import("../components/game/MarioGame"),
@@ -11,34 +11,18 @@ const MarioGame = dynamic(
       <div
         style={{
           width: "100%",
-          maxWidth: "800px",
-          margin: "0 auto",
-          padding: pixelGrid.px4,
+          aspectRatio: "16 / 9",
+          background: dayTheme.colors.sky,
+          border: `4px solid ${dayTheme.colors.border}`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: '"Press Start 2P", monospace',
+          fontSize: "clamp(8px, 2vw, 12px)",
+          color: dayTheme.colors.text,
         }}
       >
-        <div
-          style={{
-            width: "100%",
-            paddingBottom: "56.25%",
-            position: "relative",
-            background: dayTheme.colors.sky,
-            border: `4px solid ${dayTheme.colors.border}`,
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              fontFamily: '"Press Start 2P", monospace',
-              fontSize: "12px",
-              color: dayTheme.colors.text,
-            }}
-          >
-            LOADING...
-          </div>
-        </div>
+        LOADING...
       </div>
     ),
   }
@@ -48,23 +32,27 @@ export default function GamePage() {
   return (
     <main
       style={{
+        /* sit flush below the fixed navbar (56px) */
+        paddingTop: "56px",
         minHeight: "100vh",
-        padding: `${pixelGrid.px12} ${pixelGrid.px4}`,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        gap: "8px",
+        background: "#000",
       }}
     >
       <h1
         className="pixel-text"
         style={{
           color: dayTheme.colors.coin,
-          fontSize: "16px",
-          marginBottom: pixelGrid.px8,
+          fontSize: "clamp(9px, 2vw, 14px)",
           textAlign: "center",
+          margin: "8px 0 4px",
+          letterSpacing: "0.1em",
         }}
       >
-        PLAY MY MARIO GAME
+        MARIO GAME
       </h1>
       <MarioGame />
     </main>
