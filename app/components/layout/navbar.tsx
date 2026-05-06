@@ -10,10 +10,10 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, Github, Linkedin, Instagram, Settings } from "lucide-react";
+import { Menu, X, Github, Linkedin, Instagram, Settings, ChevronLeft } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { dayTheme } from "../../lib/theme";
 import { NAV_LINKS } from "../../lib/constants";
 import { PixelButton } from "../ui/pixel-button";
@@ -60,25 +60,12 @@ function getWorldLabel(pathname: string): string {
 // ---------------------------------------------------------------------------
 
 function HUDStrip({ coins, worldLabel }: { coins: number; worldLabel: string }) {
-  // Score = 100 points per visited page
-  const score = coins * 100;
-
   return (
     <div
       className="flex items-center gap-4"
       role="status"
       aria-label="Game HUD"
     >
-      {/* Score */}
-      <div className="hidden sm:block">
-        <span className="pixel-text block" style={{ color: "#aaa", fontSize: "7px" }}>
-          SCORE
-        </span>
-        <span className="pixel-text" style={{ color: "#fff", fontSize: "9px" }}>
-          {String(score).padStart(6, "0")}
-        </span>
-      </div>
-
       {/* Coins */}
       <div className="flex items-center gap-1">
         <Coin size={12} />
@@ -89,9 +76,6 @@ function HUDStrip({ coins, worldLabel }: { coins: number; worldLabel: string }) 
 
       {/* World */}
       <div>
-        <span className="pixel-text block" style={{ color: "#aaa", fontSize: "7px" }}>
-          WORLD
-        </span>
         <span className="pixel-text" style={{ color: "#fff", fontSize: "9px" }}>
           {worldLabel}
         </span>
@@ -108,10 +92,14 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const { visitedRoutes, markVisited } = useProgressTracker();
   const { theme, toggleTheme } = useThemeContext();
   const { playClick } = useSound();
   const worldLabel = getWorldLabel(pathname);
+
+  // Show back button on all pages except /world (home base) and /
+  const showBack = pathname !== "/world" && pathname !== "/";
 
   // Mark the current page as visited whenever the route changes
   useEffect(() => {
@@ -157,9 +145,31 @@ const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14 relative z-[10001]">
 
-          {/* LEFT — theme toggle + HUD stats */}
+          {/* LEFT — back button + theme toggle + HUD stats */}
           <div className="flex items-center gap-3">
-            {/* Theme toggle button — far left corner */}
+            {/* Back button — shown on all pages except /world */}
+            {showBack && (
+              <motion.button
+                onClick={() => { playClick(); router.back(); }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9, y: 2 }}
+                aria-label="Go back"
+                title="Go back"
+                className="flex items-center justify-center cursor-pointer outline-none"
+                style={{
+                  width: 32,
+                  height: 32,
+                  backgroundColor: "#000",
+                  border: `2px solid ${dayTheme.colors.coin}`,
+                  color: dayTheme.colors.coin,
+                  flexShrink: 0,
+                }}
+              >
+                <ChevronLeft size={18} />
+              </motion.button>
+            )}
+
+            {/* Theme toggle button */}
             <motion.button
               onClick={() => { playClick(); toggleTheme(); }}
               whileHover={{ scale: 1.1 }}
@@ -195,7 +205,6 @@ const Navbar = () => {
             >
               <Link href="/" aria-label="JEZER. — go to home page" style={{ textDecoration: "none" }}>
                 <div className="flex items-center gap-2">
-                  <Coin size={14} />
                   <span className="pixel-text" style={{ color: "#fff", fontSize: "11px" }}>
                     JEZER<span style={{ color: dayTheme.colors.coin }}>.</span>
                   </span>
