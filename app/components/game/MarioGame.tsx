@@ -230,43 +230,73 @@ function renderFrame(ctx: CanvasRenderingContext2D, gs: GameState): void {
     ctx.fillRect(enemy.x + enemy.width - 12, enemy.y + 6, 8, 2);
   }
 
-  // 6. Player — rectangle with pixel-art face
+  // 6. Player — side-view pixel-art character (facing left or right)
   const px = player.x;
   const py = player.y;
   const pw = player.width;
   const ph = player.height;
 
-  // Body
-  ctx.fillStyle = dayTheme.colors.mario;
-  ctx.fillRect(px, py, pw, ph);
+  // Scale factor: design grid is 16 wide × 24 tall
+  const sx = pw / 16;
+  const sy = ph / 24;
 
-  // Cap brim (darker red)
-  ctx.fillStyle = "#b00040";
-  ctx.fillRect(px - 2, py + 4, pw + 4, 6);
+  // Helper: draw a scaled rect using design-grid coordinates
+  const pr = (gx: number, gy: number, gw: number, gh: number, color: string) => {
+    ctx.fillStyle = color;
+    // Mirror horizontally when facing left
+    const drawX = player.facingRight
+      ? Math.round(px + gx * sx)
+      : Math.round(px + (16 - gx - gw) * sx);
+    ctx.fillRect(drawX, Math.round(py + gy * sy), Math.round(gw * sx), Math.round(gh * sy));
+  };
 
-  // Face (skin tone)
-  ctx.fillStyle = "#f4a460";
-  ctx.fillRect(px + 4, py + 10, pw - 8, 14);
+  // ── HAT ──────────────────────────────────────────────────────────────────
+  // Crown (sits on top of head, slightly inset from front)
+  pr(2, 0, 10, 3, dayTheme.colors.mario);
+  // Brim (wider, sticks out toward the front)
+  pr(1, 3, 13, 2, dayTheme.colors.mario);
 
-  // Eyes (white + pupil)
-  const eyeX = player.facingRight ? px + pw - 12 : px + 4;
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(eyeX, py + 12, 6, 6);
-  ctx.fillStyle = "#000000";
-  ctx.fillRect(eyeX + (player.facingRight ? 2 : 0), py + 14, 3, 3);
+  // ── HEAD / FACE ───────────────────────────────────────────────────────────
+  // Skin — full head block
+  pr(3, 5, 9, 6, "#f4a460");
+  // Nose bump (front of face)
+  pr(11, 7, 2, 2, "#f4a460");
 
-  // Mustache
-  ctx.fillStyle = "#4a2800";
-  ctx.fillRect(px + 4, py + 20, pw - 8, 3);
+  // ── EYE (single, front-facing side) ──────────────────────────────────────
+  pr(9, 6, 3, 2, "#000000");   // eye black
+  pr(10, 6, 1, 1, "#ffffff");  // eye shine
 
-  // Walk animation — legs alternate based on animFrame
-  ctx.fillStyle = "#0000aa"; // blue overalls
+  // ── MUSTACHE ─────────────────────────────────────────────────────────────
+  pr(7, 10, 6, 2, "#8B4513");
+
+  // ── BODY (overalls) ──────────────────────────────────────────────────────
+  pr(3, 11, 10, 7, "#0000cd");
+
+  // ── SHIRT / ARMS (red) ───────────────────────────────────────────────────
+  // Back arm
+  pr(2, 11, 3, 5, dayTheme.colors.mario);
+  // Front arm — swings with walk cycle
   if (player.animFrame === 0) {
-    ctx.fillRect(px + 2, py + ph - 14, 10, 14);
-    ctx.fillRect(px + pw - 12, py + ph - 10, 10, 10);
+    pr(11, 12, 3, 4, dayTheme.colors.mario); // arm forward
   } else {
-    ctx.fillRect(px + 2, py + ph - 10, 10, 10);
-    ctx.fillRect(px + pw - 12, py + ph - 14, 10, 14);
+    pr(11, 13, 3, 4, dayTheme.colors.mario); // arm back
+  }
+
+  // ── LEGS (walk cycle) ────────────────────────────────────────────────────
+  if (player.animFrame === 0) {
+    // Back leg forward, front leg back
+    pr(3,  18, 4, 6, "#0000cd");  // back leg (forward stride)
+    pr(8,  18, 4, 4, "#0000cd");  // front leg (back stride, shorter = lifted)
+    // Shoes (brown)
+    pr(3,  22, 5, 2, "#5c3317");  // back shoe
+    pr(8,  20, 5, 2, "#5c3317");  // front shoe (lifted)
+  } else {
+    // Front leg forward, back leg back
+    pr(8,  18, 4, 6, "#0000cd");  // front leg (forward stride)
+    pr(3,  18, 4, 4, "#0000cd");  // back leg (back stride, shorter = lifted)
+    // Shoes (brown)
+    pr(8,  22, 5, 2, "#5c3317");  // front shoe
+    pr(3,  20, 5, 2, "#5c3317");  // back shoe (lifted)
   }
 
   // 7. HUD overlay — score and lives (font size scales with canvas width)
