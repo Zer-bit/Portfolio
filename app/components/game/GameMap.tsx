@@ -28,6 +28,7 @@ import { motion } from "framer-motion";
 import { dayTheme } from "../../lib/theme";
 import { fadeUpVariant } from "../../lib/animations";
 import { PixelCard } from "../ui/pixel-card";
+import { useSound } from "../../hooks/use-sound";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -105,6 +106,7 @@ export const GameMapComponent: React.FC<GameMapProps> = ({
   routes,
   visitedRoutes = [],
 }) => {
+  const { playClick } = useSound();
   return (
     <section
       aria-label="World Map — choose a level"
@@ -171,6 +173,7 @@ export const GameMapComponent: React.FC<GameMapProps> = ({
               <Link
                 href={route.href}
                 aria-label={`Navigate to ${route.name} — ${levelLabel}`}
+                onClick={playClick}
                 style={{ display: "block", textDecoration: "none" }}
               >
                 <PixelCard

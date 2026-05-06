@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import Coin from "../game/coin";
 import { dayTheme } from "../../lib/theme";
+import { PixelButton } from "./pixel-button";
 
 interface NotificationToastProps {
     isVisible: boolean;
@@ -37,12 +38,15 @@ const NotificationToast = ({ isVisible, message, onClose }: NotificationToastPro
                     className="relative bg-white pixel-shadow flex flex-col items-center text-center overflow-hidden p-6"
                     style={{ border: `2px solid ${dayTheme.colors.border}` }}
                 >
-                    <button
+                    <PixelButton
+                        variant="brick"
+                        size="sm"
                         onClick={onClose}
-                        className="absolute top-4 right-4 text-gray-500 hover:text-black transition-colors"
+                        aria-label="Close notification"
+                        style={{ position: "absolute", top: 12, right: 12, padding: "4px 6px" }}
                     >
-                        <X size={18} />
-                    </button>
+                        <X size={14} />
+                    </PixelButton>
 
                     <div className="w-16 h-16 flex items-center justify-center mb-4">
                         <Coin size={20} />

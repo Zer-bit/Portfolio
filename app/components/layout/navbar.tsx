@@ -16,8 +16,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { dayTheme } from "../../lib/theme";
 import { NAV_LINKS } from "../../lib/constants";
+import { PixelButton } from "../ui/pixel-button";
 import { useProgressTracker } from "../../lib/progress-tracker";
 import { useThemeContext } from "../../lib/theme-context";
+import { useSound } from "../../hooks/use-sound";
 
 // Dynamic imports for game components (ssr: false)
 const Coin = dynamic(
@@ -108,6 +110,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const { visitedRoutes, markVisited } = useProgressTracker();
   const { theme, toggleTheme } = useThemeContext();
+  const { playClick } = useSound();
   const worldLabel = getWorldLabel(pathname);
 
   // Mark the current page as visited whenever the route changes
@@ -158,21 +161,24 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             {/* Theme toggle button — far left corner */}
             <motion.button
-              onClick={toggleTheme}
+              onClick={() => { playClick(); toggleTheme(); }}
               whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="p-2 cursor-pointer outline-none pixel-text"
-              style={{
-                border: `2px solid rgba(255,255,255,0.2)`,
-                backgroundColor: "rgba(255,255,255,0.08)",
-                color: dayTheme.colors.coin,
-                fontSize: "12px",
-                lineHeight: 1,
-              }}
+              whileTap={{ scale: 0.9, y: 2 }}
               aria-label={`Switch to ${theme === "day" ? "night" : "day"} theme`}
               title={`Switch to ${theme === "day" ? "night" : "day"} theme`}
+              className="flex items-center justify-center cursor-pointer outline-none"
+              style={{
+                width: 32,
+                height: 32,
+                backgroundColor: "#000",
+                border: `2px solid ${dayTheme.colors.coin}`,
+                color: dayTheme.colors.coin,
+                fontSize: "16px",
+                lineHeight: 1,
+                flexShrink: 0,
+              }}
             >
-              {theme === "day" ? "🌙" : "☀"}
+              {theme === "day" ? "🌙" : "☀️"}
             </motion.button>
 
             <HUDStrip coins={coins} worldLabel={worldLabel} />
@@ -231,7 +237,7 @@ const Navbar = () => {
             </div>
 
             {/* Settings button */}
-            <Link href="/settings" aria-label="Go to settings page">
+            <Link href="/settings" aria-label="Go to settings page" onClick={playClick}>
               <motion.div
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
@@ -249,7 +255,7 @@ const Navbar = () => {
             {/* Mobile menu button */}
             <div className="md:hidden">
               <motion.button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => { playClick(); setIsOpen(!isOpen); }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="p-2 cursor-pointer outline-none"
@@ -302,7 +308,7 @@ const Navbar = () => {
               >
                 <Link
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => { playClick(); setIsOpen(false); }}
                   aria-label={`Navigate to ${link.name}`}
                   className="block uppercase pixel-text hover:opacity-70 transition-opacity"
                   style={{
@@ -342,19 +348,19 @@ const Navbar = () => {
               </div>
 
               {/* Theme toggle in mobile menu */}
-              <button
+              <PixelButton
+                variant="coin"
+                size="sm"
                 onClick={toggleTheme}
-                className="pixel-text flex items-center gap-2 cursor-pointer"
-                style={{ fontSize: "9px", color: dayTheme.colors.coin, background: "none", border: "none" }}
                 aria-label={`Switch to ${theme === "day" ? "night" : "day"} theme`}
               >
                 {theme === "day" ? "🌙 NIGHT MODE" : "☀ DAY MODE"}
-              </button>
+              </PixelButton>
 
               {/* Settings link in mobile menu */}
               <Link
                 href="/settings"
-                onClick={() => setIsOpen(false)}
+                onClick={() => { playClick(); setIsOpen(false); }}
                 aria-label="Go to settings page"
                 className="pixel-text flex items-center gap-2"
                 style={{ fontSize: "9px", color: pathname === "/settings" ? dayTheme.colors.coin : "rgba(255,255,255,0.7)" }}
@@ -375,6 +381,7 @@ const Navbar = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
+                    onClick={playClick}
                     className="w-10 h-10 flex items-center justify-center transition-colors"
                     style={{ border: `2px solid rgba(255,255,255,0.3)`, color: "rgba(255,255,255,0.7)" }}
                     onMouseEnter={(e) => {
@@ -392,6 +399,7 @@ const Navbar = () => {
                 <a
                   href="viber://chat?number=+639763891702"
                   aria-label="Viber contact"
+                  onClick={playClick}
                   className="w-10 h-10 flex items-center justify-center transition-colors"
                   style={{ border: `2px solid rgba(255,255,255,0.3)`, color: "rgba(255,255,255,0.7)" }}
                   onMouseEnter={(e) => {

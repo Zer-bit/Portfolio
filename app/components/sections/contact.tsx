@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Send, Loader2, CheckCircle2, Github, Linkedin, Instagram } from "lucide-react";
+import { PixelButton } from "../ui/pixel-button";
+import { useSound } from "../../hooks/use-sound";
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyaTDnX4uuklVWAp6C9KwNT9pHzFhEoDd_IaTfxy_fqAk07hiICcjTREYr3-5dLXV4/exec";
 
@@ -13,6 +15,7 @@ const Contact = () => {
         email: "",
         message: ""
     });
+    const { playClick } = useSound();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -62,7 +65,7 @@ const Contact = () => {
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-500">Email me at</p>
-                                    <a href="mailto:jezermantilla263026@gmail.com" className="font-medium text-black hover:text-[#0ea5e9] transition-colors">
+                                    <a href="mailto:jezermantilla263026@gmail.com" onClick={playClick} className="font-medium text-black hover:text-[#0ea5e9] transition-colors">
                                         jezermantilla263026@gmail.com
                                     </a>
                                 </div>
@@ -92,6 +95,7 @@ const Contact = () => {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             whileHover={{ y: -5, scale: 1.1 }}
+                                            onClick={playClick}
                                             className="w-12 h-12 rounded-xl bg-black/5 flex items-center justify-center text-gray-600 transition-all"
                                             style={{
                                                 ['--hover-color' as any]: social.color,
@@ -181,16 +185,19 @@ const Contact = () => {
                                         className="w-full bg-white/80 border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:border-[#9cbd09] focus:ring-2 focus:ring-[#9cbd09]/20 transition-all resize-none text-black"
                                     />
                                 </div>
-                                <button
+                                <PixelButton
+                                    type="submit"
+                                    variant="brick"
+                                    size="lg"
                                     disabled={status === "loading"}
-                                    className="w-full py-4 bg-[#f97316] hover:bg-[#ea580c] text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#f97316]/20 hover:shadow-[#f97316]/30 disabled:opacity-50 disabled:cursor-not-allowed group"
+                                    style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
                                 >
                                     {status === "loading" ? (
-                                        <>Sending... <Loader2 size={18} className="animate-spin" /></>
+                                        <>Sending... <Loader2 size={16} className="animate-spin" /></>
                                     ) : (
-                                        <>Send Message <Send size={18} className="group-hover:translate-x-1 transition-transform" /></>
+                                        <>Send Message <Send size={16} /></>
                                     )}
-                                </button>
+                                </PixelButton>
                                 {status === "error" && (
                                     <p className="text-red-500 text-sm text-center">Something went wrong. Please try again.</p>
                                 )}

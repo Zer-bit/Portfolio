@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import { useTilt } from "../../hooks/use-tilt";
 import NotificationToast from "../ui/notification-toast";
+import { useSound } from "../../hooks/use-sound";
 
 const projects = [
     {
@@ -59,6 +60,7 @@ const projects = [
 
 const ProjectCard = ({ project, index, onNotice }: { project: typeof projects[0]; index: number; onNotice: (msg: string) => void }) => {
     const { ref, style } = useTilt(8);
+    const { playClick } = useSound();
 
     return (
         <motion.div
@@ -129,6 +131,7 @@ const ProjectCard = ({ project, index, onNotice }: { project: typeof projects[0]
                         target={project.link === "#" ? "_self" : "_blank"}
                         rel="noopener noreferrer"
                         onClick={(e) => {
+                            playClick();
                             if (project.link === "#") {
                                 e.preventDefault();
                                 onNotice("This project is not deployed or published yet.");

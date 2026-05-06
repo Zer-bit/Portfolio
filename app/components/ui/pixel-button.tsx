@@ -32,6 +32,7 @@ import { motion } from "framer-motion";
 import { dayTheme, pixelGrid } from "../../lib/theme";
 import { type AnimationPresetName } from "../../lib/animations";
 import { useAnimation } from "../../hooks/use-animation";
+import { useSound } from "../../hooks/use-sound";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -186,11 +187,17 @@ export function PixelButton({
   className = "",
   style,
   children,
+  onClick,
   ...rest
 }: PixelButtonProps) {
-  // Always call the hook — pass a fallback preset when animation is undefined
-  // so the hook call is unconditional (Rules of Hooks compliance).
   const animationProps = useAnimation(animation ?? "bounce");
+  const { playClick } = useSound();
+
+  // Wrap onClick to play sound first
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!disabled) playClick();
+    onClick?.(e);
+  };
 
   // Compose class names
   const classes = [
@@ -232,6 +239,7 @@ export function PixelButton({
         initial={animationProps.initial}
         animate={animationProps.animate}
         whileTap={disabled ? undefined : { y: 2 }}
+        onClick={handleClick}
         {...motionRest}
       >
         {children}
@@ -245,6 +253,7 @@ export function PixelButton({
       className={classes}
       style={mergedStyle}
       disabled={disabled}
+      onClick={handleClick}
       {...rest}
     >
       {children}

@@ -34,6 +34,7 @@ import { dayTheme } from "../../lib/theme";
 import { ROUTES } from "../../lib/constants";
 import PixelCard from "../ui/pixel-card";
 import PixelButton from "../ui/pixel-button";
+import { useSound } from "../../hooks/use-sound";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -69,9 +70,10 @@ export function LevelCardComponent({ project }: LevelCardProps) {
   const isComingSoon = project.link === "#";
   const slug = toSlug(project.title);
   const projectPath = `${ROUTES.projects}/${slug}`;
+  const { playClick } = useSound();
 
   // All cards navigate to the detail page regardless of live link status.
-  const handleClick = () => router.push(projectPath);
+  const handleClick = () => { playClick(); router.push(projectPath); };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter" || e.key === " ") {

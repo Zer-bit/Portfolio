@@ -3,8 +3,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
+import { useSound } from "../../hooks/use-sound";
 
 const PersonalInfo = () => {
+    const { playClick } = useSound();
     return (
         <div id="home" className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-mesh">
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
@@ -64,6 +66,7 @@ const PersonalInfo = () => {
                         {/* Primary CTA */}
                         <a
                             href="#contact"
+                            onClick={playClick}
                             className="inline-flex items-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg shadow-[#f97316]/20 hover:shadow-[#f97316]/30 hover:scale-105"
                         >
                             Hire Me
@@ -71,6 +74,7 @@ const PersonalInfo = () => {
                         {/* Secondary CTA */}
                         <a
                             href="#projects"
+                            onClick={playClick}
                             className="inline-flex items-center gap-2 bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg shadow-[#0ea5e9]/20 hover:shadow-[#0ea5e9]/30 hover:scale-105"
                         >
                             View Work

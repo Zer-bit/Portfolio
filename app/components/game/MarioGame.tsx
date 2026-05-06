@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { dayTheme, pixelGrid, zIndex } from "../../lib/theme";
 import { useSound } from "../../hooks/use-sound";
+import { PixelButton } from "../ui/pixel-button";
 import {
   capDeltaTime,
   applyGravity,
@@ -808,24 +809,16 @@ export default function MarioGame(): React.ReactElement {
                 </p>
               </div>
 
-              <button
+              <PixelButton
+                variant="pipe"
+                size="md"
                 aria-label="Start Game"
                 onClick={handleStart}
                 autoFocus
-                className="pixel-text pixel-shadow"
-                style={{
-                  padding: `${pixelGrid.px3} ${pixelGrid.px8}`,
-                  fontSize: "clamp(9px, 2vw, 12px)",
-                  background: dayTheme.colors.pipe,
-                  color: dayTheme.colors.text,
-                  border: `3px solid ${dayTheme.colors.border}`,
-                  cursor: "pointer",
-                  letterSpacing: "0.1em",
-                  width: "100%",
-                }}
+                style={{ width: "100%", fontSize: "clamp(9px, 2vw, 12px)", letterSpacing: "0.1em" }}
               >
                 ▶ START GAME
-              </button>
+              </PixelButton>
             </div>
           </div>
         )}
@@ -953,23 +946,16 @@ export default function MarioGame(): React.ReactElement {
                     )}
                   </div>
 
-                  <button
+                  <PixelButton
+                    variant="pipe"
+                    size="sm"
                     aria-label="Submit Score"
                     disabled={submitState.loading}
                     onClick={() => handleSubmitScore(submitState.playerName, overlayState.finalScore)}
-                    className="pixel-text pixel-shadow"
-                    style={{
-                      padding: `${pixelGrid.px2} ${pixelGrid.px4}`,
-                      fontSize: "10px",
-                      background: submitState.loading ? dayTheme.colors.ground : dayTheme.colors.pipe,
-                      color: dayTheme.colors.text,
-                      border: `2px solid ${dayTheme.colors.border}`,
-                      cursor: submitState.loading ? "not-allowed" : "pointer",
-                      opacity: submitState.loading ? 0.7 : 1,
-                    }}
+                    style={{ width: "100%", fontSize: "10px" }}
                   >
                     {submitState.loading ? "SAVING..." : "SUBMIT SCORE"}
-                  </button>
+                  </PixelButton>
                 </>
               )}
 
@@ -982,21 +968,15 @@ export default function MarioGame(): React.ReactElement {
                 </p>
               )}
 
-              <button
+              <PixelButton
+                variant="brick"
+                size="sm"
                 aria-label="Play Again"
                 onClick={handlePlayAgain}
-                className="pixel-text pixel-shadow"
-                style={{
-                  padding: `${pixelGrid.px2} ${pixelGrid.px4}`,
-                  fontSize: "10px",
-                  background: dayTheme.colors.brick,
-                  color: dayTheme.colors.text,
-                  border: `2px solid ${dayTheme.colors.border}`,
-                  cursor: "pointer",
-                }}
+                style={{ width: "100%", fontSize: "10px" }}
               >
                 PLAY AGAIN
-              </button>
+              </PixelButton>
             </div>
           </div>
         )}
@@ -1013,19 +993,14 @@ export default function MarioGame(): React.ReactElement {
           }}
         >
           <div style={{ display: "flex", gap: "8px" }}>
-            <button
+            <PixelButton
+              variant="brick"
               onPointerDown={() => setInput("left", true)}
               onPointerUp={() => setInput("left", false)}
               onPointerLeave={() => setInput("left", false)}
               aria-label="Move left"
-              className="pixel-text pixel-shadow"
               style={{
-                padding: "clamp(8px, 3vw, 16px) clamp(12px, 4vw, 24px)",
                 fontSize: "clamp(16px, 5vw, 28px)",
-                background: dayTheme.colors.brick,
-                color: dayTheme.colors.text,
-                border: `2px solid ${dayTheme.colors.border}`,
-                cursor: "pointer",
                 userSelect: "none",
                 touchAction: "none",
                 minWidth: "clamp(44px, 12vw, 72px)",
@@ -1033,20 +1008,15 @@ export default function MarioGame(): React.ReactElement {
               }}
             >
               ◀
-            </button>
-            <button
+            </PixelButton>
+            <PixelButton
+              variant="brick"
               onPointerDown={() => setInput("right", true)}
               onPointerUp={() => setInput("right", false)}
               onPointerLeave={() => setInput("right", false)}
               aria-label="Move right"
-              className="pixel-text pixel-shadow"
               style={{
-                padding: "clamp(8px, 3vw, 16px) clamp(12px, 4vw, 24px)",
                 fontSize: "clamp(16px, 5vw, 28px)",
-                background: dayTheme.colors.brick,
-                color: dayTheme.colors.text,
-                border: `2px solid ${dayTheme.colors.border}`,
-                cursor: "pointer",
                 userSelect: "none",
                 touchAction: "none",
                 minWidth: "clamp(44px, 12vw, 72px)",
@@ -1054,21 +1024,16 @@ export default function MarioGame(): React.ReactElement {
               }}
             >
               ▶
-            </button>
+            </PixelButton>
           </div>
-          <button
+          <PixelButton
+            variant="coin"
             onPointerDown={() => { gameStateRef.current.inputState.jumpBufferMs = 150; }}
             onPointerUp={() => {}}
             onPointerLeave={() => {}}
             aria-label="Jump"
-            className="pixel-text pixel-shadow"
             style={{
-              padding: "clamp(8px, 3vw, 16px) clamp(16px, 6vw, 36px)",
               fontSize: "clamp(16px, 5vw, 28px)",
-              background: dayTheme.colors.mario,
-              color: dayTheme.colors.text,
-              border: `2px solid ${dayTheme.colors.border}`,
-              cursor: "pointer",
               userSelect: "none",
               touchAction: "none",
               minWidth: "clamp(44px, 12vw, 72px)",
@@ -1076,7 +1041,7 @@ export default function MarioGame(): React.ReactElement {
             }}
           >
             ▲
-          </button>
+          </PixelButton>
         </div>
       )}
       {/* Leaderboard */}
@@ -1125,20 +1090,13 @@ export default function MarioGame(): React.ReactElement {
             >
               FAILED TO LOAD SCORES
             </p>
-            <button
+            <PixelButton
+              variant="brick"
+              size="sm"
               onClick={() => void fetchLeaderboard()}
-              className="pixel-text pixel-shadow"
-              style={{
-                padding: `${pixelGrid.px2} ${pixelGrid.px4}`,
-                fontSize: "8px",
-                background: dayTheme.colors.brick,
-                color: dayTheme.colors.text,
-                border: `2px solid ${dayTheme.colors.border}`,
-                cursor: "pointer",
-              }}
             >
               RETRY
-            </button>
+            </PixelButton>
           </div>
         )}
 

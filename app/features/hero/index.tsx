@@ -278,18 +278,15 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 1.2 }}
             className="flex flex-col items-start justify-center mt-10"
           >
-            <button
+            <PixelButton
+              variant="coin"
+              size="sm"
               onClick={scrollToSkills}
               aria-label="Scroll down to skills section"
-              className="w-12 h-12 flex items-center justify-center border-2 cursor-pointer transition-transform hover:scale-110"
-              style={{
-                borderColor: dayTheme.colors.coin,
-                color: dayTheme.colors.coin,
-                backgroundColor: "transparent",
-              }}
+              style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 48, height: 48 }}
             >
-              <ArrowDown size={24} />
-            </button>
+              <ArrowDown size={20} />
+            </PixelButton>
           </motion.div>
         </motion.div>
 
