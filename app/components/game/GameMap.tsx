@@ -78,6 +78,7 @@ const LEVEL_LABELS: Record<string, string> = {
   skills: "WORLD 1-3",
   experience: "WORLD 1-4",
   contact: "WORLD 1-5",
+  game: "WORLD 1-6",
 };
 
 // ---------------------------------------------------------------------------

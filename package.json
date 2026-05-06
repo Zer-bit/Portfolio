@@ -10,6 +10,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.105.3",
     "@tailwindcss/postcss": "^4.1.18",
     "clsx": "latest",
     "framer-motion": "latest",
@@ -26,6 +27,7 @@
     "@types/react-scroll": "latest",
     "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "latest",
+    "fast-check": "^4.7.0",
     "postcss": "latest",
     "react-scroll": "latest",
     "tailwindcss": "latest",

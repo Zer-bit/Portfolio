@@ -43,6 +43,7 @@ const WORLD_LABEL_MAP: Record<string, string> = {
   "/experience": "WORLD-6",
   "/contact":    "WORLD-7",
   "/settings":   "WORLD-8",
+  "/game":       "WORLD-9",
 };
 
 function getWorldLabel(pathname: string): string {

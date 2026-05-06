@@ -48,6 +48,7 @@ export const ROUTES = {
   experience: "/experience",
   contact: "/contact",
   settings: "/settings",
+  game: "/game",
 } as const;
 
 // Navigation Links
@@ -58,4 +59,5 @@ export const NAV_LINKS = [
   { name: "Projects", href: ROUTES.projects, id: "projects" },
   { name: "Experience", href: ROUTES.experience, id: "experience" },
   { name: "Contact", href: ROUTES.contact, id: "contact" },
+  { name: "Game", href: ROUTES.game, id: "game" },
 ] as const;

@@ -43,6 +43,7 @@ const WORLD_LABEL_MAP: Record<string, string> = {
   [ROUTES.experience]: "WORLD-6",
   [ROUTES.contact]: "WORLD-7",
   [ROUTES.settings]: "WORLD-8",
+  [ROUTES.game]: "WORLD-9",
 };
 
 /**
