@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 import { dayTheme } from "../../lib/theme";
 import { NAV_LINKS } from "../../lib/constants";
 import { useProgressTracker } from "../../lib/progress-tracker";
+import { useThemeContext } from "../../lib/theme-context";
 
 // Dynamic imports for game components (ssr: false)
 const Coin = dynamic(
@@ -56,6 +57,9 @@ function getWorldLabel(pathname: string): string {
 // ---------------------------------------------------------------------------
 
 function HUDStrip({ coins, worldLabel }: { coins: number; worldLabel: string }) {
+  // Score = 100 points per visited page
+  const score = coins * 100;
+
   return (
     <div
       className="flex items-center gap-4"
@@ -68,7 +72,7 @@ function HUDStrip({ coins, worldLabel }: { coins: number; worldLabel: string }) 
           SCORE
         </span>
         <span className="pixel-text" style={{ color: "#fff", fontSize: "9px" }}>
-          {String(0).padStart(6, "0")}
+          {String(score).padStart(6, "0")}
         </span>
       </div>
 
@@ -102,6 +106,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const { visitedRoutes } = useProgressTracker();
+  const { theme, toggleTheme } = useThemeContext();
   const worldLabel = getWorldLabel(pathname);
 
   // Hide the entire navbar on the landing page — it appears after "PRESS START"
@@ -190,6 +195,25 @@ const Navbar = () => {
                 </motion.div>
               ))}
             </div>
+
+            {/* Theme toggle button */}
+            <motion.button
+              onClick={toggleTheme}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2 cursor-pointer outline-none pixel-text"
+              style={{
+                border: `2px solid rgba(255,255,255,0.2)`,
+                backgroundColor: "rgba(255,255,255,0.08)",
+                color: dayTheme.colors.coin,
+                fontSize: "12px",
+                lineHeight: 1,
+              }}
+              aria-label={`Switch to ${theme === "day" ? "night" : "day"} theme`}
+              title={`Switch to ${theme === "day" ? "night" : "day"} theme`}
+            >
+              {theme === "day" ? "🌙" : "☀"}
+            </motion.button>
 
             {/* Mobile menu button */}
             <div className="md:hidden">
@@ -285,6 +309,16 @@ const Navbar = () => {
                   </span>
                 </div>
               </div>
+
+              {/* Theme toggle in mobile menu */}
+              <button
+                onClick={toggleTheme}
+                className="pixel-text flex items-center gap-2 cursor-pointer"
+                style={{ fontSize: "9px", color: dayTheme.colors.coin, background: "none", border: "none" }}
+                aria-label={`Switch to ${theme === "day" ? "night" : "day"} theme`}
+              >
+                {theme === "day" ? "🌙 NIGHT MODE" : "☀ DAY MODE"}
+              </button>
 
               <div className="flex items-center gap-4">
                 {[
