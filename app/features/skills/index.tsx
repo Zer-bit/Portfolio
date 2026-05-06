@@ -94,9 +94,8 @@ export default function Skills() {
                   key={category.name}
                   variants={cardVariant}
                   initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+                  animate="visible"
+                  transition={{ delay: index * 0.1, duration: 0.4, ease: "easeOut" }}
                 >
                   <PixelCard variant="elevated" className="p-6">
                     {/* Power-up icon badge + category name */}
@@ -164,9 +163,8 @@ export default function Skills() {
                   key={skill.name}
                   variants={cardVariant}
                   initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+                  animate="visible"
+                  transition={{ delay: index * 0.1, duration: 0.4, ease: "easeOut" }}
                 >
                   <PixelCard variant="default" className="p-6">
                     <div className="flex items-start gap-5">
