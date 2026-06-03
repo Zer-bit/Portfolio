@@ -28,11 +28,15 @@
     "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "latest",
     "fast-check": "^4.7.0",
-    "postcss": "latest",
+    "postcss": "^8.5.10",
     "react-scroll": "latest",
     "tailwindcss": "latest",
     "typescript": "latest",
     "vite": "^8.0.10",
     "vitest": "^4.1.5"
+  },
+  "overrides": {
+    "postcss": "^8.5.10"
   }
 }
+
