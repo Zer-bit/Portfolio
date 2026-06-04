@@ -98,7 +98,7 @@ function SettingRow({
  */
 export function SettingsContent() {
   const { theme, toggleTheme, soundEnabled, toggleSound } = useThemeContext();
-  const { playClick, playCoin } = useSound();
+  const { playClick, playCoin, playBounce, playPipe } = useSound();
 
   const activeColors = theme === "night" ? nightTheme.colors : dayTheme.colors;
 
@@ -191,19 +191,7 @@ export function SettingsContent() {
           <PixelButton
             variant="coin"
             size="sm"
-            onClick={() => {
-              const ctx = new AudioContext();
-              const osc = ctx.createOscillator();
-              const gain = ctx.createGain();
-              osc.connect(gain);
-              gain.connect(ctx.destination);
-              osc.type = "square";
-              osc.frequency.value = 988;
-              gain.gain.setValueAtTime(0.4, ctx.currentTime);
-              gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
-              osc.start(ctx.currentTime);
-              osc.stop(ctx.currentTime + 0.3);
-            }}
+            onClick={playCoin}
             aria-label="Test coin sound"
           >
             ♪ COIN
@@ -212,20 +200,7 @@ export function SettingsContent() {
           <PixelButton
             variant="pipe"
             size="sm"
-            onClick={() => {
-              const ctx = new AudioContext();
-              const osc = ctx.createOscillator();
-              const gain = ctx.createGain();
-              osc.connect(gain);
-              gain.connect(ctx.destination);
-              osc.type = "square";
-              osc.frequency.setValueAtTime(300, ctx.currentTime);
-              osc.frequency.exponentialRampToValueAtTime(500, ctx.currentTime + 0.15);
-              gain.gain.setValueAtTime(0.4, ctx.currentTime);
-              gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.2);
-              osc.start(ctx.currentTime);
-              osc.stop(ctx.currentTime + 0.2);
-            }}
+            onClick={playBounce}
             aria-label="Test jump sound"
           >
             ↑ JUMP
@@ -234,20 +209,7 @@ export function SettingsContent() {
           <PixelButton
             variant="brick"
             size="sm"
-            onClick={() => {
-              const ctx = new AudioContext();
-              const osc = ctx.createOscillator();
-              const gain = ctx.createGain();
-              osc.connect(gain);
-              gain.connect(ctx.destination);
-              osc.type = "square";
-              osc.frequency.setValueAtTime(600, ctx.currentTime);
-              osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.4);
-              gain.gain.setValueAtTime(0.4, ctx.currentTime);
-              gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.4);
-              osc.start(ctx.currentTime);
-              osc.stop(ctx.currentTime + 0.41);
-            }}
+            onClick={playPipe}
             aria-label="Test pipe sound"
           >
             ↓ PIPE

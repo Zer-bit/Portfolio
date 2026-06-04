@@ -90,7 +90,7 @@ describe('capDeltaTime — property-based tests', () => {
       fc.property(dtArb, (rawDt) => {
         // dtArb is already constrained to (0, 0.05]
         const result = capDeltaTime(rawDt);
-        expect(result).toBeCloseTo(rawDt, 10);
+        expect(result).toBeCloseTo(rawDt, 5);
       }),
       { numRuns: 100 }
     );

@@ -7,8 +7,8 @@ import { Code, Briefcase, Rocket, Cpu, Palette, Globe, Smartphone, Shield } from
 const technicalSkills = [
     { name: "Frontend Development", icon: Globe, items: ["HTML", "CSS", "JavaScript", "React", "Next.js", "TypeScript", "Tailwind CSS"], color: "#9cbd09" },
     { name: "Mobile Development", icon: Smartphone, items: ["Flutter", "Dart"], color: "#0ea5e9" },
-    { name: "Backend & Cloud", icon: Cpu, items: ["Node.js", "Firebase", "MySQL", "EmailJS", "SSMS", "APIs", "Google Apps Script"], color: "#f97316" },
-    { name: "DevOps & Tools", icon: Rocket, items: ["Git", "Github", "Vercel", "Visual Studio Code 2022", "Visual Studio Code", "NetBeans", "Unity", "Oracle Virtual Box"], color: "#0ea5e9" },
+    { name: "Backend & Cloud", icon: Cpu, items: ["Node.js", "Firebase", "MySQL", "EmailJS", "SSMS", "APIs", "Google Apps Script", "REST API", "Redis"], color: "#f97316" },
+    { name: "DevOps & Tools", icon: Rocket, items: ["Git", "Github", "Docker", "Vercel", "Visual Studio Code 2022", "Visual Studio Code", "NetBeans", "Unity", "Oracle Virtual Box"], color: "#0ea5e9" },
     { name: "Cybersecurity & OS", icon: Shield, items: ["Linux Kernel", "Kali Linux", "Ubuntu", "Windows", "Fedora"], color: "#9cbd09" },
 ];
 

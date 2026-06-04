@@ -37,7 +37,6 @@ import Navbar from "../layout/navbar";
 import ScrollProgress from "../ui/scroll-progress";
 import Footer from "../layout/footer";
 import Cloud from "../game/cloud";
-import Block from "../game/block";
 import { useProgressTracker } from "../../lib/progress-tracker";
 import { usePathname } from "next/navigation";
 
@@ -97,8 +96,6 @@ const CLOUD_POSITIONS: Array<{ left: string; top: string; size: "sm" | "md" | "l
   { left: "92%", top: "5%",  size: "sm" },
 ];
 
-/** Number of brick blocks to fill the ground strip. */
-const BLOCK_COUNT = 40;
 
 // ---------------------------------------------------------------------------
 // Props
@@ -221,8 +218,6 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
   // Cloud layer scrolls at 0.3× page scroll speed (middle).
   const cloudY = useTransform(motionScrollY, [0, 1000], [0, -300]);
 
-  // Ground layer scrolls at 1.0× page scroll speed (nearest / same as content).
-  const groundY = useTransform(motionScrollY, [0, 1000], [0, -1000]);
 
   // -------------------------------------------------------------------------
   // Mobile cloud limiting
@@ -298,30 +293,6 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
                 top: cloud.top,
               }}
             />
-          ))}
-        </motion.div>
-
-        {/* ------------------------------------------------------------------ */}
-        {/* Ground parallax layer — z-index: ground (10), scrolls at 1.0×      */}
-        {/* ------------------------------------------------------------------ */}
-        <motion.div
-          aria-hidden="true"
-          style={{
-            y: groundY,
-            willChange: "transform",
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: zIndex.ground,
-            display: "flex",
-            flexWrap: "nowrap",
-            overflow: "hidden",
-            pointerEvents: "none",
-          }}
-        >
-          {Array.from({ length: BLOCK_COUNT }).map((_, i) => (
-            <Block key={i} variant="brick" size={32} />
           ))}
         </motion.div>
 

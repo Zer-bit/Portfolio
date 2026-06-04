@@ -21,15 +21,31 @@ export interface UseSoundReturn {
 // Helpers
 // ---------------------------------------------------------------------------
 
-async function getCtx(ctxRef: React.MutableRefObject<AudioContext | null>): Promise<AudioContext | null> {
-  if (typeof window === "undefined") return null;
+// ---------------------------------------------------------------------------
+// Global Shared AudioContext Singleton
+// ---------------------------------------------------------------------------
+let globalAudioCtx: AudioContext | null = null;
+
+async function resumeCtx(ctx: AudioContext) {
   try {
-    if (!ctxRef.current) {
-      ctxRef.current = new AudioContext();
-    }
-    const ctx = ctxRef.current;
     if (ctx.state === "suspended") {
       await ctx.resume();
+    }
+  } catch (e) {
+    console.warn("AudioContext resume failed:", e);
+  }
+}
+
+function getSharedCtx(): AudioContext | null {
+  if (typeof window === "undefined") return null;
+  try {
+    if (!globalAudioCtx) {
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      globalAudioCtx = new AudioContextClass();
+    }
+    const ctx = globalAudioCtx;
+    if (ctx.state === "suspended") {
+      void resumeCtx(ctx);
     }
     return ctx;
   } catch {
@@ -42,7 +58,7 @@ function tone(
   freq: number,
   startTime: number,
   duration: number,
-  volume = 0.3,
+  volume = 0.25,
   type: OscillatorType = "square"
 ) {
   const osc = ctx.createOscillator();
@@ -63,35 +79,33 @@ function tone(
 
 export function useSound(): UseSoundReturn {
   const { soundEnabled } = useThemeContext();
-  // Use a ref so we don't recreate AudioContext on every render
-  const ctxRef = useRef<AudioContext | null>(null);
   // Keep soundEnabled in a ref so callbacks always see the latest value
   const enabledRef = useRef(soundEnabled);
   enabledRef.current = soundEnabled;
 
-  const playBounce = useCallback(async () => {
+  const playBounce = useCallback(() => {
     if (!enabledRef.current) return;
-    const ctx = await getCtx(ctxRef);
+    const ctx = getSharedCtx();
     if (!ctx) return;
-    const t = ctx.currentTime;
-    tone(ctx, 300, t,        0.08, 0.3);
-    tone(ctx, 500, t + 0.08, 0.1,  0.3);
+    const t = ctx.currentTime + 0.02; // 20ms scheduling lookahead to prevent layout rendering dropouts
+    tone(ctx, 300, t,        0.08, 0.25);
+    tone(ctx, 500, t + 0.08, 0.1,  0.25);
   }, []);
 
-  const playCoin = useCallback(async () => {
+  const playCoin = useCallback(() => {
     if (!enabledRef.current) return;
-    const ctx = await getCtx(ctxRef);
+    const ctx = getSharedCtx();
     if (!ctx) return;
-    const t = ctx.currentTime;
+    const t = ctx.currentTime + 0.02; // 20ms scheduling lookahead
     tone(ctx, 988,  t,        0.08, 0.25);
-    tone(ctx, 1319, t + 0.08, 0.15, 0.2);
+    tone(ctx, 1319, t + 0.08, 0.15, 0.2); // slight drop for pitch echo
   }, []);
 
-  const playPipe = useCallback(async () => {
+  const playPipe = useCallback(() => {
     if (!enabledRef.current) return;
-    const ctx = await getCtx(ctxRef);
+    const ctx = getSharedCtx();
     if (!ctx) return;
-    const t = ctx.currentTime;
+    const t = ctx.currentTime + 0.02; // 20ms scheduling lookahead
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.connect(gain);
@@ -105,11 +119,11 @@ export function useSound(): UseSoundReturn {
     osc.stop(t + 0.41);
   }, []);
 
-  const playClick = useCallback(async () => {
+  const playClick = useCallback(() => {
     if (!enabledRef.current) return;
-    const ctx = await getCtx(ctxRef);
+    const ctx = getSharedCtx();
     if (!ctx) return;
-    const t = ctx.currentTime;
+    const t = ctx.currentTime + 0.02; // 20ms scheduling lookahead
     tone(ctx, 440, t, 0.07, 0.25);
   }, []);
 

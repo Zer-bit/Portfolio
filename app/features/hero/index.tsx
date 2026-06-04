@@ -18,21 +18,12 @@
  */
 
 import React from "react";
-import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { SectionWrapper } from "../../components/layout/section-wrapper";
 import { PixelButton } from "../../components/ui/pixel-button";
 import { dayTheme } from "../../lib/theme";
-
-// ---------------------------------------------------------------------------
-// Dynamic imports (ssr: false) for game components
-// ---------------------------------------------------------------------------
-
-const Block = dynamic(
-  () => import("../../components/game/block").then((mod) => ({ default: mod.BlockComponent })),
-  { ssr: false }
-);
+import { BRICK_SVG_BASE64 } from "../../lib/constants";
 
 // ---------------------------------------------------------------------------
 // Pixel-art Mario character SVG
@@ -90,19 +81,22 @@ function MarioSprite() {
  * at the bottom of the hero section.
  */
 function GroundPlatform() {
-  // Render enough blocks to fill the width; CSS overflow:hidden clips extras
-  const blockCount = 20;
   return (
     <div
       className="absolute bottom-0 left-0 w-full overflow-hidden"
       aria-hidden="true"
       style={{ zIndex: 1 }}
     >
-      <div className="flex">
-        {Array.from({ length: blockCount }).map((_, i) => (
-          <Block key={i} variant="brick" size={32} />
-        ))}
-      </div>
+      <div
+        style={{
+          width: "100%",
+          height: "32px",
+          backgroundImage: `url("data:image/svg+xml;base64,${BRICK_SVG_BASE64}")`,
+          backgroundRepeat: "repeat-x",
+          backgroundSize: "32px 32px",
+          imageRendering: "pixelated",
+        }}
+      />
     </div>
   );
 }

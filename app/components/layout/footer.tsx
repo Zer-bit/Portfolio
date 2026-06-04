@@ -2,14 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
 import { dayTheme } from "../../lib/theme";
-
-// Dynamically import Block with ssr:false (Requirement 17.1)
-const Block = dynamic(
-  () => import("../game/block").then((mod) => ({ default: mod.BlockComponent })),
-  { ssr: false }
-);
+import { BRICK_SVG_BASE64 } from "../../lib/constants";
 
 /**
  * Footer — Mario-themed site footer.
@@ -33,16 +27,15 @@ const Footer = () => {
       {/* Brick block row along the top edge */}
       <div
         style={{
-          display: "flex",
-          overflow: "hidden",
-          lineHeight: 0,
+          width: "100%",
+          height: "32px",
+          backgroundImage: `url("data:image/svg+xml;base64,${BRICK_SVG_BASE64}")`,
+          backgroundRepeat: "repeat-x",
+          backgroundSize: "32px 32px",
+          imageRendering: "pixelated",
         }}
         aria-hidden="true"
-      >
-        {Array.from({ length: 20 }).map((_, i) => (
-          <Block key={i} variant="brick" size={32} />
-        ))}
-      </div>
+      />
 
       {/* Footer content */}
       <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">

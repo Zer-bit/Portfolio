@@ -61,3 +61,6 @@ export const NAV_LINKS = [
   { name: "Contact", href: ROUTES.contact, id: "contact" },
   { name: "Game", href: ROUTES.game, id: "game" },
 ] as const;
+
+// Base64 encoded 16x16 pixel-art brick SVG for infinite repeating backgrounds
+export const BRICK_SVG_BASE64 = "PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGZpbGw9IiNkMDcwMzAiIC8+PHJlY3QgeD0iMCIgeT0iNyIgd2lkdGg9IjE2IiBoZWlnaHQ9IjIiIGZpbGw9IiNhMDUwMjAiIC8+PHJlY3QgeD0iNyIgeT0iMCIgd2lkdGg9IjIiIGhlaWdodD0iNyIgZmlsbD0iI2EwNTAyMCIgLz48cmVjdCB4PSIzIiB5PSI5IiB3aWR0aD0iMiIgaGVpZ2h0PSI3IiBmaWxsPSIjYTA1MDIwIiAvPjxyZWN0IHg9IjExIiB5PSI5IiB3aWR0aD0iMiIgaGVpZ2h0PSI3IiBmaWxsPSIjYTA1MDIwIiAvPjwvc3ZnPg==";

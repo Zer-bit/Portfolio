@@ -15,7 +15,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { dayTheme } from "../../lib/theme";
-import { NAV_LINKS } from "../../lib/constants";
+import { NAV_LINKS, BRICK_SVG_BASE64 } from "../../lib/constants";
 import { PixelButton } from "../ui/pixel-button";
 import { useProgressTracker } from "../../lib/progress-tracker";
 import { useThemeContext } from "../../lib/theme-context";
@@ -27,10 +27,6 @@ const Coin = dynamic(
   { ssr: false }
 );
 
-const Block = dynamic(
-  () => import("../game/block").then((mod) => ({ default: mod.BlockComponent })),
-  { ssr: false }
-);
 
 // ---------------------------------------------------------------------------
 // Route → World Label mapping (moved from PlayerHUD)
@@ -298,12 +294,20 @@ const Navbar = () => {
         >
           {/* Brick block decorative row */}
           <div
-            className="flex items-center gap-0 pt-14 px-4 pb-2"
+            className="pt-14 px-4 pb-2"
             style={{ borderBottom: `2px solid rgba(255,255,255,0.15)` }}
           >
-            {Array.from({ length: 8 }).map((_, i) => (
-              <Block key={i} variant="brick" size={32} />
-            ))}
+            <div
+              style={{
+                width: "100%",
+                height: "32px",
+                backgroundImage: `url("data:image/svg+xml;base64,${BRICK_SVG_BASE64}")`,
+                backgroundRepeat: "repeat-x",
+                backgroundSize: "32px 32px",
+                imageRendering: "pixelated",
+              }}
+              aria-hidden="true"
+            />
           </div>
 
           {/* Navigation Links */}

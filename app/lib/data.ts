@@ -85,7 +85,7 @@ export const technicalSkills = [
   {
     name: "Backend & Cloud",
     icon: Cpu,
-    items: ["Node.js", "C#", "Firebase", "Supabase", "PostgreSQL", "MySQL"],
+    items: ["Node.js", "C#", "Firebase", "Supabase", "PostgreSQL", "MySQL", "REST API", "Redis"],
     color: COLORS.accent.orange,
   },
   {
@@ -94,6 +94,7 @@ export const technicalSkills = [
     items: [
       "Git",
       "Github",
+      "Docker",
       "Vercel",
       "EmailJS",
       "Google Apps Script",
@@ -156,24 +157,62 @@ export const professionalSkills = [
   },
 ];
 
+export interface ExperienceProject {
+  title: string;
+  link?: string;
+}
+
+export interface ExperienceEntry {
+  jobTitle: string;
+  company: string;
+  startDate: string;
+  endDate: string;
+  overview: string;
+  details: string[];
+  projects?: ExperienceProject[];
+  tech: string[];
+  accent: string;
+}
+
 // Experience Data
-export const experience = [
+export const experience: ExperienceEntry[] = [
   {
     jobTitle: "Full Stack Developer",
     company: "Inspire Holdings Incorporated",
     startDate: "2026",
     endDate: "Present",
-    description:
-      "Designed and developed full-stack web applications for corporate clients, including the company website and the iPageant platform. Built features using Next.js, TypeScript, Firebase, and Tailwind CSS. Collaborated directly with stakeholders to deliver polished, production-ready products.",
+    overview: "Designed and built websites for business clients, managing both the front-end layout and backend storage. Focused on turning customer ideas into fully working web platforms.",
+    details: [
+      "Created the official company website to establish a clean and professional online presence.",
+      "Developed a pageant management website with profile pages, event schedules, and real-time voting.",
+      "Collaborated directly with business clients to draft layouts, design screens, and publish websites.",
+      "Set up database systems and online connections to handle user accounts and interactive features."
+    ],
+    projects: [
+      { title: "Inspire Holdings Incorporated", link: "https://www.inspireholdings.ph/" },
+      { title: "iPageant Inspire", link: "https://pageant-inspire.vercel.app/" }
+    ],
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Node.js", "Firebase", "EmailJS", "APIs"],
     accent: COLORS.primary.green,
   },
   {
-    jobTitle: "Freelance Web application Developer",
+    jobTitle: "Freelance Web Developer",
     company: "Self-Employed",
     startDate: "2024",
     endDate: "Present",
-    description:
-      "Delivered custom webapp solutions for small businesses and personal projects. Responsibilities included UI/UX design, frontend development, backend integration, and deployment on Vercel, render, and railway. Projects include this portfolio and various client landing pages.",
+    overview: "Created custom websites and web systems for small businesses, schools, and personal projects. Managed every step of the work, from drawing layouts to writing code and launching websites.",
+    details: [
+      "Built a club management system to organize student registrations and track school activities.",
+      "Created an online tool that lets users search for videos and convert them into downloadable audio files.",
+      "Designed and built this interactive, Mario-themed portfolio website using modern web tools.",
+      "Communicated with clients, designed page layouts, wrote backend code, and put websites online."
+    ],
+    projects: [
+      { title: "SHS Club Management System" },
+      { title: "Youtube mp3 API" },
+      { title: "Inspire Book Slider", link: "https://inspire-book-slider.vercel.app/" }
+    ],
+    tech: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     accent: COLORS.secondary.blue,
   },
   {
@@ -181,8 +220,17 @@ export const experience = [
     company: "Personal Project",
     startDate: "2025",
     endDate: "Present",
-    description:
-      "Built jezsic, an Android music player using Flutter and Dart. Integrated the YouTube Data API for video browsing and implemented offline MP3 conversion via FFmpeg. Managed the full development lifecycle from design to release.",
+    overview: "Built and launched mobile apps for offline media playback and video search tools. Guided the entire development process from visual layout design to releasing on app stores.",
+    details: [
+      "Built 'jezsic', an Android music player that lets users download and play audio files offline without internet.",
+      "Added search features to help users find, search, and catalog their favorite music tracks easily.",
+      "Used media conversion tools to let users save audio files in different formats directly on their devices.",
+      "Designed app screens, wrote the backend logic, improved app speed, and managed new updates."
+    ],
+    projects: [
+      { title: "jezsic" }
+    ],
+    tech: ["Flutter", "Dart", "Android SDK", "YouTube Data API", "FFmpeg", "State Management"],
     accent: COLORS.accent.orange,
   },
 ];
