@@ -200,19 +200,20 @@ export const experience: ExperienceEntry[] = [
     company: "Self-Employed",
     startDate: "2024",
     endDate: "Present",
-    overview: "Created custom websites and web systems for small businesses, schools, and personal projects. Managed every step of the work, from drawing layouts to writing code and launching websites.",
+    overview: "Created custom websites and web systems for small businesses, schools, and personal projects. Managed every step of the work, from drawing layouts to writing code, setting up databases, and launching websites.",
     details: [
-      "Built a club management system to organize student registrations and track school activities.",
-      "Created an online tool that lets users search for videos and convert them into downloadable audio files.",
-      "Designed and built this interactive, Mario-themed portfolio website using modern web tools.",
-      "Communicated with clients, designed page layouts, wrote backend code, and put websites online."
+      "Developed the Inspire Book Slider, an interactive digital annual report website utilizing React, Next.js, and Framer Motion.",
+      "Created the YouTube mp3 API to handle video searching and audio conversions using Node.js and REST APIs.",
+      "Built the SHS Club Management System, integrating custom user interfaces with vanilla and MySQL database storage.",
+      "Leveraged Supabase and PostgreSQL to design secure database schemas and user login flows for freelance clients.",
+      "Utilized Docker to containerize development environments and Git/Vercel for version control and website deployment."
     ],
     projects: [
-      { title: "SHS Club Management System" },
+      { title: "Inspire Book Slider", link: "https://inspire-book-slider.vercel.app/" },
       { title: "Youtube mp3 API" },
-      { title: "Inspire Book Slider", link: "https://inspire-book-slider.vercel.app/" }
+      { title: "SHS Club Management System" }
     ],
-    tech: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "MySQL", "Supabase", "PostgreSQL", "REST API", "Docker", "Git", "Vercel"],
     accent: COLORS.secondary.blue,
   },
   {
