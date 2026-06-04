@@ -9,7 +9,7 @@ const technicalSkills = [
     { name: "Mobile Development", icon: Smartphone, items: ["Flutter", "Dart"], color: "#0ea5e9" },
     { name: "Backend & Cloud", icon: Cpu, items: ["Node.js", "Firebase", "MySQL", "EmailJS", "SSMS", "APIs", "Google Apps Script"], color: "#f97316" },
     { name: "DevOps & Tools", icon: Rocket, items: ["Git", "Github", "Vercel", "Visual Studio Code 2022", "Visual Studio Code", "NetBeans", "Unity", "Oracle Virtual Box"], color: "#0ea5e9" },
-    { name: "Cybersecurity & OS", icon: Shield, items: ["Linux Kernel", "Kali Linux", "Ubuntu"], color: "#9cbd09" },
+    { name: "Cybersecurity & OS", icon: Shield, items: ["Linux Kernel", "Kali Linux", "Ubuntu", "Windows", "Fedora"], color: "#9cbd09" },
 ];
 
 const professionalSkills = [

@@ -109,7 +109,7 @@ export const technicalSkills = [
   {
     name: "Cybersecurity & OS",
     icon: Shield,
-    items: ["Linux Kernel", "Kali Linux", "Ubuntu"],
+    items: ["Linux Kernel", "Kali Linux", "Ubuntu", "Windows", "Fedora"],
     color: COLORS.primary.green,
   },
 ];
