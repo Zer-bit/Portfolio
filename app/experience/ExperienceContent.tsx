@@ -14,12 +14,15 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { experience } from "../lib/data";
-import { dayTheme } from "../lib/theme";
+import { dayTheme, nightTheme } from "../lib/theme";
+import { useThemeContext } from "../lib/theme-context";
 import { fadeUpVariant } from "../lib/animations";
 import { PixelCard } from "../components/ui/pixel-card";
 import { PixelButton } from "../components/ui/pixel-button";
 
 export function ExperienceContent() {
+  const { theme } = useThemeContext();
+  const activeTheme = theme === "night" ? nightTheme : dayTheme;
   // Track expanded cards. Using a record so multiple cards can be expanded at once.
   const [expanded, setExpanded] = useState<Record<number, boolean>>({});
 
@@ -36,7 +39,7 @@ export function ExperienceContent() {
       <div className="mb-12 text-center">
         <h1
           className="pixel-text text-lg md:text-2xl"
-          style={{ color: dayTheme.colors.coin }}
+          style={{ color: activeTheme.colors.coin }}
         >
           GAME PROGRESSION
         </h1>
@@ -47,7 +50,7 @@ export function ExperienceContent() {
         {/* Timeline connector line */}
         <div
           className="absolute left-4 top-0 bottom-0 w-0.5"
-          style={{ backgroundColor: dayTheme.colors.border }}
+          style={{ backgroundColor: activeTheme.colors.border }}
           aria-hidden="true"
         />
 
@@ -70,7 +73,7 @@ export function ExperienceContent() {
                   className="absolute left-2 top-6 w-4 h-4 -translate-x-1/2"
                   style={{
                     backgroundColor: entry.accent,
-                    border: `2px solid ${dayTheme.colors.border}`,
+                    border: `2px solid ${activeTheme.colors.border}`,
                   }}
                   aria-hidden="true"
                 />
@@ -86,7 +89,7 @@ export function ExperienceContent() {
                     {/* Job title */}
                     <h2
                       className="pixel-text text-xs md:text-sm mb-2"
-                      style={{ color: dayTheme.colors.coin }}
+                      style={{ color: activeTheme.colors.coin }}
                     >
                       {entry.jobTitle}
                     </h2>
@@ -94,7 +97,7 @@ export function ExperienceContent() {
                     {/* Company */}
                     <h3
                       className="pixel-text text-xs mb-2"
-                      style={{ color: dayTheme.colors.text }}
+                      style={{ color: activeTheme.colors.text }}
                     >
                       {entry.company}
                     </h3>
@@ -102,7 +105,7 @@ export function ExperienceContent() {
                     {/* Date range */}
                     <p
                       className="pixel-text text-xs mb-4"
-                      style={{ color: dayTheme.colors.pipe }}
+                      style={{ color: activeTheme.colors.pipe }}
                     >
                       {entry.startDate} – {entry.endDate}
                     </p>
@@ -110,7 +113,7 @@ export function ExperienceContent() {
                     {/* Overview description */}
                     <p
                       className="text-sm leading-relaxed mb-4"
-                      style={{ color: dayTheme.colors.text }}
+                      style={{ color: activeTheme.colors.text }}
                     >
                       {entry.overview}
                     </p>
@@ -140,14 +143,14 @@ export function ExperienceContent() {
                           {/* Divider */}
                           <div
                             className="my-4"
-                            style={{ height: "1px", backgroundColor: dayTheme.colors.border }}
+                            style={{ height: "1px", backgroundColor: activeTheme.colors.border }}
                           />
 
                           {/* Achievements */}
                           <div className="mb-4">
                             <h4
                               className="pixel-text text-xs mb-3"
-                              style={{ color: dayTheme.colors.coin, fontSize: "9px" }}
+                              style={{ color: activeTheme.colors.coin, fontSize: "9px" }}
                             >
                               ★ STAGE OBJECTIVES / ACHIEVEMENTS
                             </h4>
@@ -156,7 +159,7 @@ export function ExperienceContent() {
                                 <li
                                   key={idx}
                                   className="text-sm leading-relaxed flex items-start gap-2"
-                                  style={{ color: dayTheme.colors.text }}
+                                  style={{ color: activeTheme.colors.text }}
                                 >
                                   <span
                                     className="pixel-text flex-shrink-0"
@@ -175,7 +178,7 @@ export function ExperienceContent() {
                             <div className="mb-4">
                               <h4
                                 className="pixel-text text-xs mb-3"
-                                style={{ color: dayTheme.colors.coin, fontSize: "9px" }}
+                                style={{ color: activeTheme.colors.coin, fontSize: "9px" }}
                               >
                                 🗺️ COMPLETED MAP STAGES
                               </h4>
@@ -189,7 +192,7 @@ export function ExperienceContent() {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="pixel-text flex items-center gap-1 hover:underline"
-                                        style={{ color: dayTheme.colors.text, fontSize: "8px" }}
+                                        style={{ color: activeTheme.colors.text, fontSize: "8px" }}
                                       >
                                         [{proj.title.toUpperCase()} ↗]
                                       </a>
@@ -213,7 +216,7 @@ export function ExperienceContent() {
                           <div>
                             <h4
                               className="pixel-text text-xs mb-3"
-                              style={{ color: dayTheme.colors.coin, fontSize: "9px" }}
+                              style={{ color: activeTheme.colors.coin, fontSize: "9px" }}
                             >
                               🎒 POWER-UPS USED
                             </h4>
