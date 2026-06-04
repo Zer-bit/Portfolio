@@ -36,7 +36,8 @@ import { dayTheme, nightTheme, zIndex } from "../../lib/theme";
 import Navbar from "../layout/navbar";
 import ScrollProgress from "../ui/scroll-progress";
 import Footer from "../layout/footer";
-import { Cloud, Block } from "../game/index";
+import Cloud from "../game/cloud";
+import Block from "../game/block";
 import { useProgressTracker } from "../../lib/progress-tracker";
 import { usePathname } from "next/navigation";
 
