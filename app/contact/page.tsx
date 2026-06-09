@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import ContactSection from "../features/contact/index";
+import ContactWrapper from "./ContactWrapper";
 
 export const metadata: Metadata = {
   title: "Jezer Parales | Contact",
 };
 
 export default function ContactPage() {
-  return <ContactSection />;
+  return <ContactWrapper />;
 }

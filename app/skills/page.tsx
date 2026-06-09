@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Skills from "../features/skills/index";
+import SkillsWrapper from "./SkillsWrapper";
 
 export const metadata: Metadata = {
   title: "Jezer Parales | Skills",
 };
 
 export default function SkillsPage() {
-  return <Skills />;
+  return <SkillsWrapper />;
 }

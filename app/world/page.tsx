@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import WorldPageContent from "./WorldPageContent";
+import WorldWrapper from "./WorldWrapper";
 
 export const metadata: Metadata = {
   title: "Jezer Parales | World Map",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function WorldPage() {
-  return <WorldPageContent />;
+  return <WorldWrapper />;
 }

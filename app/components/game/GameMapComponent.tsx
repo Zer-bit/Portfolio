@@ -160,8 +160,7 @@ export const GameMapComponent: React.FC<GameMapProps> = ({
               key={route.id}
               variants={fadeUpVariant}
               initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
+              animate="visible"
               // Stagger each node slightly for a cascade entrance effect
               transition={{ delay: index * 0.08 }}
             >

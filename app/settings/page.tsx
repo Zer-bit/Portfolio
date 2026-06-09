@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import SettingsContent from "./SettingsContent";
+import SettingsWrapper from "./SettingsWrapper";
 
 /**
  * @file app/settings/page.tsx — Settings Page
@@ -19,5 +19,5 @@ export const metadata: Metadata = {
 };
 
 export default function SettingsPage() {
-  return <SettingsContent />;
+  return <SettingsWrapper />;
 }

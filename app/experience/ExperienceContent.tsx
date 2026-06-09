@@ -63,8 +63,7 @@ export function ExperienceContent() {
                 key={`${entry.company}-${entry.startDate}`}
                 variants={fadeUpVariant}
                 initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
+                animate="visible"
                 transition={{ delay: index * 0.1 }}
                 className="relative pl-12"
               >

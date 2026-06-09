@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AboutContent from "./AboutContent";
+import AboutWrapper from "./AboutWrapper";
 
 export const metadata: Metadata = {
   title: "Jezer Parales | About",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return <AboutContent />;
+  return <AboutWrapper />;
 }
