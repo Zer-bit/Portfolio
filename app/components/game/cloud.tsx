@@ -25,8 +25,6 @@
 
 import type React from "react";
 import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
-import { floatVariant } from "../../lib/animations";
 
 // ---------------------------------------------------------------------------
 // Props
@@ -72,23 +70,17 @@ const sizeMap: Record<NonNullable<CloudProps["size"]>, { width: number; height: 
  * shadow/outline uses light blue (`#c0d8f8`) along the bottom and side edges,
  * matching the classic Super Mario Bros. cloud style.
  *
- * The `floatVariant` animation (Y: 0 → -6 → 0, 3s easeInOut, infinite) is
- * applied via a `motion.div` wrapper so the cloud gently bobs up and down.
+ * Uses hardware-accelerated CSS animations for maximum frame rate.
  *
  * @param props.size  - Size variant: `"sm"` | `"md"` | `"lg"` (default: `"md"`)
  * @param props.style - Optional inline styles for positioning
- *
- * @satisfies Requirement 6.4  — Cloud renders pixel-art shape with float animation
- * @satisfies Requirement 17.1 — Loaded via next/dynamic with ssr:false
  */
 export const CloudComponent: React.FC<CloudProps> = ({ size = "md", style }) => {
   const { width, height } = sizeMap[size];
 
   return (
-    <motion.div
-      variants={floatVariant}
-      initial="initial"
-      animate="animate"
+    <div
+      className="animate-pixel-float"
       style={{ display: "inline-flex", width, height, ...style }}
     >
       <svg
@@ -109,7 +101,7 @@ export const CloudComponent: React.FC<CloudProps> = ({ size = "md", style }) => 
         <rect x="2" y="8" width="2" height="6" fill="#c0d8f8" />
         <rect x="28" y="8" width="2" height="6" fill="#c0d8f8" />
       </svg>
-    </motion.div>
+    </div>
   );
 };
 

@@ -44,3 +44,24 @@ canvas {
     font-size: max(calc(0.75em), 10px);
   }
 }
+
+/* ─── GPU-Accelerated CSS Animations ─────────────────────────────────────────── */
+@keyframes floatBobbing {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -12px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+.animate-pixel-float {
+  animation: floatBobbing 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes spinCoin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.animate-pixel-spin {
+  animation: spinCoin 1s linear infinite;
+  will-change: transform;
+}
+

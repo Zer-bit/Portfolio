@@ -21,8 +21,6 @@
 
 import type React from "react";
 import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
-import { spinVariant } from "../../lib/animations";
 
 // ---------------------------------------------------------------------------
 // Props
@@ -45,14 +43,14 @@ interface CoinProps {
  * gold (`#f8b800`), with a lighter highlight pixel in the top-left area and
  * a darker shadow pixel in the bottom-right area.
  *
+ * Uses hardware-accelerated CSS animations for maximum frame rate.
+ *
  * @param props.size - Rendered width/height in pixels (default: 24)
  */
 export const CoinComponent: React.FC<CoinProps> = ({ size = 24 }) => {
   return (
-    <motion.div
-      variants={spinVariant}
-      initial="initial"
-      animate="animate"
+    <div
+      className="animate-pixel-spin"
       style={{ display: "inline-flex", width: size, height: size }}
     >
       <svg
@@ -73,7 +71,7 @@ export const CoinComponent: React.FC<CoinProps> = ({ size = 24 }) => {
         {/* Shadow — darker gold in bottom-right area */}
         <rect x="5" y="5" width="2" height="2" fill="#c8960c" />
       </svg>
-    </motion.div>
+    </div>
   );
 };
 
