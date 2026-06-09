@@ -44,10 +44,7 @@ const Footer = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          {/* Logo */}
-          <div className="pixel-text text-xl mb-4" style={{ color: dayTheme.colors.text }}>
-            JEZER<span style={{ color: dayTheme.colors.coin }}>.</span>
-          </div>
+
 
           {/* Copyright */}
           <p className="text-sm" style={{ color: dayTheme.colors.text }}>
