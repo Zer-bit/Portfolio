@@ -85,7 +85,7 @@ export const technicalSkills = [
   {
     name: "Backend & Cloud",
     icon: Cpu,
-    items: ["Node.js", "C#", "Firebase", "Supabase", "PostgreSQL", "MySQL", "REST API", "Redis"],
+    items: ["Node.js", "C#", "Rust", "Firebase", "Supabase", "PostgreSQL", "MySQL", "REST API", "Redis"],
     color: COLORS.accent.orange,
   },
   {
