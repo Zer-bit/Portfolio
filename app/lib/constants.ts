@@ -38,6 +38,9 @@ export const CONTACT_INFO = {
 export const APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbyaTDnX4uuklVWAp6C9KwNT9pHzFhEoDd_IaTfxy_fqAk07hiICcjTREYr3-5dLXV4/exec";
 
+// Site Production URL for SEO Base Metadata
+export const SITE_URL = "https://jezer-parales.vercel.app";
+
 // Route Constants
 export const ROUTES = {
   home: "/",

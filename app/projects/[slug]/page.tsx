@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { projects, toSlug } from "../../lib/data";
 import { dayTheme } from "../../lib/theme";
 import ProjectDetailWrapper from "./ProjectDetailWrapper";
+import { SITE_URL } from "../../lib/constants";
 
 interface ProjectDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -28,9 +29,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = projects.find((p) => toSlug(p.title) === slug);
   return {
-    title: project
-      ? `Jezer Parales | ${project.title}`
-      : "Jezer Parales | Level Not Found",
+    title: project ? project.title : "Level Not Found",
+    description: project
+      ? `Explore details of the project: ${project.title}. ${project.description} Technologies used: ${project.tech.join(", ")}.`
+      : "The requested project level was not found.",
+    openGraph: project
+      ? {
+          title: `${project.title} | Jezer Parales`,
+          description: project.description,
+          type: "article",
+          url: `${SITE_URL}/projects/${slug}`,
+          images: [{ url: project.image, alt: `${project.title} screenshot` }],
+        }
+      : undefined,
   };
 }
 
