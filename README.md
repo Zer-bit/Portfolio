@@ -26,17 +26,30 @@ A modern, professional portfolio website built with Next.js, TypeScript, and Tai
 
 ```
 app/
-├── components/
-│   ├── layout/          # Navbar, Footer
-│   ├── sections/        # Hero, Skills, Projects, Contact
-│   └── ui/              # Reusable UI components
-├── hooks/               # Custom React hooks
-├── lib/
-│   ├── constants.ts     # App constants
-│   └── data.ts          # Projects & skills data
-├── globals.css          # Global styles
-├── layout.tsx           # Root layout
-└── page.tsx             # Homepage
+├── about/               # About page (Character Profile)
+├── contact/             # Contact page
+├── experience/          # Work experience (Game Progression)
+├── game/                # Mario Mini-Game page
+├── projects/            # Projects showcase page & detail subroutes
+│   └── [slug]/
+├── skills/              # Skills page (Power-ups)
+├── settings/            # Theme & sound settings page
+├── world/               # Level/World map page (main entry point after start screen)
+├── components/          # Reusable components
+│   ├── game/            # Game components (MarioGame, GameMap, LevelCard, PlayerHUD, block, etc.)
+│   ├── layout/          # Page transitioning, Navbar, Footer, layouts
+│   └── ui/              # Reusable UI elements (pixel-button, pixel-card, scroll-progress, etc.)
+├── features/            # Section components migrated to support pixel themes
+│   ├── contact/
+│   ├── hero/
+│   ├── projects/
+│   └── skills/
+├── hooks/               # Custom hooks (use-animation, use-sound, use-tilt)
+├── lib/                 # Shared data, constants, context, test cases, and game logic
+│   ├── game/            # Core game engines (physics, player, enemy, and math utils)
+│   ├── constants.ts     # Global styling, routes, social links
+│   └── data.ts          # Portfolio project and work experience data
+└── styles/              # Global styles and custom pixel borders
 ```
 
 ## 🚀 Getting Started
@@ -138,8 +151,7 @@ The project works on any platform that supports Next.js:
 
 ## 📚 Documentation
 
-- [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) - Detailed project structure
-- [QUICK_REFERENCE.md](./QUICK_REFERENCE.md) - Quick reference guide
+The `README.md` serves as the primary developer guide. The codebase features modular Next.js routing, client/server boundaries, chiptune sound synthesis via Web Audio API, and custom canvas-based 2D physics.
 
 ## 🎨 Color Palette
 
