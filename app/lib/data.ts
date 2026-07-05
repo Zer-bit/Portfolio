@@ -177,10 +177,24 @@ export interface ExperienceEntry {
 // Experience Data
 export const experience: ExperienceEntry[] = [
   {
+    jobTitle: "Technical Executive Secretary",
+    company: "Inspire Holdings Incorporated",
+    startDate: "May 2026",
+    endDate: "Present",
+    overview: "Execute a unique, hybrid role combining high-level executive administrative support with technical asset management, digital maintenance, and secretarial operations.",
+    details: [
+      "Streamline daily executive functions by managing corporate schedules, high-priority communications, and documentation with precision.",
+      "Maintain company digital systems, including web portals, domain assets, and database backups, ensuring maximum operational uptime.",
+      "Optimize record-keeping by designing secure, structured digital archives for confidential corporate and technical documents."
+    ],
+    tech: ["Technical Operations", "Digital Maintenance", "Database Management", "Google Workspace", "Office Productivity Tools"],
+    accent: COLORS.accent.orange,
+  },
+  {
     jobTitle: "Full Stack Developer",
     company: "Inspire Holdings Incorporated",
-    startDate: "2026",
-    endDate: "Present",
+    startDate: "Jan 2026",
+    endDate: "May 2026",
     overview: "Designed and built websites for business clients, managing both the front-end layout and backend storage. Focused on turning customer ideas into fully working web platforms.",
     details: [
       "Created the official company website to establish a clean and professional online presence.",
