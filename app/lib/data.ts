@@ -40,19 +40,19 @@ export const projects = [
     accent: COLORS.accent.orange,
   },
   {
-    title: "jezsic",
+    title: "void",
     description:
-      "An advanced Android music player that lets you browse YouTube videos — not to stream them, but to download and convert them into M4A or MP3 files. Once converted, you can listen to your saved tracks anytime, completely offline without needing an internet connection.",
-    tech: ["Flutter", "Dart", "Android SDK", "YouTube Data API", "FFmpeg"],
-    image: "/Images/jezsic-img.png",
+      "An advanced Android music player that lets you browse and convert video media into high-quality audio files for offline listening. The application uses Dart for the user interface and is powered by a high-performance Rust core via FFI for internal logic, utility functions, and algorithms. Supported by a robust backend deployed in Rust.",
+    tech: ["Dart", "Rust", "Flutter", "Android SDK", "FFI", "FFmpeg"],
+    image: "/Images/void-img.png",
     link: "#",
     accent: COLORS.primary.green,
   },
   {
     title: "Youtube mp3 API",
     description:
-      "A specialized API service designed to fetch and convert YouTube video data into high-quality MP3 or m4a formats, utilizing pure JavaScript and JSON for rapid data processing.",
-    tech: ["JavaScript", "JSON", "YouTube API", "REST API"],
+      "A high-performance API service designed to fetch and convert YouTube video data into high-quality MP3 or M4A formats, written in Rust for optimal execution speed, safety, and rapid data processing.",
+    tech: ["Rust", "REST API", "YouTube API", "JSON"],
     image: "/Images/youtube-mp3-api.svg",
     link: "#",
     accent: COLORS.secondary.blue,
@@ -237,13 +237,13 @@ export const experience: ExperienceEntry[] = [
     endDate: "Present",
     overview: "Built and launched mobile apps for offline media playback and video search tools. Guided the entire development process from visual layout design to releasing on app stores.",
     details: [
-      "Built 'jezsic', an Android music player that lets users download and play audio files offline without internet.",
+      "Built 'void', an Android music player that lets users download and play audio files offline without internet.",
       "Added search features to help users find, search, and catalog their favorite music tracks easily.",
       "Used media conversion tools to let users save audio files in different formats directly on their devices.",
       "Designed app screens, wrote the backend logic, improved app speed, and managed new updates."
     ],
     projects: [
-      { title: "jezsic" }
+      { title: "void" }
     ],
     tech: ["Flutter", "Dart", "Android SDK", "YouTube Data API", "FFmpeg", "State Management"],
     accent: COLORS.accent.orange,

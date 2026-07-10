@@ -31,7 +31,7 @@ describe("toSlug", () => {
   });
 
   it("returns a single lowercase word unchanged", () => {
-    expect(toSlug("jezsic")).toBe("jezsic");
+    expect(toSlug("void")).toBe("void");
   });
 
   it("strips special characters (punctuation)", () => {
@@ -72,7 +72,7 @@ describe("generateStaticParams", () => {
     expect(slugs).toContain("inspire-holdings-incorporated");
     expect(slugs).toContain("ipageant-inspire");
     expect(slugs).toContain("shs-club-management-system");
-    expect(slugs).toContain("jezsic");
+    expect(slugs).toContain("void");
     expect(slugs).toContain("youtube-mp3-api");
     expect(slugs).toContain("inspire-book-slider");
   });
