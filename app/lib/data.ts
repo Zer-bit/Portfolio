@@ -44,7 +44,7 @@ export const projects = [
     description:
       "An advanced Android music player that lets you browse and convert video media into high-quality audio files for offline listening. The application uses Dart for the user interface and is powered by a high-performance Rust core via FFI for internal logic, utility functions, and algorithms. Supported by a robust backend deployed in Rust.",
     tech: ["Dart", "Rust", "Flutter", "Android SDK", "FFI", "FFmpeg"],
-    image: "/Images/void-img.png",
+    image: "/Images/void-img.jpeg",
     link: "#",
     accent: COLORS.primary.green,
   },
