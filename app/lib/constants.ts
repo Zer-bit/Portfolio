@@ -52,6 +52,7 @@ export const ROUTES = {
   contact: "/contact",
   settings: "/settings",
   game: "/game",
+  gallery: "/gallery",
   admin: "/void",
 } as const;
 

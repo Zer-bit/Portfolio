@@ -80,6 +80,7 @@ const LEVEL_LABELS: Record<string, string> = {
   experience: "WORLD 1-4",
   contact:    "WORLD 1-5",
   game:       "WORLD 1-6",
+  gallery:    "WORLD 1-7",
 };
 
 // ---------------------------------------------------------------------------

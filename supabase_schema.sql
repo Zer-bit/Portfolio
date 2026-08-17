@@ -94,6 +94,17 @@ CREATE TABLE scores (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+-- Gallery Table
+CREATE TABLE gallery (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  description TEXT NOT NULL DEFAULT '',
+  image TEXT NOT NULL,
+  date TEXT NOT NULL DEFAULT '',
+  order_index INT NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 -- ----------------------------------------------------------------------------
 -- 3. ENABLE ROW LEVEL SECURITY (RLS) WITH LOW-LEVEL / PERMISSIVE POLICIES
 -- ----------------------------------------------------------------------------
@@ -103,6 +114,7 @@ ALTER TABLE professional_skills ENABLE ROW LEVEL SECURITY;
 ALTER TABLE experience ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_info ENABLE ROW LEVEL SECURITY;
 ALTER TABLE scores ENABLE ROW LEVEL SECURITY;
+ALTER TABLE gallery ENABLE ROW LEVEL SECURITY;
 
 -- Allow open read, insert, update, delete for simple management
 CREATE POLICY "Low Security Projects Policy" ON projects FOR ALL USING (true) WITH CHECK (true);
@@ -111,3 +123,5 @@ CREATE POLICY "Low Security Prof Skills Policy" ON professional_skills FOR ALL U
 CREATE POLICY "Low Security Experience Policy" ON experience FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Low Security Contact Policy" ON contact_info FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Low Security Scores Policy" ON scores FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Low Security Gallery Policy" ON gallery FOR ALL USING (true) WITH CHECK (true);
+

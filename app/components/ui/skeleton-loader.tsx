@@ -235,3 +235,36 @@ export function ProjectDetailSkeleton() {
     </div>
   );
 }
+
+/**
+ * GalleryCardSkeleton — Pixel-accurate placeholder matching /gallery grid cards
+ */
+export function GalleryCardSkeleton() {
+  return (
+    <div
+      className="relative overflow-hidden flex flex-col h-full p-4 space-y-4"
+      style={{
+        backgroundColor: "#1a1a2e",
+        border: "4px solid #000000",
+        boxShadow: "4px 4px 0px #000000",
+      }}
+    >
+      {/* 4:3 Image placeholder */}
+      <div className="aspect-video relative overflow-hidden bg-slate-900">
+        <SkeletonBox style={{ width: "100%", height: "100%", border: "none" }} />
+      </div>
+
+      {/* Date badge placeholder */}
+      <SkeletonBox style={{ width: "90px", height: "18px", backgroundColor: `${dayTheme.colors.pipe}33` }} />
+
+      {/* Title placeholder */}
+      <SkeletonBox style={{ width: "75%", height: "20px", backgroundColor: `${dayTheme.colors.coin}33` }} />
+
+      {/* Description lines */}
+      <div className="space-y-2">
+        <SkeletonBox style={{ width: "100%", height: "12px" }} />
+        <SkeletonBox style={{ width: "80%", height: "12px" }} />
+      </div>
+    </div>
+  );
+}

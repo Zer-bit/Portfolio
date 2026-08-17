@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { dayTheme } from "../lib/theme";
 import { PixelButton } from "../components/ui/pixel-button";
 import { PixelCard } from "../components/ui/pixel-card";
+import { ConfirmModal } from "../components/ui/confirm-modal";
 import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 import {
   fetchProjects,
@@ -11,6 +12,7 @@ import {
   fetchProfessionalSkills,
   fetchExperience,
   fetchContactInfo,
+  fetchGalleryItems,
   saveProject,
   deleteProject,
   uploadProjectImage,
@@ -21,14 +23,17 @@ import {
   saveExperience,
   deleteExperience,
   saveContactInfo,
+  saveGalleryItem,
+  deleteGalleryItem,
   type ProjectItem,
   type TechnicalSkillItem,
   type ProfessionalSkillItem,
   type ExperienceItem,
   type ContactInfoItem,
+  type GalleryItem,
 } from "../lib/db-data";
 
-type TabType = "projects" | "tech_skills" | "prof_skills" | "experience" | "contact" | "scores";
+type TabType = "projects" | "gallery" | "tech_skills" | "prof_skills" | "experience" | "contact" | "scores";
 
 export default function HiddenVoidAdminPage() {
   const [authed, setAuthed] = useState<boolean>(false);
@@ -39,6 +44,7 @@ export default function HiddenVoidAdminPage() {
 
   // Data states
   const [projectsList, setProjectsList] = useState<ProjectItem[]>([]);
+  const [galleryList, setGalleryList] = useState<GalleryItem[]>([]);
   const [techSkillsList, setTechSkillsList] = useState<TechnicalSkillItem[]>([]);
   const [profSkillsList, setProfSkillsList] = useState<ProfessionalSkillItem[]>([]);
   const [experienceList, setExperienceList] = useState<ExperienceItem[]>([]);
@@ -58,10 +64,39 @@ export default function HiddenVoidAdminPage() {
 
   // Form Modals / Edit states
   const [editingProject, setEditingProject] = useState<Partial<ProjectItem> | null>(null);
+  const [editingGalleryItem, setEditingGalleryItem] = useState<Partial<GalleryItem> | null>(null);
   const [uploadingImage, setUploadingImage] = useState<boolean>(false);
   const [editingTechSkill, setEditingTechSkill] = useState<Partial<TechnicalSkillItem> | null>(null);
   const [editingProfSkill, setEditingProfSkill] = useState<Partial<ProfessionalSkillItem> | null>(null);
   const [editingExp, setEditingExp] = useState<Partial<ExperienceItem> | null>(null);
+
+  // Confirmation Modal state
+  const [confirmModal, setConfirmModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    confirmText: string;
+    variant: "coin" | "brick" | "pipe";
+    action: () => Promise<void> | void;
+  } | null>(null);
+  const [actionLoading, setActionLoading] = useState<boolean>(false);
+
+  const requestConfirmation = (
+    title: string,
+    message: string,
+    confirmText: string,
+    variant: "coin" | "brick" | "pipe",
+    action: () => Promise<void> | void
+  ) => {
+    setConfirmModal({
+      isOpen: true,
+      title,
+      message,
+      confirmText,
+      variant,
+      action,
+    });
+  };
 
   // Auth Guard check on mount
   useEffect(() => {
@@ -103,6 +138,9 @@ export default function HiddenVoidAdminPage() {
       if (activeTab === "projects") {
         const data = await fetchProjects();
         setProjectsList(data);
+      } else if (activeTab === "gallery") {
+        const data = await fetchGalleryItems();
+        setGalleryList(data);
       } else if (activeTab === "tech_skills") {
         const data = await fetchTechnicalSkills();
         setTechSkillsList(data);
@@ -234,6 +272,7 @@ export default function HiddenVoidAdminPage() {
         {(
           [
             { id: "projects", label: "PROJECTS" },
+            { id: "gallery", label: "GALLERY" },
             { id: "tech_skills", label: "TECH SKILLS" },
             { id: "prof_skills", label: "PROF SKILLS" },
             { id: "experience", label: "EXPERIENCE" },
@@ -248,6 +287,7 @@ export default function HiddenVoidAdminPage() {
             onClick={() => {
               setActiveTab(tab.id as TabType);
               setEditingProject(null);
+              setEditingGalleryItem(null);
               setEditingTechSkill(null);
               setEditingProfSkill(null);
               setEditingExp(null);
@@ -302,34 +342,34 @@ export default function HiddenVoidAdminPage() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
                 <div>
-                  <label className="block text-gray-400 mb-1">PROJECT TITLE</label>
+                  <label className="block text-white font-bold mb-1">PROJECT TITLE</label>
                   <input
                     type="text"
                     value={editingProject.title || ""}
                     onChange={(e) => setEditingProject({ ...editingProject, title: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-400 mb-1">LIVE PROJECT LINK</label>
+                  <label className="block text-white font-bold mb-1">LIVE PROJECT LINK</label>
                   <input
                     type="text"
                     value={editingProject.link || "#"}
                     onChange={(e) => setEditingProject({ ...editingProject, link: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-gray-400 mb-1">DESCRIPTION</label>
+                  <label className="block text-white font-bold mb-1">DESCRIPTION</label>
                   <textarea
                     rows={3}
                     value={editingProject.description || ""}
                     onChange={(e) => setEditingProject({ ...editingProject, description: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-400 mb-1">TECH STACK (Comma Separated)</label>
+                  <label className="block text-white font-bold mb-1">TECH STACK (Comma Separated)</label>
                   <input
                     type="text"
                     value={(editingProject.tech || []).join(", ")}
@@ -339,26 +379,26 @@ export default function HiddenVoidAdminPage() {
                         tech: e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
                       })
                     }
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-400 mb-1">ACCENT COLOR (HEX)</label>
+                  <label className="block text-white font-bold mb-1">ACCENT COLOR (HEX)</label>
                   <input
                     type="text"
                     value={editingProject.accent || "#9cbd09"}
                     onChange={(e) => setEditingProject({ ...editingProject, accent: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-gray-400 mb-1">PROJECT IMAGE URL OR FILE UPLOAD</label>
+                  <label className="block text-white font-bold mb-1">PROJECT IMAGE URL OR FILE UPLOAD</label>
                   <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
                     <input
                       type="text"
                       value={editingProject.image || ""}
                       onChange={(e) => setEditingProject({ ...editingProject, image: e.target.value })}
-                      className="flex-1 p-2 bg-slate-900 border text-white"
+                      className="flex-1 p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                     />
                     <label className="cursor-pointer px-4 py-2 bg-blue-600 text-white font-bold rounded hover:bg-blue-500">
                       {uploadingImage ? "UPLOADING..." : "UPLOAD FILE"}
@@ -389,19 +429,23 @@ export default function HiddenVoidAdminPage() {
                 <PixelButton
                   variant="coin"
                   size="sm"
-                  onClick={async () => {
+                  onClick={() => {
                     if (!editingProject.title || !editingProject.description) {
                       showFeedback("Title and description are required!", "error");
                       return;
                     }
-                    try {
-                      await saveProject(editingProject);
-                      showFeedback("Project saved successfully!");
-                      setEditingProject(null);
-                      void loadData();
-                    } catch (err) {
-                      showFeedback(err instanceof Error ? err.message : "Save failed", "error");
-                    }
+                    requestConfirmation(
+                      editingProject.id ? "CONFIRM EDIT PROJECT" : "CONFIRM CREATE PROJECT",
+                      `Are you sure you want to ${editingProject.id ? "update" : "create"} project "${editingProject.title}"?`,
+                      editingProject.id ? "YES, SAVE EDITS" : "YES, CREATE PROJECT",
+                      "coin",
+                      async () => {
+                        await saveProject(editingProject);
+                        showFeedback("Project saved successfully!");
+                        setEditingProject(null);
+                        void loadData();
+                      }
+                    );
                   }}
                 >
                   SAVE PROJECT
@@ -428,23 +472,25 @@ export default function HiddenVoidAdminPage() {
                     <PixelButton
                       variant="brick"
                       size="sm"
-                      onClick={async () => {
-                        if (confirm(`Delete project "${p.title}"?`)) {
-                          try {
-                            if (p.id) await deleteProject(p.id);
+                      onClick={() => {
+                        requestConfirmation(
+                          "CONFIRM DELETE PROJECT",
+                          `Are you sure you want to permanently delete project "${p.title}"?`,
+                          "YES, DELETE",
+                          "brick",
+                          async () => {
+                            await deleteProject(p.id, p.title);
                             showFeedback("Project deleted");
                             void loadData();
-                          } catch (err) {
-                            showFeedback(err instanceof Error ? err.message : "Delete failed", "error");
                           }
-                        }
+                        );
                       }}
                     >
                       DEL
                     </PixelButton>
                   </div>
                 </div>
-                <p className="text-xs text-gray-300">{p.description}</p>
+                <p className="text-xs text-gray-100 font-medium">{p.description}</p>
                 <div className="flex flex-wrap gap-1">
                   {p.tech.map((t) => (
                     <span key={t} className="text-[10px] px-2 py-0.5 bg-slate-800 text-yellow-300 border border-slate-700">
@@ -452,6 +498,176 @@ export default function HiddenVoidAdminPage() {
                     </span>
                   ))}
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 2: GALLERY CMS */}
+      {!loading && activeTab === "gallery" && (
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <h2 className="pixel-text text-base" style={{ color: dayTheme.colors.coin }}>
+              MANAGE GALLERY PHOTOS ({galleryList.length})
+            </h2>
+            <PixelButton
+              variant="coin"
+              size="sm"
+              onClick={() =>
+                setEditingGalleryItem({
+                  title: "",
+                  description: "",
+                  image: "/Images/IHI.png",
+                  date: new Date().toLocaleDateString("en-US", { month: "short", year: "numeric" }),
+                  order_index: galleryList.length + 1,
+                })
+              }
+            >
+              ADD GALLERY PHOTO
+            </PixelButton>
+          </div>
+
+          {/* Form Modal / Inline Editor for Gallery Item */}
+          {editingGalleryItem && (
+            <PixelCard variant="elevated" className="p-6 space-y-4 border-4 border-yellow-400">
+              <h3 className="pixel-text text-sm" style={{ color: dayTheme.colors.coin }}>
+                {editingGalleryItem.id ? "EDIT GALLERY ITEM" : "CREATE GALLERY ITEM"}
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+                <div>
+                  <label className="block text-white font-bold mb-1">IMAGE TITLE</label>
+                  <input
+                    type="text"
+                    value={editingGalleryItem.title || ""}
+                    onChange={(e) => setEditingGalleryItem({ ...editingGalleryItem, title: e.target.value })}
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
+                  />
+                </div>
+                <div>
+                  <label className="block text-white font-bold mb-1">EVENT / PHOTO DATE (e.g. May 2026)</label>
+                  <input
+                    type="text"
+                    value={editingGalleryItem.date || ""}
+                    onChange={(e) => setEditingGalleryItem({ ...editingGalleryItem, date: e.target.value })}
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-white font-bold mb-1">DESCRIPTION / CAPTION</label>
+                  <textarea
+                    rows={2}
+                    value={editingGalleryItem.description || ""}
+                    onChange={(e) => setEditingGalleryItem({ ...editingGalleryItem, description: e.target.value })}
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-white font-bold mb-1">IMAGE URL OR FILE UPLOAD</label>
+                  <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
+                    <input
+                      type="text"
+                      value={editingGalleryItem.image || ""}
+                      onChange={(e) => setEditingGalleryItem({ ...editingGalleryItem, image: e.target.value })}
+                      className="flex-1 p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
+                    />
+                    <label className="cursor-pointer px-4 py-2 bg-blue-600 text-white font-bold rounded hover:bg-blue-500">
+                      {uploadingImage ? "UPLOADING..." : "UPLOAD FILE"}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          setUploadingImage(true);
+                          try {
+                            const publicUrl = await uploadProjectImage(file);
+                            setEditingGalleryItem({ ...editingGalleryItem, image: publicUrl });
+                            showFeedback("Image uploaded to Supabase Storage!");
+                          } catch (err) {
+                            showFeedback(err instanceof Error ? err.message : "Upload failed", "error");
+                          } finally {
+                            setUploadingImage(false);
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="flex gap-3 pt-4">
+                <PixelButton
+                  variant="coin"
+                  size="sm"
+                  onClick={() => {
+                    if (!editingGalleryItem.title || !editingGalleryItem.image) {
+                      showFeedback("Title and image are required!", "error");
+                      return;
+                    }
+                    requestConfirmation(
+                      editingGalleryItem.id ? "CONFIRM EDIT GALLERY PHOTO" : "CONFIRM CREATE GALLERY PHOTO",
+                      `Are you sure you want to ${editingGalleryItem.id ? "update" : "add"} gallery photo "${editingGalleryItem.title}"?`,
+                      editingGalleryItem.id ? "YES, SAVE EDITS" : "YES, ADD PHOTO",
+                      "coin",
+                      async () => {
+                        await saveGalleryItem(editingGalleryItem);
+                        showFeedback("Gallery item saved successfully!");
+                        setEditingGalleryItem(null);
+                        void loadData();
+                      }
+                    );
+                  }}
+                >
+                  SAVE GALLERY ITEM
+                </PixelButton>
+                <PixelButton variant="brick" size="sm" onClick={() => setEditingGalleryItem(null)}>
+                  CANCEL
+                </PixelButton>
+              </div>
+            </PixelCard>
+          )}
+
+          {/* Gallery Items Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {galleryList.map((g) => (
+              <div key={g.id || g.title} className="p-4 bg-[rgba(13,27,42,0.8)] border-2 border-black space-y-2">
+                <div className="aspect-video relative overflow-hidden bg-slate-900 border border-slate-700">
+                  <img src={g.image} alt={g.title} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex justify-between items-start pt-1">
+                  <div>
+                    <h3 className="pixel-text text-xs" style={{ color: dayTheme.colors.coin }}>
+                      {g.title}
+                    </h3>
+                    <p className="text-[10px] text-green-400 font-mono">{g.date}</p>
+                  </div>
+                  <div className="flex gap-1">
+                    <PixelButton variant="coin" size="sm" onClick={() => setEditingGalleryItem(g)}>
+                      EDIT
+                    </PixelButton>
+                    <PixelButton
+                      variant="brick"
+                      size="sm"
+                      onClick={() => {
+                        requestConfirmation(
+                          "CONFIRM DELETE GALLERY PHOTO",
+                          `Are you sure you want to delete gallery item "${g.title}"?`,
+                          "YES, DELETE",
+                          "brick",
+                          async () => {
+                            await deleteGalleryItem(g.id, g.title);
+                            showFeedback("Gallery item deleted");
+                            void loadData();
+                          }
+                        );
+                      }}
+                    >
+                      DEL
+                    </PixelButton>
+                  </div>
+                </div>
+                {g.description && <p className="text-[11px] text-gray-100 font-medium line-clamp-2">{g.description}</p>}
               </div>
             ))}
           </div>
@@ -489,25 +705,25 @@ export default function HiddenVoidAdminPage() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
                 <div>
-                  <label className="block text-gray-400 mb-1">CATEGORY NAME</label>
+                  <label className="block text-white font-bold mb-1">CATEGORY NAME</label>
                   <input
                     type="text"
                     value={editingTechSkill.name || ""}
                     onChange={(e) => setEditingTechSkill({ ...editingTechSkill, name: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-400 mb-1">ICON (Globe, Smartphone, Cpu, Rocket, Shield, Code)</label>
+                  <label className="block text-white font-bold mb-1">ICON (Globe, Smartphone, Cpu, Rocket, Shield, Code)</label>
                   <input
                     type="text"
                     value={editingTechSkill.icon || "Globe"}
                     onChange={(e) => setEditingTechSkill({ ...editingTechSkill, icon: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-gray-400 mb-1">SKILL ITEMS (Comma Separated)</label>
+                  <label className="block text-white font-bold mb-1">SKILL ITEMS (Comma Separated)</label>
                   <input
                     type="text"
                     value={(editingTechSkill.items || []).join(", ")}
@@ -517,7 +733,7 @@ export default function HiddenVoidAdminPage() {
                         items: e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
                       })
                     }
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
               </div>
@@ -525,15 +741,23 @@ export default function HiddenVoidAdminPage() {
                 <PixelButton
                   variant="coin"
                   size="sm"
-                  onClick={async () => {
-                    try {
-                      await saveTechnicalSkill(editingTechSkill);
-                      showFeedback("Skill category saved!");
-                      setEditingTechSkill(null);
-                      void loadData();
-                    } catch (err) {
-                      showFeedback(err instanceof Error ? err.message : "Save failed", "error");
+                  onClick={() => {
+                    if (!editingTechSkill.name) {
+                      showFeedback("Category name is required!", "error");
+                      return;
                     }
+                    requestConfirmation(
+                      editingTechSkill.id ? "CONFIRM EDIT SKILL CATEGORY" : "CONFIRM CREATE SKILL CATEGORY",
+                      `Are you sure you want to ${editingTechSkill.id ? "update" : "create"} skill category "${editingTechSkill.name}"?`,
+                      editingTechSkill.id ? "YES, SAVE EDITS" : "YES, CREATE CATEGORY",
+                      "coin",
+                      async () => {
+                        await saveTechnicalSkill(editingTechSkill);
+                        showFeedback("Skill category saved!");
+                        setEditingTechSkill(null);
+                        void loadData();
+                      }
+                    );
                   }}
                 >
                   SAVE CATEGORY
@@ -567,12 +791,18 @@ export default function HiddenVoidAdminPage() {
                   <PixelButton
                     variant="brick"
                     size="sm"
-                    onClick={async () => {
-                      if (confirm(`Delete category "${s.name}"?`)) {
-                        if (s.id) await deleteTechnicalSkill(s.id);
-                        showFeedback("Category deleted");
-                        void loadData();
-                      }
+                    onClick={() => {
+                      requestConfirmation(
+                        "CONFIRM DELETE CATEGORY",
+                        `Are you sure you want to delete category "${s.name}"?`,
+                        "YES, DELETE",
+                        "brick",
+                        async () => {
+                          await deleteTechnicalSkill(s.id, s.name);
+                          showFeedback("Category deleted");
+                          void loadData();
+                        }
+                      );
                     }}
                   >
                     DEL
@@ -615,30 +845,30 @@ export default function HiddenVoidAdminPage() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
                 <div>
-                  <label className="block text-gray-400 mb-1">SKILL NAME</label>
+                  <label className="block text-white font-bold mb-1">SKILL NAME</label>
                   <input
                     type="text"
                     value={editingProfSkill.name || ""}
                     onChange={(e) => setEditingProfSkill({ ...editingProfSkill, name: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-400 mb-1">ICON (Code, Palette, Briefcase, Rocket)</label>
+                  <label className="block text-white font-bold mb-1">ICON (Code, Palette, Briefcase, Rocket)</label>
                   <input
                     type="text"
                     value={editingProfSkill.icon || "Code"}
                     onChange={(e) => setEditingProfSkill({ ...editingProfSkill, icon: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-gray-400 mb-1">DESCRIPTION</label>
+                  <label className="block text-white font-bold mb-1">DESCRIPTION</label>
                   <textarea
                     rows={2}
                     value={editingProfSkill.description || ""}
                     onChange={(e) => setEditingProfSkill({ ...editingProfSkill, description: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
               </div>
@@ -646,15 +876,23 @@ export default function HiddenVoidAdminPage() {
                 <PixelButton
                   variant="coin"
                   size="sm"
-                  onClick={async () => {
-                    try {
-                      await saveProfessionalSkill(editingProfSkill);
-                      showFeedback("Professional skill saved!");
-                      setEditingProfSkill(null);
-                      void loadData();
-                    } catch (err) {
-                      showFeedback(err instanceof Error ? err.message : "Save failed", "error");
+                  onClick={() => {
+                    if (!editingProfSkill.name) {
+                      showFeedback("Skill name is required!", "error");
+                      return;
                     }
+                    requestConfirmation(
+                      editingProfSkill.id ? "CONFIRM EDIT PROFESSIONAL SKILL" : "CONFIRM CREATE PROFESSIONAL SKILL",
+                      `Are you sure you want to ${editingProfSkill.id ? "update" : "create"} skill "${editingProfSkill.name}"?`,
+                      editingProfSkill.id ? "YES, SAVE EDITS" : "YES, CREATE SKILL",
+                      "coin",
+                      async () => {
+                        await saveProfessionalSkill(editingProfSkill);
+                        showFeedback("Professional skill saved!");
+                        setEditingProfSkill(null);
+                        void loadData();
+                      }
+                    );
                   }}
                 >
                   SAVE SKILL
@@ -673,7 +911,7 @@ export default function HiddenVoidAdminPage() {
                   <h3 className="pixel-text text-sm" style={{ color: dayTheme.colors.coin }}>
                     {s.name}
                   </h3>
-                  <p className="text-xs text-gray-300 mt-1">{s.description}</p>
+                  <p className="text-xs text-gray-100 font-medium mt-1">{s.description}</p>
                 </div>
                 <div className="flex gap-2">
                   <PixelButton variant="coin" size="sm" onClick={() => setEditingProfSkill(s)}>
@@ -682,12 +920,18 @@ export default function HiddenVoidAdminPage() {
                   <PixelButton
                     variant="brick"
                     size="sm"
-                    onClick={async () => {
-                      if (confirm(`Delete skill "${s.name}"?`)) {
-                        if (s.id) await deleteProfessionalSkill(s.id);
-                        showFeedback("Skill deleted");
-                        void loadData();
-                      }
+                    onClick={() => {
+                      requestConfirmation(
+                        "CONFIRM DELETE SKILL",
+                        `Are you sure you want to delete skill "${s.name}"?`,
+                        "YES, DELETE",
+                        "brick",
+                        async () => {
+                          await deleteProfessionalSkill(s.id, s.name);
+                          showFeedback("Skill deleted");
+                          void loadData();
+                        }
+                      );
                     }}
                   >
                     DEL
@@ -734,52 +978,52 @@ export default function HiddenVoidAdminPage() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
                 <div>
-                  <label className="block text-gray-400 mb-1">JOB TITLE</label>
+                  <label className="block text-white font-bold mb-1">JOB TITLE</label>
                   <input
                     type="text"
                     value={editingExp.jobTitle || ""}
                     onChange={(e) => setEditingExp({ ...editingExp, jobTitle: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-400 mb-1">COMPANY</label>
+                  <label className="block text-white font-bold mb-1">COMPANY</label>
                   <input
                     type="text"
                     value={editingExp.company || ""}
                     onChange={(e) => setEditingExp({ ...editingExp, company: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-400 mb-1">START DATE</label>
+                  <label className="block text-white font-bold mb-1">START DATE</label>
                   <input
                     type="text"
                     value={editingExp.startDate || ""}
                     onChange={(e) => setEditingExp({ ...editingExp, startDate: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-400 mb-1">END DATE</label>
+                  <label className="block text-white font-bold mb-1">END DATE</label>
                   <input
                     type="text"
                     value={editingExp.endDate || ""}
                     onChange={(e) => setEditingExp({ ...editingExp, endDate: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-gray-400 mb-1">OVERVIEW</label>
+                  <label className="block text-white font-bold mb-1">OVERVIEW</label>
                   <textarea
                     rows={2}
                     value={editingExp.overview || ""}
                     onChange={(e) => setEditingExp({ ...editingExp, overview: e.target.value })}
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-gray-400 mb-1">ACHIEVEMENTS / BULLETS (Pipe '|' Separated)</label>
+                  <label className="block text-white font-bold mb-1">ACHIEVEMENTS / BULLETS (Pipe '|' Separated)</label>
                   <textarea
                     rows={3}
                     value={(editingExp.details || []).join(" | ")}
@@ -789,11 +1033,11 @@ export default function HiddenVoidAdminPage() {
                         details: e.target.value.split("|").map((s) => s.trim()).filter(Boolean),
                       })
                     }
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-gray-400 mb-1">TECH USED (Comma Separated)</label>
+                  <label className="block text-white font-bold mb-1">TECH USED (Comma Separated)</label>
                   <input
                     type="text"
                     value={(editingExp.tech || []).join(", ")}
@@ -803,7 +1047,7 @@ export default function HiddenVoidAdminPage() {
                         tech: e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
                       })
                     }
-                    className="w-full p-2 bg-slate-900 border text-white"
+                    className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
                   />
                 </div>
               </div>
@@ -811,15 +1055,23 @@ export default function HiddenVoidAdminPage() {
                 <PixelButton
                   variant="coin"
                   size="sm"
-                  onClick={async () => {
-                    try {
-                      await saveExperience(editingExp);
-                      showFeedback("Experience entry saved!");
-                      setEditingExp(null);
-                      void loadData();
-                    } catch (err) {
-                      showFeedback(err instanceof Error ? err.message : "Save failed", "error");
+                  onClick={() => {
+                    if (!editingExp.jobTitle || !editingExp.company) {
+                      showFeedback("Job title and company are required!", "error");
+                      return;
                     }
+                    requestConfirmation(
+                      editingExp.id ? "CONFIRM EDIT EXPERIENCE" : "CONFIRM CREATE EXPERIENCE",
+                      `Are you sure you want to ${editingExp.id ? "update" : "create"} experience "${editingExp.jobTitle} @ ${editingExp.company}"?`,
+                      editingExp.id ? "YES, SAVE EDITS" : "YES, CREATE EXPERIENCE",
+                      "coin",
+                      async () => {
+                        await saveExperience(editingExp);
+                        showFeedback("Experience entry saved!");
+                        setEditingExp(null);
+                        void loadData();
+                      }
+                    );
                   }}
                 >
                   SAVE EXPERIENCE
@@ -841,7 +1093,7 @@ export default function HiddenVoidAdminPage() {
                   <p className="text-xs text-green-400">
                     {e.startDate} – {e.endDate}
                   </p>
-                  <p className="text-xs text-gray-300 mt-2">{e.overview}</p>
+                  <p className="text-xs text-gray-100 font-medium mt-2">{e.overview}</p>
                 </div>
                 <div className="flex gap-2">
                   <PixelButton variant="coin" size="sm" onClick={() => setEditingExp(e)}>
@@ -850,12 +1102,18 @@ export default function HiddenVoidAdminPage() {
                   <PixelButton
                     variant="brick"
                     size="sm"
-                    onClick={async () => {
-                      if (confirm(`Delete experience "${e.jobTitle}"?`)) {
-                        if (e.id) await deleteExperience(e.id);
-                        showFeedback("Experience deleted");
-                        void loadData();
-                      }
+                    onClick={() => {
+                      requestConfirmation(
+                        "CONFIRM DELETE EXPERIENCE",
+                        `Are you sure you want to delete experience "${e.jobTitle}"?`,
+                        "YES, DELETE",
+                        "brick",
+                        async () => {
+                          await deleteExperience(e.id, e.company);
+                          showFeedback("Experience deleted");
+                          void loadData();
+                        }
+                      );
                     }}
                   >
                     DEL
@@ -875,57 +1133,57 @@ export default function HiddenVoidAdminPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
             <div>
-              <label className="block text-gray-400 mb-1">EMAIL ADDRESS</label>
+              <label className="block text-white font-bold mb-1">EMAIL ADDRESS</label>
               <input
                 type="text"
                 value={contactData.email}
                 onChange={(e) => setContactData({ ...contactData, email: e.target.value })}
-                className="w-full p-2 bg-slate-900 border text-white"
+                className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
               />
             </div>
             <div>
-              <label className="block text-gray-400 mb-1">PHONE NUMBER</label>
+              <label className="block text-white font-bold mb-1">PHONE NUMBER</label>
               <input
                 type="text"
                 value={contactData.phone}
                 onChange={(e) => setContactData({ ...contactData, phone: e.target.value })}
-                className="w-full p-2 bg-slate-900 border text-white"
+                className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
               />
             </div>
             <div>
-              <label className="block text-gray-400 mb-1">GITHUB URL</label>
+              <label className="block text-white font-bold mb-1">GITHUB URL</label>
               <input
                 type="text"
                 value={contactData.github}
                 onChange={(e) => setContactData({ ...contactData, github: e.target.value })}
-                className="w-full p-2 bg-slate-900 border text-white"
+                className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
               />
             </div>
             <div>
-              <label className="block text-gray-400 mb-1">LINKEDIN URL</label>
+              <label className="block text-white font-bold mb-1">LINKEDIN URL</label>
               <input
                 type="text"
                 value={contactData.linkedin}
                 onChange={(e) => setContactData({ ...contactData, linkedin: e.target.value })}
-                className="w-full p-2 bg-slate-900 border text-white"
+                className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
               />
             </div>
             <div>
-              <label className="block text-gray-400 mb-1">INSTAGRAM URL</label>
+              <label className="block text-white font-bold mb-1">INSTAGRAM URL</label>
               <input
                 type="text"
                 value={contactData.instagram}
                 onChange={(e) => setContactData({ ...contactData, instagram: e.target.value })}
-                className="w-full p-2 bg-slate-900 border text-white"
+                className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
               />
             </div>
             <div>
-              <label className="block text-gray-400 mb-1">VIBER LINK</label>
+              <label className="block text-white font-bold mb-1">VIBER LINK</label>
               <input
                 type="text"
                 value={contactData.viber}
                 onChange={(e) => setContactData({ ...contactData, viber: e.target.value })}
-                className="w-full p-2 bg-slate-900 border text-white"
+                className="w-full p-2 bg-slate-900 border-2 border-black text-white font-mono placeholder-white" style={{ color: "#ffffff" }}
               />
             </div>
           </div>
@@ -933,13 +1191,17 @@ export default function HiddenVoidAdminPage() {
             <PixelButton
               variant="coin"
               size="md"
-              onClick={async () => {
-                try {
-                  await saveContactInfo(contactData);
-                  showFeedback("Contact details updated!");
-                } catch (err) {
-                  showFeedback(err instanceof Error ? err.message : "Save failed", "error");
-                }
+              onClick={() => {
+                requestConfirmation(
+                  "CONFIRM SAVE CONTACT INFO",
+                  "Are you sure you want to update your public contact information and social links?",
+                  "YES, SAVE DETAILS",
+                  "coin",
+                  async () => {
+                    await saveContactInfo(contactData);
+                    showFeedback("Contact details updated!");
+                  }
+                );
               }}
             >
               SAVE CONTACT DETAILS
@@ -971,6 +1233,29 @@ export default function HiddenVoidAdminPage() {
           )}
         </div>
       )}
+
+      {/* Confirmation Modal Component */}
+      <ConfirmModal
+        isOpen={!!confirmModal?.isOpen}
+        title={confirmModal?.title || "CONFIRM ACTION"}
+        message={confirmModal?.message || ""}
+        confirmText={confirmModal?.confirmText || "CONFIRM"}
+        variant={confirmModal?.variant || "coin"}
+        loading={actionLoading}
+        onConfirm={async () => {
+          if (!confirmModal?.action) return;
+          setActionLoading(true);
+          try {
+            await confirmModal.action();
+          } catch (err) {
+            showFeedback(err instanceof Error ? err.message : "Action failed", "error");
+          } finally {
+            setActionLoading(false);
+            setConfirmModal(null);
+          }
+        }}
+        onCancel={() => setConfirmModal(null)}
+      />
     </div>
   );
 }
