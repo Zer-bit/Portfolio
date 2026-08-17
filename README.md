@@ -2,17 +2,6 @@
 
 A modern, professional portfolio website built with Next.js, TypeScript, and Tailwind CSS.
 
-## ✨ Features
-
-- 🎨 Clean, professional design with light theme
-- 🎯 3-color system (Green, Blue, Orange)
-- 📱 Fully responsive across all devices
-- ⚡ Fast performance with Next.js 15
-- 🎭 Smooth transitions and hover effects
-- 📧 Working contact form with Google Apps Script
-- 🔍 SEO optimized
-- ♿ Accessible design
-
 ## 🛠️ Tech Stack
 
 - **Framework:** Next.js 15

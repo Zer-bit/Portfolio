@@ -134,7 +134,7 @@ export const professionalSkills = [
     description:
       "Strong verbal and written skills with active listening. Effective team coordination and independent work.",
     icon: Briefcase,
-    color: COLORS.secondary.blue,
+    color: "#a855f7", // Vibrant Retro Star Purple
   },
   {
     name: "Customer Service",
@@ -153,7 +153,7 @@ export const professionalSkills = [
     description:
       "Quick to learn and adapt to new technologies, tools, and challenges. If I don't know something, I'll figure it out.",
     icon: Rocket,
-    color: COLORS.secondary.blue,
+    color: "#ec4899", // Vibrant Super Peach Magenta
   },
 ];
 

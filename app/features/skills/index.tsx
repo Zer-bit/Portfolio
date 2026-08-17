@@ -179,26 +179,34 @@ export default function Skills() {
                 ? Array.from({ length: 4 }).map((_, idx) => (
                     <SkillCardSkeleton key={idx} variant="professional" />
                   ))
-                : profSkills.map((skill, index) => (
-                    <motion.div
-                      key={skill.id || skill.name}
-                      variants={cardVariant}
-                      initial="hidden"
-                      animate="visible"
-                      transition={{ delay: index * 0.1, duration: 0.4, ease: "easeOut" }}
-                    >
-                      <PixelCard variant="default" className="p-6">
-                        <div className="flex items-start gap-5">
-                          <div
-                            className="w-12 h-12 flex-shrink-0 flex items-center justify-center pixel-shadow"
-                            style={{
-                              backgroundColor: `${skill.color}22`,
-                              color: skill.color,
-                              border: `2px solid ${dayTheme.colors.border}`,
-                            }}
-                          >
-                            {renderIcon(skill.icon, 24)}
-                          </div>
+                : profSkills.map((skill, index) => {
+                    const iconColor =
+                      skill.name.includes("Communication")
+                        ? "#a855f7"
+                        : skill.name.includes("Adaptability")
+                        ? "#ec4899"
+                        : skill.color || "#9cbd09";
+
+                    return (
+                      <motion.div
+                        key={skill.id || skill.name}
+                        variants={cardVariant}
+                        initial="hidden"
+                        animate="visible"
+                        transition={{ delay: index * 0.1, duration: 0.4, ease: "easeOut" }}
+                      >
+                        <PixelCard variant="default" className="p-6">
+                          <div className="flex items-start gap-5">
+                            <div
+                              className="w-12 h-12 flex-shrink-0 flex items-center justify-center pixel-shadow"
+                              style={{
+                                backgroundColor: `${iconColor}22`,
+                                color: iconColor,
+                                border: `2px solid ${dayTheme.colors.border}`,
+                              }}
+                            >
+                              {renderIcon(skill.icon, 24)}
+                            </div>
 
                           <div>
                             <h5
@@ -217,7 +225,8 @@ export default function Skills() {
                         </div>
                       </PixelCard>
                     </motion.div>
-                  ))}
+                  );
+                })}
             </div>
           </div>
         </div>
