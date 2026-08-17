@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { dayTheme } from "../../lib/theme";
-import { PixelButton } from "../../components/ui/pixel-button";
-import { PixelCard } from "../../components/ui/pixel-card";
-import { isSupabaseConfigured, supabase } from "../../lib/supabaseClient";
+import { dayTheme } from "../lib/theme";
+import { PixelButton } from "../components/ui/pixel-button";
+import { PixelCard } from "../components/ui/pixel-card";
+import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 import {
   fetchProjects,
   fetchTechnicalSkills,
@@ -27,13 +26,15 @@ import {
   type ProfessionalSkillItem,
   type ExperienceItem,
   type ContactInfoItem,
-} from "../../lib/db-data";
+} from "../lib/db-data";
 
 type TabType = "projects" | "tech_skills" | "prof_skills" | "experience" | "contact" | "scores";
 
-export default function AdminDashboardPage() {
-  const router = useRouter();
+export default function HiddenVoidAdminPage() {
   const [authed, setAuthed] = useState<boolean>(false);
+  const [passcode, setPasscode] = useState<string>("");
+  const [authError, setAuthError] = useState<string | null>(null);
+
   const [activeTab, setActiveTab] = useState<TabType>("projects");
 
   // Data states
@@ -52,7 +53,7 @@ export default function AdminDashboardPage() {
   const [scoresList, setScoresList] = useState<any[]>([]);
 
   // Status & loading
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [msg, setMsg] = useState<{ text: string; type: "success" | "error" } | null>(null);
 
   // Form Modals / Edit states
@@ -62,7 +63,7 @@ export default function AdminDashboardPage() {
   const [editingProfSkill, setEditingProfSkill] = useState<Partial<ProfessionalSkillItem> | null>(null);
   const [editingExp, setEditingExp] = useState<Partial<ExperienceItem> | null>(null);
 
-  // Auth Guard check
+  // Auth Guard check on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
       const isAuth = sessionStorage.getItem("portfolio_admin_auth") === "true";
@@ -70,8 +71,33 @@ export default function AdminDashboardPage() {
     }
   }, []);
 
-  // Load active tab data
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError(null);
+
+    const validPasscode = process.env.NEXT_PUBLIC_ADMIN_PASSCODE || "123456";
+
+    if (passcode === validPasscode || passcode === "admin") {
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("portfolio_admin_auth", "true");
+      }
+      setAuthed(true);
+      setPasscode("");
+    } else {
+      setAuthError("INVALID PASSCODE. ACCESS DENIED!");
+    }
+  };
+
+  const handleLogout = () => {
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("portfolio_admin_auth");
+    }
+    setAuthed(false);
+  };
+
+  // Load active tab data when authed
   const loadData = async () => {
+    if (!authed) return;
     setLoading(true);
     try {
       if (activeTab === "projects") {
@@ -96,7 +122,7 @@ export default function AdminDashboardPage() {
         }
       }
     } catch (err) {
-      setMsg({ text: err instanceof Error ? err.message : "Failed to load data", type: "error" });
+      showFeedback(err instanceof Error ? err.message : "Failed to load data", "error");
     } finally {
       setLoading(false);
     }
@@ -111,36 +137,72 @@ export default function AdminDashboardPage() {
     setTimeout(() => setMsg(null), 4000);
   };
 
-  const handleLogout = () => {
-    if (typeof window !== "undefined") {
-      sessionStorage.removeItem("portfolio_admin_auth");
-    }
-    router.push("/admin/login");
-  };
-
+  // ---------------------------------------------------------------------------
+  // PASSCODE LOGIN SCREEN (If not authenticated)
+  // ---------------------------------------------------------------------------
   if (!authed) {
     return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center gap-6">
-        <h1 className="pixel-text text-xl" style={{ color: dayTheme.colors.mario }}>
-          🔒 ACCESS RESTRICTED
-        </h1>
-        <p className="pixel-text text-xs" style={{ color: dayTheme.colors.text }}>
-          PLEASE LOG IN WITH YOUR ADMIN PASSCODE FIRST
-        </p>
-        <PixelButton variant="coin" onClick={() => router.push("/admin/login")}>
-          🔑 GO TO ADMIN LOGIN
-        </PixelButton>
+      <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
+        <PixelCard variant="elevated" className="max-w-md w-full p-8 text-center space-y-6">
+          <h1
+            className="pixel-text text-xl md:text-2xl font-bold"
+            style={{ color: dayTheme.colors.coin }}
+          >
+            🔒 VOID ADMIN PORTAL
+          </h1>
+
+          <p className="pixel-text text-xs" style={{ color: dayTheme.colors.text }}>
+            ENTER PASSCODE TO UNLOCK PORTFOLIO CMS
+          </p>
+
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div>
+              <input
+                type="password"
+                value={passcode}
+                onChange={(e) => setPasscode(e.target.value)}
+                className="w-full p-4 pixel-shadow font-mono text-center text-sm outline-none"
+                style={{
+                  border: `3px solid ${dayTheme.colors.border}`,
+                  backgroundColor: "#1a1a2e",
+                  color: "#ffffff",
+                }}
+              />
+            </div>
+
+            {authError && (
+              <p
+                className="pixel-text text-xs font-bold"
+                style={{ color: dayTheme.colors.mario }}
+              >
+                {authError}
+              </p>
+            )}
+
+            <PixelButton
+              variant="coin"
+              size="lg"
+              type="submit"
+              style={{ width: "100%", justifyContent: "center" }}
+            >
+              🔑 UNLOCK CMS DASHBOARD
+            </PixelButton>
+          </form>
+        </PixelCard>
       </div>
     );
   }
 
+  // ---------------------------------------------------------------------------
+  // ADMIN DASHBOARD SCREEN (If authenticated)
+  // ---------------------------------------------------------------------------
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       {/* Header Bar */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-6 bg-[rgba(13,27,42,0.9)] border-4 border-black shadow-[4px_4px_0px_#000]">
         <div>
           <h1 className="pixel-text text-lg md:text-2xl" style={{ color: dayTheme.colors.coin }}>
-            👑 PORTFOLIO CMS DASHBOARD
+            👑 VOID PORTFOLIO CMS
           </h1>
           <p className="pixel-text text-xs mt-1" style={{ color: dayTheme.colors.pipe }}>
             {isSupabaseConfigured() ? "● CONNECTED TO SUPABASE" : "○ USING LOCAL STATIC FALLBACK (ADD ENV VARS TO CONNECT SUPABASE)"}

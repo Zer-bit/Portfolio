@@ -52,7 +52,7 @@ export const ROUTES = {
   contact: "/contact",
   settings: "/settings",
   game: "/game",
-  admin: "/admin/login",
+  admin: "/void",
 } as const;
 
 // Navigation Links
