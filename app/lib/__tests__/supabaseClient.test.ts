@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { isSupabaseConfigured, supabase } from '../supabaseClient';
 
 describe('supabaseClient', () => {
   beforeEach(() => {
@@ -6,17 +7,20 @@ describe('supabaseClient', () => {
     vi.unstubAllEnvs();
   });
 
-  it('throws when NEXT_PUBLIC_SUPABASE_URL is missing', async () => {
+  it('detects when Supabase is not configured', () => {
     vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', '');
-    vi.stubEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY', 'test-key');
-
-    await expect(import('../supabaseClient')).rejects.toThrow('NEXT_PUBLIC_SUPABASE_URL');
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY', '');
+    expect(isSupabaseConfigured()).toBe(false);
   });
 
-  it('throws when NEXT_PUBLIC_SUPABASE_ANON_KEY is missing', async () => {
-    vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', 'https://test.supabase.co');
-    vi.stubEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY', '');
+  it('detects when Supabase is configured', () => {
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', 'https://test-ref.supabase.co');
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY', 'test-anon-key-12345');
+    expect(isSupabaseConfigured()).toBe(true);
+  });
 
-    await expect(import('../supabaseClient')).rejects.toThrow('NEXT_PUBLIC_SUPABASE_ANON_KEY');
+  it('exports a valid client instance without throwing', () => {
+    expect(supabase).toBeDefined();
+    expect(typeof supabase.from).toBe('function');
   });
 });

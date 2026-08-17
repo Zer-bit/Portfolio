@@ -40,12 +40,19 @@ import { useSound } from "../../hooks/use-sound";
 // Types
 // ---------------------------------------------------------------------------
 
-/** Project type inferred from the `projects` array in `app/lib/data.ts`. */
-type Project = (typeof projects)[number];
+export interface ProjectCardData {
+  title: string;
+  description?: string;
+  tech: string[];
+  image: string;
+  link: string;
+  accent: string;
+  slug?: string;
+}
 
 export interface LevelCardProps {
   /** The project data object to render. */
-  project: Project;
+  project: ProjectCardData;
 }
 
 // ---------------------------------------------------------------------------

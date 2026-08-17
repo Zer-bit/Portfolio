@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { projects, toSlug } from "../../lib/data";
+import { fetchProjectBySlug, type ProjectItem } from "../../lib/db-data";
 import { ROUTES } from "../../lib/constants";
 import { dayTheme } from "../../lib/theme";
 import { PixelButton } from "../../components/ui/pixel-button";
 import NotificationToast from "../../components/ui/notification-toast";
+import { ProjectDetailSkeleton } from "../../components/ui/skeleton-loader";
 
 interface ProjectDetailContentProps {
   slug: string;
@@ -16,7 +17,25 @@ interface ProjectDetailContentProps {
 export function ProjectDetailContent({ slug }: ProjectDetailContentProps) {
   const router = useRouter();
   const [toastVisible, setToastVisible] = useState(false);
-  const project = projects.find((p) => toSlug(p.title) === slug);
+  const [project, setProject] = useState<ProjectItem | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchProjectBySlug(slug).then((data) => {
+      if (isMounted) {
+        setProject(data);
+        setLoading(false);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [slug]);
+
+  if (loading) {
+    return <ProjectDetailSkeleton />;
+  }
 
   // Level Not Found
   if (!project) {

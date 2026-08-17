@@ -24,20 +24,7 @@ import {
   aabb,
   layoutLevel,
 } from "../../lib/game/utils";
-// ---------------------------------------------------------------------------
-// SUPABASE — commented out until Supabase is connected.
-// To re-enable: uncomment the import below and the _supabaseInstance block,
-// then replace the localStorage helpers with the Supabase implementations.
-// ---------------------------------------------------------------------------
-// import { supabase } from "../../lib/supabaseClient";
-//
-// let _supabaseInstance: typeof supabase | null = null;
-// let _supabaseConfigError: string | null = null;
-// try {
-//   _supabaseInstance = supabase;
-// } catch (e) {
-//   _supabaseConfigError = e instanceof Error ? e.message : "Supabase configuration error";
-// }
+import { supabase, isSupabaseConfigured } from "../../lib/supabaseClient";
 
 // ---------------------------------------------------------------------------
 // LOCAL STORAGE — temporary persistence until Supabase is connected
@@ -354,27 +341,23 @@ export default function MarioGame(): React.ReactElement {
   };
 
   const handleSubmitScore = async (playerName: string, finalScore: number): Promise<void> => {
-    // Validate: name must not be empty
     if (!playerName.trim()) {
       setSubmitState((prev) => ({ ...prev, error: "Please enter your name." }));
       return;
     }
 
     const sanitized = sanitizeName(playerName);
-
     setSubmitState((prev) => ({ ...prev, loading: true, error: null }));
 
-    // --- LOCAL STORAGE (temporary) ---
-    // TODO: Replace with Supabase when connected:
-    // const { error } = await _supabaseInstance!
-    //   .from("scores")
-    //   .insert({ player_name: sanitized, score: finalScore });
-    // if (error) {
-    //   setSubmitState((prev) => ({ ...prev, loading: false, error: error.message }));
-    //   return;
-    // }
     try {
-      lsSaveScore(sanitized, finalScore);
+      if (isSupabaseConfigured()) {
+        const { error } = await supabase
+          .from("scores")
+          .insert({ player_name: sanitized, score: finalScore });
+        if (error) throw error;
+      } else {
+        lsSaveScore(sanitized, finalScore);
+      }
       setSubmitState({ playerName: "", loading: false, error: null, submitted: false });
       setOverlayState({ type: "start" });
       void fetchLeaderboard();
@@ -391,26 +374,22 @@ export default function MarioGame(): React.ReactElement {
     setLeaderboardLoading(true);
     setLeaderboardError(null);
 
-    // --- LOCAL STORAGE (temporary) ---
-    // TODO: Replace with Supabase when connected:
-    // try {
-    //   const { data, error } = await _supabaseInstance!
-    //     .from("scores")
-    //     .select("id, player_name, score, created_at")
-    //     .order("score", { ascending: false })
-    //     .limit(10);
-    //   if (error) { setLeaderboardError(error.message); }
-    //   else { setLeaderboard(data ?? []); }
-    // } catch (err) {
-    //   setLeaderboardError(err instanceof Error ? err.message : "Failed to load scores.");
-    // } finally {
-    //   setLeaderboardLoading(false);
-    // }
     try {
-      const scores = lsGetTopScores(10);
-      setLeaderboard(scores);
+      if (isSupabaseConfigured()) {
+        const { data, error } = await supabase
+          .from("scores")
+          .select("id, player_name, score, created_at")
+          .order("score", { ascending: false })
+          .limit(10);
+        if (error) throw error;
+        setLeaderboard(data ?? []);
+      } else {
+        const scores = lsGetTopScores(10);
+        setLeaderboard(scores);
+      }
     } catch (err) {
       setLeaderboardError(err instanceof Error ? err.message : "Failed to load scores.");
+      setLeaderboard(lsGetTopScores(10));
     } finally {
       setLeaderboardLoading(false);
     }

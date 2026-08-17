@@ -52,6 +52,7 @@ export const ROUTES = {
   contact: "/contact",
   settings: "/settings",
   game: "/game",
+  admin: "/admin/login",
 } as const;
 
 // Navigation Links
