@@ -148,7 +148,7 @@ export default function HiddenVoidAdminPage() {
             className="pixel-text text-xl md:text-2xl font-bold"
             style={{ color: dayTheme.colors.coin }}
           >
-            🔒 VOID ADMIN PORTAL
+            VOID ADMIN PORTAL
           </h1>
 
           <p className="pixel-text text-xs" style={{ color: dayTheme.colors.text }}>
@@ -185,7 +185,7 @@ export default function HiddenVoidAdminPage() {
               type="submit"
               style={{ width: "100%", justifyContent: "center" }}
             >
-              🔑 UNLOCK CMS DASHBOARD
+              UNLOCK CMS DASHBOARD
             </PixelButton>
           </form>
         </PixelCard>
@@ -198,18 +198,23 @@ export default function HiddenVoidAdminPage() {
   // ---------------------------------------------------------------------------
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
-      {/* Header Bar */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-6 bg-[rgba(13,27,42,0.9)] border-4 border-black shadow-[4px_4px_0px_#000]">
-        <div>
-          <h1 className="pixel-text text-lg md:text-2xl" style={{ color: dayTheme.colors.coin }}>
-            👑 VOID PORTFOLIO CMS
+      {/* Header Bar — Sleek Minimalist Retro Bar */}
+      <div className="flex items-center justify-between gap-4 p-4 bg-[rgba(13,27,42,0.9)] border-2 border-black shadow-[2px_2px_0px_#000]">
+        <div className="flex items-center gap-3">
+          <span
+            className="w-2.5 h-2.5 rounded-full inline-block animate-pulse"
+            style={{
+              backgroundColor: isSupabaseConfigured() ? "#00a800" : "#e40058",
+              boxShadow: isSupabaseConfigured() ? "0 0 8px #00a800" : "0 0 8px #e40058",
+            }}
+            title={isSupabaseConfigured() ? "Live Supabase Database Active" : "Local Static Fallback Mode"}
+          />
+          <h1 className="pixel-text text-sm md:text-base font-bold tracking-wider" style={{ color: dayTheme.colors.coin }}>
+            VOID // CMS
           </h1>
-          <p className="pixel-text text-xs mt-1" style={{ color: dayTheme.colors.pipe }}>
-            {isSupabaseConfigured() ? "● CONNECTED TO SUPABASE" : "○ USING LOCAL STATIC FALLBACK (ADD ENV VARS TO CONNECT SUPABASE)"}
-          </p>
         </div>
         <PixelButton variant="brick" size="sm" onClick={handleLogout}>
-          🚪 LOG OUT
+          LOG OUT
         </PixelButton>
       </div>
 
@@ -228,12 +233,12 @@ export default function HiddenVoidAdminPage() {
       <div className="flex flex-wrap gap-2 border-b-4 border-black pb-2">
         {(
           [
-            { id: "projects", label: "📂 PROJECTS" },
-            { id: "tech_skills", label: "⚡ TECH SKILLS" },
-            { id: "prof_skills", label: "💼 PROF SKILLS" },
-            { id: "experience", label: "🏆 EXPERIENCE" },
-            { id: "contact", label: "📞 CONTACT" },
-            { id: "scores", label: "🕹️ LEADERBOARD" },
+            { id: "projects", label: "PROJECTS" },
+            { id: "tech_skills", label: "TECH SKILLS" },
+            { id: "prof_skills", label: "PROF SKILLS" },
+            { id: "experience", label: "EXPERIENCE" },
+            { id: "contact", label: "CONTACT" },
+            { id: "scores", label: "LEADERBOARD" },
           ] as const
         ).map((tab) => (
           <PixelButton
@@ -265,7 +270,7 @@ export default function HiddenVoidAdminPage() {
       {/* TAB 1: PROJECTS CMS */}
       {!loading && activeTab === "projects" && (
         <div className="space-y-6">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <h2 className="pixel-text text-base" style={{ color: dayTheme.colors.coin }}>
               MANAGE PROJECTS ({projectsList.length})
             </h2>
@@ -285,7 +290,7 @@ export default function HiddenVoidAdminPage() {
                 })
               }
             >
-              + ADD NEW PROJECT
+              ADD NEW PROJECT
             </PixelButton>
           </div>
 
@@ -348,7 +353,7 @@ export default function HiddenVoidAdminPage() {
                 </div>
                 <div className="md:col-span-2">
                   <label className="block text-gray-400 mb-1">PROJECT IMAGE URL OR FILE UPLOAD</label>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
                     <input
                       type="text"
                       value={editingProject.image || ""}
@@ -399,7 +404,7 @@ export default function HiddenVoidAdminPage() {
                     }
                   }}
                 >
-                  💾 SAVE PROJECT
+                  SAVE PROJECT
                 </PixelButton>
                 <PixelButton variant="brick" size="sm" onClick={() => setEditingProject(null)}>
                   CANCEL
@@ -473,7 +478,7 @@ export default function HiddenVoidAdminPage() {
                 })
               }
             >
-              + ADD SKILL CATEGORY
+              ADD SKILL CATEGORY
             </PixelButton>
           </div>
 
@@ -531,7 +536,7 @@ export default function HiddenVoidAdminPage() {
                     }
                   }}
                 >
-                  💾 SAVE CATEGORY
+                  SAVE CATEGORY
                 </PixelButton>
                 <PixelButton variant="brick" size="sm" onClick={() => setEditingTechSkill(null)}>
                   CANCEL
@@ -599,7 +604,7 @@ export default function HiddenVoidAdminPage() {
                 })
               }
             >
-              + ADD PROFESSIONAL SKILL
+              ADD PROFESSIONAL SKILL
             </PixelButton>
           </div>
 
@@ -652,7 +657,7 @@ export default function HiddenVoidAdminPage() {
                     }
                   }}
                 >
-                  💾 SAVE SKILL
+                  SAVE SKILL
                 </PixelButton>
                 <PixelButton variant="brick" size="sm" onClick={() => setEditingProfSkill(null)}>
                   CANCEL
@@ -718,7 +723,7 @@ export default function HiddenVoidAdminPage() {
                 })
               }
             >
-              + ADD EXPERIENCE
+              ADD EXPERIENCE
             </PixelButton>
           </div>
 
@@ -817,7 +822,7 @@ export default function HiddenVoidAdminPage() {
                     }
                   }}
                 >
-                  💾 SAVE EXPERIENCE
+                  SAVE EXPERIENCE
                 </PixelButton>
                 <PixelButton variant="brick" size="sm" onClick={() => setEditingExp(null)}>
                   CANCEL
@@ -937,7 +942,7 @@ export default function HiddenVoidAdminPage() {
                 }
               }}
             >
-              💾 SAVE CONTACT DETAILS
+              SAVE CONTACT DETAILS
             </PixelButton>
           </div>
         </PixelCard>

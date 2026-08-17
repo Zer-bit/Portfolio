@@ -111,7 +111,7 @@ export const GameMapComponent: React.FC<GameMapProps> = ({
     <section
       aria-label="World Map — choose a level"
       style={{
-        padding: "40px 24px 80px",
+        padding: "0px 24px 64px",
         maxWidth: "1000px",
         margin: "0 auto",
         minHeight: "calc(100vh - 56px)", // fill viewport below navbar
@@ -121,20 +121,19 @@ export const GameMapComponent: React.FC<GameMapProps> = ({
       }}
     >
       {/* Section heading */}
-      <motion.h2
-        className="pixel-text"
+      <motion.div
         variants={fadeUpVariant}
         initial="hidden"
         animate="visible"
-        style={{
-          color: dayTheme.colors.coin,
-          fontSize: "clamp(12px, 2.5vw, 20px)",
-          textAlign: "center",
-          marginBottom: "40px",
-        }}
+        className="mb-12 text-center pt-8"
       >
-        SELECT A WORLD
-      </motion.h2>
+        <h1
+          className="pixel-text text-lg md:text-2xl"
+          style={{ color: dayTheme.colors.coin }}
+        >
+          SELECT A WORLD
+        </h1>
+      </motion.div>
 
       {/*
        * Responsive grid container.

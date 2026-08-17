@@ -116,15 +116,12 @@ export default function AboutContent() {
           variants={fadeUpVariant}
           initial="hidden"
           animate="visible"
-          className="text-center mb-8"
+          className="mb-12 text-center pt-8"
         >
           <h1
-            className="pixel-text"
+            className="pixel-text text-lg md:text-2xl"
             style={{
-              fontSize: "clamp(14px, 3vw, 22px)",
               color: dayTheme.colors.coin,
-              textShadow: `3px 3px 0 #000`,
-              letterSpacing: "0.05em",
             }}
           >
             CHARACTER PROFILE

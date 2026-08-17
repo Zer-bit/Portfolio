@@ -36,7 +36,7 @@ export function ProjectsContent() {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 pb-16 pt-8">
+    <div className="max-w-7xl mx-auto px-6 pb-16 pt-12">
       {/* Page heading */}
       <div className="mb-12 text-center">
         <h1

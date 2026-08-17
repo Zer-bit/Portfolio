@@ -73,17 +73,16 @@ export default function Skills() {
   }, []);
 
   return (
-    <section id="skills" className="py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Section heading */}
-        <div className="text-center mb-16">
-          <h2
-            className="pixel-text text-4xl md:text-5xl font-bold"
-            style={{ color: dayTheme.colors.coin }}
-          >
-            SKILLS
-          </h2>
-        </div>
+    <div className="max-w-7xl mx-auto px-6 pb-16 pt-12">
+      {/* Section heading */}
+      <div className="mb-12 text-center">
+        <h1
+          className="pixel-text text-lg md:text-2xl"
+          style={{ color: dayTheme.colors.coin }}
+        >
+          SKILLS
+        </h1>
+      </div>
 
         {/* Two-column layout: Technical Skills | Professional Skills */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -178,7 +177,7 @@ export default function Skills() {
             <div className="space-y-6">
               {loading
                 ? Array.from({ length: 4 }).map((_, idx) => (
-                    <SkillCardSkeleton key={idx} />
+                    <SkillCardSkeleton key={idx} variant="professional" />
                   ))
                 : profSkills.map((skill, index) => (
                     <motion.div
@@ -222,7 +221,6 @@ export default function Skills() {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+    </div>
   );
 }
