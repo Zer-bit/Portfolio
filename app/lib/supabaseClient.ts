@@ -4,19 +4,21 @@ const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-url.sup
 const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key";
 
 /**
- * Returns true if real Supabase environment variables are provided.
+ * Returns true if real, valid Supabase environment variables are provided.
  */
 export function isSupabaseConfigured(): boolean {
-  return (
-    !!process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    process.env.NEXT_PUBLIC_SUPABASE_URL !== "https://placeholder-url.supabase.co" &&
-    !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY !== "placeholder-anon-key"
-  );
+  const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!rawUrl || !rawKey) return false;
+  if (rawUrl.includes("your-project-ref") || rawUrl.includes("placeholder-url")) return false;
+  if (rawKey.includes("your-anon-public-key") || rawKey.includes("placeholder-anon-key")) return false;
+
+  return true;
 }
 
 /**
  * Safe Supabase Client Singleton.
- * Does not throw at build time even if environment variables are absent.
+ * Does not throw at build time even if environment variables are absent or placeholders.
  */
 export const supabase: SupabaseClient = createClient(url, key);
