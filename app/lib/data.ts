@@ -259,26 +259,4 @@ export interface GalleryItem {
   order_index?: number;
 }
 
-export const galleryItems: GalleryItem[] = [
-  {
-    title: "Corporate Showcase 2026",
-    description: "Inspire Holdings corporate website and digital branding deployment.",
-    image: "/Images/IHI.png",
-    date: "May 2026",
-    order_index: 1,
-  },
-  {
-    title: "iPageant Platform Release",
-    description: "Pageant management and real-time contestant voting portal.",
-    image: "/Images/inspirepageant.png",
-    date: "March 2026",
-    order_index: 2,
-  },
-  {
-    title: "Inspire Annual Report",
-    description: "Interactive book slider digital annual report publication.",
-    image: "/Images/inspire-annual-report-img.png",
-    date: "January 2026",
-    order_index: 3,
-  },
-];
+export const galleryItems: GalleryItem[] = [];

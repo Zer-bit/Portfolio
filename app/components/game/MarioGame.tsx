@@ -673,6 +673,10 @@ export default function MarioGame(): React.ReactElement {
     resizeObserver.observe(container);
     setupCanvas();
     function handleKeyDown(e: KeyboardEvent): void {
+      // Don't intercept keys when user is typing in a text field
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || (e.target as HTMLElement)?.isContentEditable) return;
+
       const gs = gameStateRef.current;
       if (e.code === "ArrowLeft" || e.code === "KeyA") gs.inputState.left = true;
       if (e.code === "ArrowRight" || e.code === "KeyD") gs.inputState.right = true;
@@ -682,6 +686,9 @@ export default function MarioGame(): React.ReactElement {
       }
     }
     function handleKeyUp(e: KeyboardEvent): void {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || (e.target as HTMLElement)?.isContentEditable) return;
+
       const gs = gameStateRef.current;
       if (e.code === "ArrowLeft" || e.code === "KeyA") gs.inputState.left = false;
       if (e.code === "ArrowRight" || e.code === "KeyD")
