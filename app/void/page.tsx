@@ -42,7 +42,6 @@ export default function HiddenVoidAdminPage() {
 
   const [activeTab, setActiveTab] = useState<TabType>("projects");
 
-  // Data states
   const [projectsList, setProjectsList] = useState<ProjectItem[]>([]);
   const [galleryList, setGalleryList] = useState<GalleryItem[]>([]);
   const [techSkillsList, setTechSkillsList] = useState<TechnicalSkillItem[]>([]);
@@ -58,11 +57,9 @@ export default function HiddenVoidAdminPage() {
   });
   const [scoresList, setScoresList] = useState<any[]>([]);
 
-  // Status & loading
   const [loading, setLoading] = useState<boolean>(false);
   const [msg, setMsg] = useState<{ text: string; type: "success" | "error" } | null>(null);
 
-  // Form Modals / Edit states
   const [editingProject, setEditingProject] = useState<Partial<ProjectItem> | null>(null);
   const [editingGalleryItem, setEditingGalleryItem] = useState<Partial<GalleryItem> | null>(null);
   const [uploadingImage, setUploadingImage] = useState<boolean>(false);
@@ -70,7 +67,6 @@ export default function HiddenVoidAdminPage() {
   const [editingProfSkill, setEditingProfSkill] = useState<Partial<ProfessionalSkillItem> | null>(null);
   const [editingExp, setEditingExp] = useState<Partial<ExperienceItem> | null>(null);
 
-  // Confirmation Modal state
   const [confirmModal, setConfirmModal] = useState<{
     isOpen: boolean;
     title: string;
@@ -98,7 +94,7 @@ export default function HiddenVoidAdminPage() {
     });
   };
 
-  // Auth Guard check on mount
+  // Auth check on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
       const isAuth = sessionStorage.getItem("portfolio_admin_auth") === "true";
@@ -130,7 +126,7 @@ export default function HiddenVoidAdminPage() {
     setAuthed(false);
   };
 
-  // Load active tab data when authed
+  // Load data for the active tab
   const loadData = async () => {
     if (!authed) return;
     setLoading(true);
@@ -175,9 +171,7 @@ export default function HiddenVoidAdminPage() {
     setTimeout(() => setMsg(null), 4000);
   };
 
-  // ---------------------------------------------------------------------------
-  // PASSCODE LOGIN SCREEN (If not authenticated)
-  // ---------------------------------------------------------------------------
+  // Login screen
   if (!authed) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
@@ -231,12 +225,10 @@ export default function HiddenVoidAdminPage() {
     );
   }
 
-  // ---------------------------------------------------------------------------
   // ADMIN DASHBOARD SCREEN (If authenticated)
-  // ---------------------------------------------------------------------------
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
-      {/* Header Bar — Sleek Minimalist Retro Bar */}
+      {/* Header */}
       <div className="flex items-center justify-between gap-4 p-4 bg-[rgba(13,27,42,0.9)] border-2 border-black shadow-[2px_2px_0px_#000]">
         <div className="flex items-center gap-3">
           <span
@@ -307,7 +299,7 @@ export default function HiddenVoidAdminPage() {
         </div>
       )}
 
-      {/* TAB 1: PROJECTS CMS */}
+      {/* Projects */}
       {!loading && activeTab === "projects" && (
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -334,7 +326,7 @@ export default function HiddenVoidAdminPage() {
             </PixelButton>
           </div>
 
-          {/* Form Modal / Inline Editor */}
+          {/* Editor form */}
           {editingProject && (
             <PixelCard variant="elevated" className="p-6 space-y-4 border-4 border-yellow-400">
               <h3 className="pixel-text text-sm" style={{ color: dayTheme.colors.coin }}>
@@ -457,7 +449,7 @@ export default function HiddenVoidAdminPage() {
             </PixelCard>
           )}
 
-          {/* Project List */}
+          {/* Project list */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {projectsList.map((p) => (
               <div key={p.id || p.title} className="p-4 bg-[rgba(13,27,42,0.8)] border-2 border-black space-y-2">
@@ -504,7 +496,7 @@ export default function HiddenVoidAdminPage() {
         </div>
       )}
 
-      {/* TAB 2: GALLERY CMS */}
+      {/* Gallery */}
       {!loading && activeTab === "gallery" && (
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -528,7 +520,7 @@ export default function HiddenVoidAdminPage() {
             </PixelButton>
           </div>
 
-          {/* Form Modal / Inline Editor for Gallery Item */}
+          {/* Editor form */}
           {editingGalleryItem && (
             <PixelCard variant="elevated" className="p-6 space-y-4 border-4 border-yellow-400">
               <h3 className="pixel-text text-sm" style={{ color: dayTheme.colors.coin }}>
@@ -628,7 +620,7 @@ export default function HiddenVoidAdminPage() {
             </PixelCard>
           )}
 
-          {/* Gallery Items Grid */}
+          {/* Gallery grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {galleryList.map((g) => (
               <div key={g.id || g.title} className="p-4 bg-[rgba(13,27,42,0.8)] border-2 border-black space-y-2">
@@ -674,7 +666,7 @@ export default function HiddenVoidAdminPage() {
         </div>
       )}
 
-      {/* TAB 2: TECHNICAL SKILLS CMS */}
+      {/* Technical Skills */}
       {!loading && activeTab === "tech_skills" && (
         <div className="space-y-6">
           <div className="flex justify-between items-center">
@@ -814,7 +806,7 @@ export default function HiddenVoidAdminPage() {
         </div>
       )}
 
-      {/* TAB 3: PROFESSIONAL SKILLS CMS */}
+      {/* Professional Skills */}
       {!loading && activeTab === "prof_skills" && (
         <div className="space-y-6">
           <div className="flex justify-between items-center">
@@ -943,7 +935,7 @@ export default function HiddenVoidAdminPage() {
         </div>
       )}
 
-      {/* TAB 4: EXPERIENCE CMS */}
+      {/* Experience */}
       {!loading && activeTab === "experience" && (
         <div className="space-y-6">
           <div className="flex justify-between items-center">
@@ -1125,7 +1117,7 @@ export default function HiddenVoidAdminPage() {
         </div>
       )}
 
-      {/* TAB 5: CONTACT CMS */}
+      {/* Contact Info */}
       {!loading && activeTab === "contact" && (
         <PixelCard variant="elevated" className="p-6 space-y-4">
           <h2 className="pixel-text text-base mb-4" style={{ color: dayTheme.colors.coin }}>
@@ -1210,7 +1202,7 @@ export default function HiddenVoidAdminPage() {
         </PixelCard>
       )}
 
-      {/* TAB 6: LEADERBOARD */}
+      {/* Leaderboard */}
       {!loading && activeTab === "scores" && (
         <div className="space-y-4">
           <h2 className="pixel-text text-base" style={{ color: dayTheme.colors.coin }}>
@@ -1234,7 +1226,7 @@ export default function HiddenVoidAdminPage() {
         </div>
       )}
 
-      {/* Confirmation Modal Component */}
+      {/* Confirm modal */}
       <ConfirmModal
         isOpen={!!confirmModal?.isOpen}
         title={confirmModal?.title || "CONFIRM ACTION"}

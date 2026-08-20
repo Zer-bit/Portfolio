@@ -1,23 +1,3 @@
-/**
- * @file StartScreen.tsx — StartScreen Game Component
- *
- * Renders the Mario-themed landing/intro screen for the portfolio site.
- * Displays the developer name with a coin-gold color, a blinking "PRESS START"
- * call-to-action button, and a floating animation to evoke the classic
- * Super Mario Bros. title screen aesthetic.
- *
- * This file exports two things:
- * - `StartScreenComponent` — the actual React implementation (named export)
- * - `default` — a `next/dynamic` wrapped version with `{ ssr: false }` for
- *   code splitting and to avoid SSR issues with Framer Motion animations.
- *
- * @example
- * ```tsx
- * import StartScreen from "@/components/game/StartScreen";
- * <StartScreen />
- * ```
- */
-
 "use client";
 
 import type React from "react";
@@ -30,22 +10,8 @@ import { PixelButton } from "../ui/pixel-button";
 import { ROUTES } from "../../lib/constants";
 import { useProgressTracker } from "../../lib/progress-tracker";
 
-// ---------------------------------------------------------------------------
 // Implementation
-// ---------------------------------------------------------------------------
-
-/**
- * StartScreenComponent — Mario-themed intro/landing screen.
- *
- * Layout mirrors a classic game title screen:
- * - Developer name displayed prominently in coin gold using `.pixel-text`
- * - Subtitle / tagline in white `.pixel-text`
- * - Animated "PRESS START" PixelButton with coin variant
- * - Blinking cursor element using `bounceVariant` for Mario title screen feel
- *
- * All animations use existing presets from `app/lib/animations.ts`.
- * All colors use existing tokens from `app/lib/theme.ts`.
- */
+// StartScreenComponent — Mario-themed intro/landing screen.
 export const StartScreenComponent: React.FC = () => {
   const router = useRouter();
   const { markVisited } = useProgressTracker();

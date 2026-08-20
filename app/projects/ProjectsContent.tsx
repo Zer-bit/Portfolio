@@ -1,10 +1,6 @@
 "use client";
 
-/**
- * @file app/projects/ProjectsContent.tsx — Projects Page Client Content
- *
- * Renders projects dynamically from Supabase / data layer with pixel-art skeleton loading.
- */
+// Renders projects dynamically from Supabase / data layer with pixel-art skeleton loading.
 
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";

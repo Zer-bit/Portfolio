@@ -5,19 +5,7 @@ import { motion } from "framer-motion";
 import { dayTheme } from "../../lib/theme";
 import { BRICK_SVG_BASE64 } from "../../lib/constants";
 
-/**
- * Footer — Mario-themed site footer.
- *
- * Displays the "JEZER." logo in pixel-art font with the "." styled in the
- * theme coin color, a row of brick blocks along the top edge, and the
- * copyright text on a ground-colored background.
- *
- * @example
- * ```tsx
- * import Footer from "@/components/layout/footer";
- * <Footer />
- * ```
- */
+// Footer — Mario-themed site footer.
 const Footer = () => {
   return (
     <footer
@@ -44,7 +32,6 @@ const Footer = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-
 
           {/* Copyright */}
           <p className="text-sm" style={{ color: dayTheme.colors.text }}>

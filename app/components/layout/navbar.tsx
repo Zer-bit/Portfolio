@@ -1,12 +1,6 @@
 "use client";
 
-/**
- * @file navbar.tsx — Navbar Layout Component
- *
- * Single fixed top bar that combines the Mario HUD stats (score, coins, world)
- * with the site navigation. The HUD strip sits on the left; the logo + nav
- * links sit on the right. This replaces the previous two-bar layout.
- */
+// Single fixed top bar that combines the Mario HUD stats (score, coins, world) wit...
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -27,11 +21,7 @@ const Coin = dynamic(
   { ssr: false }
 );
 
-
-// ---------------------------------------------------------------------------
 // Route → World Label mapping (moved from PlayerHUD)
-// ---------------------------------------------------------------------------
-
 const WORLD_LABEL_MAP: Record<string, string> = {
   "/":           "WORLD 1-1",
   "/world":      "WORLD MAP",
@@ -51,10 +41,7 @@ function getWorldLabel(pathname: string): string {
   return WORLD_LABEL_MAP[normalized] ?? WORLD_LABEL_MAP[parentPath] ?? "WORLD-?";
 }
 
-// ---------------------------------------------------------------------------
 // HUD strip — score / coins / world label
-// ---------------------------------------------------------------------------
-
 function HUDStrip({ coins, worldLabel }: { coins: number; worldLabel: string }) {
   return (
     <div
@@ -80,10 +67,7 @@ function HUDStrip({ coins, worldLabel }: { coins: number; worldLabel: string }) 
   );
 }
 
-// ---------------------------------------------------------------------------
 // Navbar
-// ---------------------------------------------------------------------------
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);

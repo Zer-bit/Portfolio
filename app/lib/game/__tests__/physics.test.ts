@@ -9,20 +9,17 @@ import {
 } from '../physics';
 import { type Platform } from '../utils';
 
-// ---------------------------------------------------------------------------
 // Arbitraries
-// ---------------------------------------------------------------------------
-
-/** Valid delta-time values in (0, 0.05] */
+// Valid delta-time values in (0, 0.05]
 const dtArb = fc.float({ min: Math.fround(0.001), max: Math.fround(0.05), noNaN: true });
 
-/** Any finite vertical velocity */
+// Any finite vertical velocity
 const vyArb = fc.float({ min: Math.fround(-2000), max: Math.fround(2000), noNaN: true });
 
-/** Any raw delta-time (including values well above the cap) */
+// Any raw delta-time (including values well above the cap)
 const rawDtArb = fc.float({ min: Math.fround(0.001), max: Math.fround(10), noNaN: true });
 
-/** A minimal PlayerState with configurable position/velocity */
+// A minimal PlayerState with configurable position/velocity
 const playerArb = fc.record({
   x: fc.float({ min: Math.fround(0), max: Math.fround(700), noNaN: true }),
   y: fc.float({ min: Math.fround(0), max: Math.fround(500), noNaN: true }),
@@ -36,7 +33,7 @@ const playerArb = fc.record({
   animTimer: fc.float({ min: Math.fround(0), max: Math.fround(1), noNaN: true }),
 });
 
-/** A platform with positive dimensions */
+// A platform with positive dimensions
 const platformArb = fc.record({
   id: fc.constant('platform-test'),
   x: fc.float({ min: Math.fround(0), max: Math.fround(600), noNaN: true }),
@@ -46,11 +43,8 @@ const platformArb = fc.record({
   isGround: fc.boolean(),
 });
 
-// ---------------------------------------------------------------------------
 // Property 1: Gravity proportionality
 // Validates: Requirements 1.4, 2.1
-// ---------------------------------------------------------------------------
-
 describe('applyGravity — property-based tests', () => {
   // Feature: mario-game-supabase, Property 1: Gravity increases vy proportionally to dt
   // Validates: Requirements 1.4, 2.1
@@ -67,11 +61,8 @@ describe('applyGravity — property-based tests', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // Property 2: Delta-time cap
 // Validates: Requirements 7.1, 7.2
-// ---------------------------------------------------------------------------
-
 describe('capDeltaTime — property-based tests', () => {
   // Feature: mario-game-supabase, Property 2: Delta-time cap never exceeds 0.05 seconds
   // Validates: Requirements 7.1, 7.2
@@ -97,13 +88,10 @@ describe('capDeltaTime — property-based tests', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // Property 5: Horizontal clamp validity
 // Validates: Requirements 1.5, 1.6
-// ---------------------------------------------------------------------------
-
 describe('clampX — property-based tests', () => {
-  // Feature: mario-game-supabase, Property 5: Horizontal position clamping always produces a valid x
+  // Feature: mario-game-supabase, Property 5: Horizontal position clamping always pr...
   // Validates: Requirements 1.5, 1.6
   it('Property 5: clampX(x, pw, W) always returns a value in [0, W - pw] for any valid inputs', () => {
     // W > pw > 0 to ensure a valid range exists
@@ -124,13 +112,10 @@ describe('clampX — property-based tests', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // Property 8: Top-face collision resolution
 // Validates: Requirements 2.2
-// ---------------------------------------------------------------------------
-
 describe('resolveAABBCollision — property-based tests', () => {
-  // Feature: mario-game-supabase, Property 8: Top-face collision resolution positions player flush on platform
+  // Feature: mario-game-supabase, Property 8: Top-face collision resolution position...
   // Validates: Requirements 2.2
   it('Property 8: after top-face resolution, player.y + player.height === platform.y and player.vy === 0', () => {
     // Construct a scenario where the player is falling from above and overlaps the platform top.

@@ -8,14 +8,11 @@ import {
   type PlayerState,
 } from '../player';
 
-// ---------------------------------------------------------------------------
 // Arbitraries
-// ---------------------------------------------------------------------------
-
-/** Valid delta-time values in (0, 0.05] */
+// Valid delta-time values in (0, 0.05]
 const dtArb = fc.float({ min: Math.fround(0.001), max: Math.fround(0.05), noNaN: true });
 
-/** A minimal PlayerState with configurable fields */
+// A minimal PlayerState with configurable fields
 const playerArb = fc.record({
   x: fc.float({ min: Math.fround(0), max: Math.fround(700), noNaN: true }),
   y: fc.float({ min: Math.fround(0), max: Math.fround(500), noNaN: true }),
@@ -29,13 +26,10 @@ const playerArb = fc.record({
   animTimer: fc.float({ min: Math.fround(0), max: Math.fround(1), noNaN: true }),
 });
 
-/** A PlayerState that is airborne (isGrounded === false) */
+// A PlayerState that is airborne (isGrounded === false)
 const airbornePlayerArb = playerArb.map((p) => ({ ...p, isGrounded: false }));
 
-// ---------------------------------------------------------------------------
 // Unit tests — createPlayer
-// ---------------------------------------------------------------------------
-
 describe('createPlayer', () => {
   it('positions player near the left edge of the canvas', () => {
     const player = createPlayer(800, 450);
@@ -56,10 +50,7 @@ describe('createPlayer', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // Unit tests — applyJump
-// ---------------------------------------------------------------------------
-
 describe('applyJump', () => {
   it('applies vy = -480 when player is grounded', () => {
     const player: PlayerState = {
@@ -87,10 +78,7 @@ describe('applyJump', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // Unit tests — updatePlayerAnimation
-// ---------------------------------------------------------------------------
-
 describe('updatePlayerAnimation', () => {
   it('toggles animFrame from 0 to 1 when timer exceeds 0.1 s', () => {
     const player: PlayerState = {
@@ -128,13 +116,10 @@ describe('updatePlayerAnimation', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // Property 3: Horizontal movement linearity
 // Validates: Requirements 1.1
-// ---------------------------------------------------------------------------
-
 describe('applyHorizontalInput — property-based tests', () => {
-  // Feature: mario-game-supabase, Property 3: Horizontal movement scales linearly with delta-time
+  // Feature: mario-game-supabase, Property 3: Horizontal movement scales linearly wi...
   // Validates: Requirements 1.1
   it('Property 3: changes x by exactly ±160 * dt for direction ±1 and any dt ∈ (0, 0.05]', () => {
     const directionArb = fc.constantFrom(-1 as const, 1 as const);
@@ -174,11 +159,8 @@ describe('applyHorizontalInput — property-based tests', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // Property 4: Jump ignored when airborne
 // Validates: Requirements 1.3
-// ---------------------------------------------------------------------------
-
 describe('applyJump — property-based tests', () => {
   // Feature: mario-game-supabase, Property 4: Jump is ignored when player is airborne
   // Validates: Requirements 1.3

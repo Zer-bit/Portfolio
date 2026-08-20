@@ -3,9 +3,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-url.supabase.co";
 const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key";
 
-/**
- * Returns true if real, valid Supabase environment variables are provided.
- */
+// Checks if real Supabase credentials are set (not placeholders)
 export function isSupabaseConfigured(): boolean {
   const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -17,8 +15,5 @@ export function isSupabaseConfigured(): boolean {
   return true;
 }
 
-/**
- * Safe Supabase Client Singleton.
- * Does not throw at build time even if environment variables are absent or placeholders.
- */
+// Safe singleton — won't throw at build time even without env vars
 export const supabase: SupabaseClient = createClient(url, key);

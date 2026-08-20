@@ -1,14 +1,6 @@
 "use client";
 
-/**
- * @file not-found.tsx — 404 Not Found Page
- *
- * Rendered by Next.js App Router whenever a visitor navigates to an undefined
- * route. Styled as a pixel-art "Level Not Found" screen consistent with the
- * Mario theme, using only existing design tokens and CSS classes.
- *
- * Requirements: 2.10, 18.3
- */
+// Rendered by Next.
 
 import Link from "next/link";
 import { dayTheme } from "./lib/theme";

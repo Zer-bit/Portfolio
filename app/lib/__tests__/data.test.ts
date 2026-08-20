@@ -1,14 +1,7 @@
-/**
- * Unit tests for `toSlug` utility and `generateStaticParams` output.
- * Validates: Requirements 19.1, 5.3
- */
 import { describe, it, expect } from "vitest";
 import { toSlug, projects } from "../data";
 
-// ---------------------------------------------------------------------------
 // toSlug — core transformation tests
-// ---------------------------------------------------------------------------
-
 describe("toSlug", () => {
   it("converts spaces to hyphens and lowercases the string", () => {
     expect(toSlug("Hello World")).toBe("hello-world");
@@ -47,16 +40,9 @@ describe("toSlug", () => {
   });
 });
 
-// ---------------------------------------------------------------------------
 // generateStaticParams — output matches toSlug applied to each project title
-// ---------------------------------------------------------------------------
-
 describe("generateStaticParams", () => {
-  /**
-   * Replicates the logic from app/projects/[slug]/page.tsx so the test
-   * validates the contract without importing Next.js server-only code.
-   * Validates: Requirements 5.3, 19.1
-   */
+  // Replicates the logic from app/projects/[slug]/page.
   it("produces a slug for every project", () => {
     const params = projects.map((p) => ({ slug: toSlug(p.title) }));
     expect(params).toHaveLength(projects.length);

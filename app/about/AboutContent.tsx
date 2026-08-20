@@ -1,14 +1,6 @@
 "use client";
 
-/**
- * @file app/about/AboutContent.tsx — About Page Client Content
- *
- * Client component containing the interactive About page content.
- * Separated from page.tsx so that page.tsx can remain a server component
- * and export Next.js metadata.
- *
- * Requirements: 6.1, 6.2, 6.3, 6.4, 6.5
- */
+// Client component containing the interactive About page content.
 
 import React from "react";
 import Link from "next/link";
@@ -19,10 +11,7 @@ import { dayTheme } from "../lib/theme";
 import { ROUTES } from "../lib/constants";
 import { fadeUpVariant } from "../lib/animations";
 
-// ---------------------------------------------------------------------------
 // Developer data
-// ---------------------------------------------------------------------------
-
 const DEVELOPER = {
   name: "JEZER PARALES",
   role: "Full Stack Developer",
@@ -31,10 +20,7 @@ const DEVELOPER = {
   bio: "I'm a passionate developer who genuinely loves programming — it's not just a career, it's a craft I enjoy every day. I specialize in building modern web applications, turning ideas into clean, functional, and engaging experiences on the web. Beyond that, I have a deep dream of becoming a game developer, combining my love for interactive design and code to create worlds that people can explore and enjoy.",
 } as const;
 
-// ---------------------------------------------------------------------------
 // Stat row component
-// ---------------------------------------------------------------------------
-
 interface StatRowProps {
   label: string;
   value: string;
@@ -63,10 +49,7 @@ function StatRow({ label, value }: StatRowProps) {
   );
 }
 
-// ---------------------------------------------------------------------------
 // Pixel-art avatar SVG (Mario-style character)
-// ---------------------------------------------------------------------------
-
 function AvatarSprite() {
   return (
     <svg
@@ -99,10 +82,7 @@ function AvatarSprite() {
   );
 }
 
-// ---------------------------------------------------------------------------
 // About Content
-// ---------------------------------------------------------------------------
-
 export default function AboutContent() {
   return (
     <main

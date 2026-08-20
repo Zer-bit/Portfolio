@@ -3,9 +3,7 @@
 import React from "react";
 import { dayTheme } from "../../lib/theme";
 
-/**
- * SkeletonBox — Pixel-styled animated pulse box
- */
+// SkeletonBox — Pixel-styled animated pulse box
 export function SkeletonBox({
   className = "",
   style = {},
@@ -27,9 +25,7 @@ export function SkeletonBox({
   );
 }
 
-/**
- * LevelCardSkeleton — Pixel-accurate placeholder matching LevelCard layout on /projects
- */
+// LevelCardSkeleton — Pixel-accurate placeholder matching LevelCard layout on /projects
 export function LevelCardSkeleton() {
   return (
     <div
@@ -77,9 +73,7 @@ export function LevelCardSkeleton() {
   );
 }
 
-/**
- * SkillCardSkeleton — Pixel-accurate placeholder matching Technical & Professional Skill Cards
- */
+// SkillCardSkeleton — Pixel-accurate placeholder matching Technical & Professional...
 export function SkillCardSkeleton({ variant = "technical" }: { variant?: "technical" | "professional" }) {
   if (variant === "professional") {
     return (
@@ -132,9 +126,7 @@ export function SkillCardSkeleton({ variant = "technical" }: { variant?: "techni
   );
 }
 
-/**
- * ExperienceCardSkeleton — Pixel-accurate placeholder matching /experience entries timeline
- */
+// ExperienceCardSkeleton — Pixel-accurate placeholder matching /experience entries timeline
 export function ExperienceCardSkeleton() {
   return (
     <div className="relative pl-12 my-8">
@@ -175,9 +167,7 @@ export function ExperienceCardSkeleton() {
   );
 }
 
-/**
- * ProjectDetailSkeleton — Pixel-accurate placeholder matching /projects/[slug] view
- */
+// ProjectDetailSkeleton — Pixel-accurate placeholder matching /projects/[slug] view
 export function ProjectDetailSkeleton() {
   return (
     <div className="max-w-4xl mx-auto px-6 pb-16 pt-8 space-y-8">
@@ -236,9 +226,7 @@ export function ProjectDetailSkeleton() {
   );
 }
 
-/**
- * GalleryCardSkeleton — Pixel-accurate placeholder matching /gallery grid cards
- */
+// GalleryCardSkeleton — Pixel-accurate placeholder matching /gallery grid cards
 export function GalleryCardSkeleton() {
   return (
     <div

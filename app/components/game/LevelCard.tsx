@@ -1,27 +1,6 @@
 "use client";
 
-/**
- * @file LevelCard.tsx — LevelCard Game Component
- *
- * Renders a single project as a selectable level card in the Mario-themed
- * portfolio. Uses existing `PixelCard` (elevated variant) styling, displays
- * the project title, tech stack tags, accent color, and thumbnail image.
- *
- * On click, navigates to `/projects/[slug]` using the `toSlug` utility.
- * For projects with `link: "#"` (not yet deployed), shows a `NotificationToast`
- * instead of navigating.
- *
- * This file exports two things:
- * - `LevelCardComponent` — the actual React implementation (named export)
- * - `default` — a `next/dynamic` wrapped version with `{ ssr: false }` for
- *   code splitting and to avoid SSR issues with Framer Motion animations.
- *
- * @example
- * ```tsx
- * import LevelCard from "@/components/game/LevelCard";
- * <LevelCard project={projects[0]} />
- * ```
- */
+// Renders a single project as a selectable level card in the Mario-themed portfoli...
 
 import React from "react";
 import Image from "next/image";
@@ -36,10 +15,7 @@ import PixelCard from "../ui/pixel-card";
 import PixelButton from "../ui/pixel-button";
 import { useSound } from "../../hooks/use-sound";
 
-// ---------------------------------------------------------------------------
 // Types
-// ---------------------------------------------------------------------------
-
 export interface ProjectCardData {
   title: string;
   description?: string;
@@ -51,27 +27,12 @@ export interface ProjectCardData {
 }
 
 export interface LevelCardProps {
-  /** The project data object to render. */
+  // The project data object to render.
   project: ProjectCardData;
 }
 
-// ---------------------------------------------------------------------------
 // Implementation
-// ---------------------------------------------------------------------------
-
-/**
- * LevelCardComponent — pixel-art styled project level card.
- *
- * Renders a project as a PixelCard (elevated) with:
- * - Aspect-ratio thumbnail image using Next.js `<Image>`
- * - Project title in coin-gold color
- * - Tech stack tags rendered as non-interactive PixelButton (brick/sm)
- * - Accent color overlay on hover
- * - Click handler: navigates to `/projects/[slug]` or shows NotificationToast
- *   for coming-soon projects (`link: "#"`)
- *
- * @param props.project - The project data object to render.
- */
+// LevelCardComponent — pixel-art styled project level card.
 export function LevelCardComponent({ project }: LevelCardProps) {
   const router = useRouter();
   const isComingSoon = project.link === "#";
@@ -172,18 +133,8 @@ export function LevelCardComponent({ project }: LevelCardProps) {
   );
 }
 
-// ---------------------------------------------------------------------------
 // Default export — dynamic import wrapper (no SSR)
-// ---------------------------------------------------------------------------
 
-/**
- * Dynamically imported LevelCard component with `{ ssr: false }`.
- *
- * Use this default export in all consuming components to enable code splitting
- * and avoid SSR hydration issues with Framer Motion animations (via PixelCard).
- *
- * @satisfies Requirement 14.1 — Game components use next/dynamic with ssr:false
- */
 const LevelCard = dynamic(
   () => import("./LevelCard").then((mod) => ({ default: mod.LevelCardComponent })),
   { ssr: false }

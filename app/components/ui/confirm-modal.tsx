@@ -45,7 +45,6 @@ export function ConfirmModal({
             onClick={(e) => e.stopPropagation()}
             className="max-w-md w-full bg-[rgba(13,27,42,0.98)] border-4 border-black p-6 space-y-6 shadow-[8px_8px_0px_#000] text-center"
           >
-            {/* Header Title */}
             <h2
               className="pixel-text text-sm md:text-base font-bold tracking-wider"
               style={{
@@ -55,12 +54,10 @@ export function ConfirmModal({
               {title}
             </h2>
 
-            {/* Message Body */}
             <p className="text-xs md:text-sm font-mono text-white leading-relaxed px-2">
               {message}
             </p>
 
-            {/* Actions */}
             <div className="flex gap-4 justify-center pt-2">
               <PixelButton
                 variant={variant}

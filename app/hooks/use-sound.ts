@@ -1,11 +1,6 @@
 "use client";
 
-/**
- * useSound — Mario-themed sound effects via Web Audio API
- *
- * Generates retro 8-bit style sounds procedurally. Respects the
- * `soundEnabled` preference from ThemeContext.
- */
+// useSound — Mario-themed sound effects via Web Audio API Generates retro 8-bit st...
 
 import { useRef, useCallback } from "react";
 import { useThemeContext } from "../lib/theme-context";
@@ -17,13 +12,8 @@ export interface UseSoundReturn {
   playClick: () => void;
 }
 
-// ---------------------------------------------------------------------------
 // Helpers
-// ---------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------
 // Global Shared AudioContext Singleton
-// ---------------------------------------------------------------------------
 let globalAudioCtx: AudioContext | null = null;
 
 async function resumeCtx(ctx: AudioContext) {
@@ -73,10 +63,7 @@ function tone(
   osc.stop(startTime + duration + 0.01);
 }
 
-// ---------------------------------------------------------------------------
 // Hook
-// ---------------------------------------------------------------------------
-
 export function useSound(): UseSoundReturn {
   const { soundEnabled } = useThemeContext();
   // Keep soundEnabled in a ref so callbacks always see the latest value

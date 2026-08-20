@@ -26,10 +26,7 @@ import {
 } from "../../lib/game/utils";
 import { supabase, isSupabaseConfigured } from "../../lib/supabaseClient";
 
-// ---------------------------------------------------------------------------
 // LOCAL STORAGE — temporary persistence until Supabase is connected
-// ---------------------------------------------------------------------------
-
 const LS_KEY = "mario_game_scores";
 
 interface ScoreEntry {
@@ -65,14 +62,11 @@ function lsGetTopScores(limit = 10): ScoreEntry[] {
     .slice(0, limit);
 }
 
-// ---------------------------------------------------------------------------
 // Local Interfaces
-// ---------------------------------------------------------------------------
-
 interface InputState {
   left: boolean;
   right: boolean;
-  /** Milliseconds remaining in the jump buffer window (set to 150 on Space press). */
+  // Milliseconds remaining in the jump buffer window (set to 150 on Space press).
   jumpBufferMs: number;
 }
 
@@ -104,34 +98,19 @@ interface SubmitState {
   submitted: boolean;
 }
 
-// ---------------------------------------------------------------------------
 // Physics tuning constants
-// ---------------------------------------------------------------------------
-
-/**
- * DESKTOP jump velocity (px/s, negative = upward).
- * Applied when canvasWidth >= 500px.
- * Increase the absolute value to jump higher on desktop.
- */
+// DESKTOP jump velocity (px/s, negative = upward).
 const JUMP_VELOCITY_DESKTOP = -600;
 
-/**
- * MOBILE jump velocity (px/s, negative = upward).
- * Applied when canvasWidth < 500px.
- * Edit this value to tune jump height specifically for mobile without
- * affecting the desktop experience.
- */
+// MOBILE jump velocity (px/s, negative = upward).
 const JUMP_VELOCITY_MOBILE = -700;
 
-/** Returns the correct jump velocity for the current canvas width. */
+// Returns the correct jump velocity for the current canvas width.
 function getJumpVelocity(canvasWidth: number): number {
   return canvasWidth < 500 ? JUMP_VELOCITY_MOBILE : JUMP_VELOCITY_DESKTOP;
 }
 
-// ---------------------------------------------------------------------------
 // Module-level helpers
-// ---------------------------------------------------------------------------
-
 // ScoreRow is an alias for ScoreEntry (same shape, kept for component state typing)
 type ScoreRow = ScoreEntry;
 
@@ -139,10 +118,7 @@ export function sanitizeName(s: string): string {
   return s.slice(0, 20);
 }
 
-// ---------------------------------------------------------------------------
 // Helpers
-// ---------------------------------------------------------------------------
-
 function initGameState(canvasWidth: number, canvasHeight: number): GameState {
   const layout = layoutLevel(canvasWidth, canvasHeight);
   const player = createPlayer(canvasWidth, canvasHeight);
@@ -161,10 +137,7 @@ function initGameState(canvasWidth: number, canvasHeight: number): GameState {
   };
 }
 
-// ---------------------------------------------------------------------------
 // Render stub (full rendering implemented in Task 8)
-// ---------------------------------------------------------------------------
-
 function renderFrame(ctx: CanvasRenderingContext2D, gs: GameState): void {
   const { canvasWidth, canvasHeight, player, platforms, coins, enemies, score, lives } = gs;
 
@@ -295,10 +268,7 @@ function renderFrame(ctx: CanvasRenderingContext2D, gs: GameState): void {
   ctx.fillText(`\u2665 \u00d7 ${lives}`, canvasWidth - hudFontSize * 5.5, 8);
 }
 
-// ---------------------------------------------------------------------------
 // Component
-// ---------------------------------------------------------------------------
-
 export default function MarioGame(): React.ReactElement {
   // Refs
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -479,9 +449,7 @@ export default function MarioGame(): React.ReactElement {
       }
     }
 
-    // ---------------------------------------------------------------------------
     // Game loop — 12-step tick function
-    // ---------------------------------------------------------------------------
     function tick(timestamp: number): void {
       try {
         const gs = gameStateRef.current;

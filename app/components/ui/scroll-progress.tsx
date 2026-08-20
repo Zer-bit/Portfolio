@@ -1,22 +1,6 @@
 "use client";
 
-/**
- * @file scroll-progress.tsx — ScrollProgress UI Component
- *
- * Renders a fixed circular SVG progress indicator in the bottom-right corner
- * that tracks the user's scroll position. Styled with pixel-art aesthetics:
- * square stroke caps, theme coin color for the progress arc, and theme border
- * color for the background circle.
- *
- * At 100% scroll progress, the percentage text is replaced by a `<Coin>`
- * component to celebrate reaching the bottom of the page.
- *
- * @example
- * ```tsx
- * import ScrollProgress from "@/components/ui/scroll-progress";
- * <ScrollProgress />
- * ```
- */
+// Renders a fixed circular SVG progress indicator in the bottom-right corner that...
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -29,20 +13,6 @@ const Coin = dynamic(
   { ssr: false }
 );
 
-/**
- * ScrollProgress — pixel-art circular scroll progress indicator.
- *
- * Tracks `document.documentElement.scrollTop` and renders a circular SVG
- * progress ring. Uses `dayTheme.colors.coin` (`#f8b800`) for the progress
- * stroke and `dayTheme.colors.border` (`#000000`) for the background circle.
- * `strokeLinecap="square"` gives the arc pixel-art square corners.
- *
- * When scroll reaches 100%, displays a `<Coin size={20}>` instead of the
- * percentage number.
- *
- * @satisfies Requirement 14.3 — ScrollProgress uses Theme_System color tokens and pixel-art styling
- * @satisfies Requirement 14.4 — At 100% scroll, displays a coin/star icon instead of percentage
- */
 const ScrollProgress = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
 

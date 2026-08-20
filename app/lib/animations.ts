@@ -1,30 +1,7 @@
-/**
- * @file animations.ts — Animation Presets
- *
- * Centralized Framer Motion variant definitions for the Mario Pixel Portfolio.
- * No component should define its own animation inline — import from here instead.
- *
- * @example
- * import { bounceVariant } from "@/lib/animations";
- * <motion.div variants={bounceVariant} initial="initial" animate="animate" />
- */
-
 import { type Variants } from "framer-motion";
 
-// ---------------------------------------------------------------------------
 // Bounce Variant
-// ---------------------------------------------------------------------------
-
-/**
- * Bounce animation preset.
- *
- * Moves the element along the Y axis: 0 → -8px → 0, using a spring easing,
- * repeating infinitely. Ideal for coins, interactive icons, and call-to-action
- * elements that need to draw attention.
- *
- * @example
- * <motion.div variants={bounceVariant} initial="initial" animate="animate" />
- */
+// Bounce animation preset.
 export const bounceVariant: Variants = {
   initial: { y: 0 },
   animate: {
@@ -38,20 +15,8 @@ export const bounceVariant: Variants = {
   },
 };
 
-// ---------------------------------------------------------------------------
 // Float Variant
-// ---------------------------------------------------------------------------
-
-/**
- * Float animation preset.
- *
- * Moves the element along the Y axis: 0 → -6px → 0 with a sinusoidal
- * (easeInOut) easing over a 3-second duration, repeating infinitely.
- * Ideal for clouds and background decorative elements.
- *
- * @example
- * <motion.div variants={floatVariant} initial="initial" animate="animate" />
- */
+// Float animation preset.
 export const floatVariant: Variants = {
   initial: { y: 0 },
   animate: {
@@ -65,20 +30,8 @@ export const floatVariant: Variants = {
   },
 };
 
-// ---------------------------------------------------------------------------
 // Spin Variant
-// ---------------------------------------------------------------------------
-
-/**
- * Spin animation preset.
- *
- * Rotates the element continuously from 0° → 360° with a 1-second linear
- * duration, repeating infinitely. Ideal for coin components and loading
- * indicators.
- *
- * @example
- * <motion.div variants={spinVariant} initial="initial" animate="animate" />
- */
+// Spin animation preset.
 export const spinVariant: Variants = {
   initial: { rotate: 0 },
   animate: {
@@ -92,20 +45,8 @@ export const spinVariant: Variants = {
   },
 };
 
-// ---------------------------------------------------------------------------
 // Fade-Up Variant
-// ---------------------------------------------------------------------------
-
-/**
- * Fade-up animation preset.
- *
- * Transitions the element from `{ opacity: 0, y: 20 }` to
- * `{ opacity: 1, y: 0 }` over 0.5 seconds with an ease-out curve.
- * Ideal for section entrance animations and content reveals.
- *
- * @example
- * <motion.div variants={fadeUpVariant} initial="hidden" animate="visible" />
- */
+// Fade-up animation preset.
 export const fadeUpVariant: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -118,34 +59,12 @@ export const fadeUpVariant: Variants = {
   },
 };
 
-// ---------------------------------------------------------------------------
 // Preset Name Type
-// ---------------------------------------------------------------------------
-
-/**
- * Union type of all available animation preset names.
- * Use this type for component props that accept an animation preset.
- *
- * @example
- * interface MyProps {
- *   animation?: AnimationPresetName;
- * }
- */
+// Union type of all available animation preset names.
 export type AnimationPresetName = "bounce" | "float" | "spin" | "fade-up";
 
-// ---------------------------------------------------------------------------
 // Presets Map
-// ---------------------------------------------------------------------------
-
-/**
- * A lookup map from `AnimationPresetName` to its corresponding Framer Motion
- * `Variants` object. Use this in hooks or components to resolve a preset by
- * name at runtime.
- *
- * @example
- * const variant = presets["bounce"]; // → bounceVariant
- * const variant = presets[animationProp]; // dynamic lookup
- */
+// A lookup map from `AnimationPresetName` to its corresponding Framer Motion `Vari...
 export const presets: Record<AnimationPresetName, Variants> = {
   bounce: bounceVariant,
   float: floatVariant,

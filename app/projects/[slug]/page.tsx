@@ -9,20 +9,14 @@ interface ProjectDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
-/**
- * Generates static params for all project slugs at build time.
- * Requirements: 5.8, 17.5, 19.1
- */
+// Generates static params for all project slugs at build time. Requirements: 5.8, 17.5, 19.1
 export function generateStaticParams() {
   return projects.map((project) => ({
     slug: toSlug(project.title),
   }));
 }
 
-/**
- * Generates page metadata with the project title.
- * Requirements: 18.3
- */
+// Generates page metadata with the project title. Requirements: 18.3
 export async function generateMetadata({
   params,
 }: ProjectDetailPageProps): Promise<Metadata> {
@@ -45,10 +39,7 @@ export async function generateMetadata({
   };
 }
 
-/**
- * ProjectDetailPage — Dynamic route `/projects/[slug]`
- * Requirements: 2.4, 5.3, 5.4, 5.5, 5.6, 5.8, 14.2, 17.1, 18.3
- */
+// ProjectDetailPage — Dynamic route `/projects/[slug]` Requirements: 2.
 export default async function ProjectDetailPage({
   params,
 }: ProjectDetailPageProps) {

@@ -1,24 +1,3 @@
-/**
- * @file block.tsx — Block Game Component
- *
- * Renders a pixel-art SVG block in one of two variants:
- * - `"question"` — orange/brown block with a `?` character and 3D pixel edges.
- *   Clicking it triggers a `bounceVariant` animation via local state.
- * - `"brick"` — static brick pattern block with darker mortar lines.
- *
- * This file exports two things:
- * - `BlockComponent` — the actual React implementation (named export)
- * - `default` — a `next/dynamic` wrapped version with `{ ssr: false }` for
- *   code splitting and to avoid SSR issues with Framer Motion animations.
- *
- * @example
- * ```tsx
- * import Block from "@/components/game/block";
- * <Block variant="question" size={32} />
- * <Block variant="brick" size={32} />
- * ```
- */
-
 "use client";
 
 import { useState } from "react";
@@ -27,28 +6,16 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { bounceVariant } from "../../lib/animations";
 
-// ---------------------------------------------------------------------------
 // Props
-// ---------------------------------------------------------------------------
-
 interface BlockProps {
-  /** Visual style of the block. `"question"` is interactive; `"brick"` is static. */
+  // Visual style of the block. `"question"` is interactive; `"brick"` is static.
   variant: "question" | "brick";
-  /** Width and height of the block in pixels. Defaults to 32. */
+  // Width and height of the block in pixels. Defaults to 32.
   size?: number;
 }
 
-// ---------------------------------------------------------------------------
 // SVG Renderers
-// ---------------------------------------------------------------------------
-
-/**
- * Renders the pixel-art SVG for the question-mark (`?`) block variant.
- *
- * Uses `dayTheme.colors.brick` (`#d07030`) as the main body color, with a
- * lighter top/left edge (`#e8904a`) and a darker bottom/right edge (`#a05020`)
- * to simulate a 3D pixel-art effect.
- */
+// Renders the pixel-art SVG for the question-mark (`?`) block variant.
 function QuestionBlockSVG({ size }: { size: number }) {
   return (
     <svg
@@ -84,12 +51,7 @@ function QuestionBlockSVG({ size }: { size: number }) {
   );
 }
 
-/**
- * Renders the pixel-art SVG for the brick block variant.
- *
- * Uses `dayTheme.colors.brick` (`#d07030`) as the main body color with
- * darker mortar lines (`#a05020`) forming the classic brick pattern.
- */
+// Renders the pixel-art SVG for the brick block variant.
 function BrickBlockSVG({ size }: { size: number }) {
   return (
     <svg
@@ -112,20 +74,8 @@ function BrickBlockSVG({ size }: { size: number }) {
   );
 }
 
-// ---------------------------------------------------------------------------
 // Implementation
-// ---------------------------------------------------------------------------
-
-/**
- * BlockComponent — pixel-art SVG block with optional bounce animation.
- *
- * The `"question"` variant is interactive: clicking it triggers a
- * `bounceVariant` animation (Y: 0 → -8 → 0, spring easing) via local state.
- * The `"brick"` variant is purely decorative and does not respond to clicks.
- *
- * @param props.variant - `"question"` for the `?` block, `"brick"` for the brick block
- * @param props.size    - Rendered width/height in pixels (default: 32)
- */
+// BlockComponent — pixel-art SVG block with optional bounce animation.
 export const BlockComponent: React.FC<BlockProps> = ({ variant, size = 32 }) => {
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -163,16 +113,7 @@ export const BlockComponent: React.FC<BlockProps> = ({ variant, size = 32 }) => 
     </motion.div>
   );
 };
-// ---------------------------------------------------------------------------
 
-/**
- * Dynamically imported Block component with `{ ssr: false }`.
- *
- * Use this default export in all consuming components to enable code splitting
- * and avoid SSR hydration issues with Framer Motion animations.
- *
- * @satisfies Requirement 17.1 — Game_Elements use next/dynamic with ssr:false
- */
 const Block = dynamic(
   () => import("./block").then((mod) => ({ default: mod.BlockComponent })),
   { ssr: false }

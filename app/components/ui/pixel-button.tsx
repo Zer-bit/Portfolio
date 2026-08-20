@@ -1,31 +1,6 @@
 "use client";
 
-/**
- * @file pixel-button.tsx — PixelButton Component
- *
- * A reusable pixel-art styled button supporting three visual variants (brick,
- * coin, pipe), three sizes (sm, md, lg), optional Framer Motion animation
- * presets, disabled state, and active/pressed state. Forwards all standard
- * HTML button props to the underlying element.
- *
- * @example
- * // Basic usage
- * <PixelButton variant="coin" size="md" onClick={handleClick}>
- *   Hire Me
- * </PixelButton>
- *
- * @example
- * // With animation
- * <PixelButton variant="brick" animation="bounce">
- *   Click Me
- * </PixelButton>
- *
- * @example
- * // Disabled state
- * <PixelButton variant="pipe" disabled>
- *   Unavailable
- * </PixelButton>
- */
+// A reusable pixel-art styled button supporting three visual variants (brick, coin...
 
 import React from "react";
 import { motion } from "framer-motion";
@@ -34,45 +9,20 @@ import { type AnimationPresetName } from "../../lib/animations";
 import { useAnimation } from "../../hooks/use-animation";
 import { useSound } from "../../hooks/use-sound";
 
-// ---------------------------------------------------------------------------
 // Types
-// ---------------------------------------------------------------------------
-
-/**
- * Props for the PixelButton component.
- *
- * Extends all standard HTML button attributes so that `onClick`, `type`,
- * `aria-label`, `children`, and any other native button prop can be passed
- * through directly.
- */
+// Props for the PixelButton component.
 export interface PixelButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /**
-   * Visual style variant. Determines background, border, and text color.
-   * Defaults to `"brick"` when not provided.
-   */
+  // Visual style variant.
   variant?: "brick" | "coin" | "pipe";
-  /**
-   * Size of the button, mapping to pixel-grid padding and font-size values.
-   * Defaults to `"md"` when not provided.
-   */
+  // Size of the button, mapping to pixel-grid padding and font-size values.
   size?: "sm" | "md" | "lg";
-  /**
-   * Optional Framer Motion animation preset applied on mount/hover.
-   * When provided, the button is wrapped in a `motion.button` element.
-   */
+  // Optional Framer Motion animation preset applied on mount/hover.
   animation?: AnimationPresetName;
 }
 
-// ---------------------------------------------------------------------------
 // Variant Map
-// ---------------------------------------------------------------------------
-
-/**
- * Maps each variant name to its corresponding inline style tokens sourced
- * from `lib/theme.ts`. Using a variant map instead of conditionals keeps
- * the component compliant with Requirement 19.5.
- */
+// Maps each variant name to its corresponding inline style tokens sourced from `li...
 const variantStyles: Record<
   NonNullable<PixelButtonProps["variant"]>,
   React.CSSProperties
@@ -94,20 +44,8 @@ const variantStyles: Record<
   },
 };
 
-// ---------------------------------------------------------------------------
 // Size Map
-// ---------------------------------------------------------------------------
-
-/**
- * Maps each size name to pixel-grid-based padding and font-size values
- * sourced from `lib/theme.ts`.
- *
- * | Size | Padding (v × h)       | Font Size |
- * |------|-----------------------|-----------|
- * | sm   | px2 (8px) × px3 (12px) | 10px     |
- * | md   | px3 (12px) × px6 (24px)| 12px     |
- * | lg   | px4 (16px) × px8 (32px)| 14px     |
- */
+// Maps each size name to pixel-grid-based padding and font-size values sourced fro...
 const sizeStyles: Record<
   NonNullable<PixelButtonProps["size"]>,
   React.CSSProperties
@@ -126,21 +64,11 @@ const sizeStyles: Record<
   },
 };
 
-// ---------------------------------------------------------------------------
 // Active/Pressed State CSS
-// ---------------------------------------------------------------------------
-
-/**
- * Unique class name used to scope the `:active` pseudo-class rule injected
- * into the document head. The rule shifts the pixel shadow down by 2px to
- * simulate a pressed/inset effect.
- */
+// Unique class name used to scope the `:active` pseudo-class rule injected into th...
 const ACTIVE_CLASS = "pixel-button-active";
 
-/**
- * Injects a `<style>` tag with the `:active` pixel-shadow shift rule once.
- * This is done at module level so it runs only once per page load.
- */
+// Injects a `<style>` tag with the `:active` pixel-shadow shift rule once.
 if (typeof document !== "undefined") {
   const styleId = "pixel-button-active-style";
   if (!document.getElementById(styleId)) {
@@ -161,24 +89,8 @@ if (typeof document !== "undefined") {
   }
 }
 
-// ---------------------------------------------------------------------------
 // Component
-// ---------------------------------------------------------------------------
-
-/**
- * PixelButton — A pixel-art styled button component.
- *
- * Renders a `<button>` (or `motion.button` when `animation` is set) with
- * Mario-themed visual styles. Applies `.pixel-shadow` and `.pixel-text` CSS
- * utility classes by default.
- *
- * @param props - {@link PixelButtonProps}
- *
- * @example
- * <PixelButton variant="coin" size="lg" onClick={() => console.log("clicked")}>
- *   View Work
- * </PixelButton>
- */
+// PixelButton — A pixel-art styled button component.
 export function PixelButton({
   variant = "brick",
   size = "md",

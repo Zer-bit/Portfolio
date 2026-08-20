@@ -1,9 +1,4 @@
-/**
- * app/lib/db-data.ts — Unified Data Access & Storage Layer
- *
- * Fetches dynamic content from Supabase database tables with automatic,
- * resilient fallback to local static data (`app/lib/data.ts` & `constants.ts`).
- */
+// Unified data layer — fetches from Supabase with static fallback
 
 import { supabase, isSupabaseConfigured } from "./supabaseClient";
 import {
@@ -71,10 +66,6 @@ export interface ContactInfoItem {
   instagram: string;
   viber: string;
 }
-
-// ---------------------------------------------------------------------------
-// FETCH METHODS (with static fallback)
-// ---------------------------------------------------------------------------
 
 export async function fetchProjects(): Promise<ProjectItem[]> {
   if (!isSupabaseConfigured()) {
@@ -296,10 +287,6 @@ export async function fetchContactInfo(): Promise<ContactInfoItem> {
     return fallback;
   }
 }
-
-// ---------------------------------------------------------------------------
-// MUTATION / STORAGE METHODS (Admin Operations)
-// ---------------------------------------------------------------------------
 
 export async function uploadProjectImage(file: File): Promise<string> {
   if (!isSupabaseConfigured()) {

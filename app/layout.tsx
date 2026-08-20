@@ -6,11 +6,7 @@ import { ProgressTrackerProvider } from "./lib/progress-tracker";
 import { ThemeProvider } from "./lib/theme-context";
 import ThemedGameLayout from "./components/layout/ThemedGameLayout";
 
-/**
- * "Press Start 2P" loaded via next/font/google.
- * The CSS variable `--font-press-start-2p` is applied to the <html> element
- * so that `pixel.css` and Tailwind can reference it globally.
- */
+// "Press Start 2P" loaded via next/font/google.
 const pressStart2P = Press_Start_2P({
     weight: "400",
     subsets: ["latin"],

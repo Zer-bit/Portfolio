@@ -21,7 +21,7 @@ function collectCoins(
 }
 
 describe('Coin collection — property-based tests', () => {
-  // Feature: mario-game-supabase, Property 9: Coin collection decrements coin count and increments score
+  // Feature: mario-game-supabase, Property 9: Coin collection decrements coin count...
   // Validates: Requirements 4.2
   it('Property 9: collecting one coin decrements active count by 1 and increments score by 1', () => {
     // Generate a state with N > 0 coins, where the player overlaps exactly one coin

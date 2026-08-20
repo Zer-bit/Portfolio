@@ -1,44 +1,26 @@
 "use client";
 
-/**
- * @file SettingsContent.tsx — Settings Page Client Content
- *
- * Renders a pixel-art settings panel with a theme toggle (day/night) and a
- * sound toggle. All visual tokens are sourced from `app/lib/theme.ts` and all
- * interactive elements use existing `PixelCard` and `PixelButton` components.
- *
- * @satisfies Requirement 16.1 — Pixel-art settings panel using PixelCard and PixelButton
- * @satisfies Requirement 16.2 — Theme toggle switches between dayTheme and nightTheme
- * @satisfies Requirement 16.3 — Sound toggle enables/disables use-sound hook behavior
- * @satisfies Requirement 16.4 — Uses only existing theme color tokens and CSS classes
- * @satisfies Requirement 18.2 — All interactive elements have descriptive aria-label attributes
- * @satisfies Requirement 18.3 — Page has a unique <title> via metadata export
- */
-
 import { dayTheme, nightTheme } from "../lib/theme";
 import { PixelCard } from "../components/ui/pixel-card";
 import { PixelButton } from "../components/ui/pixel-button";
 import { useThemeContext } from "../lib/theme-context";
 import { useSound } from "../hooks/use-sound";
 
-// ---------------------------------------------------------------------------
 // SettingRow — a single labeled toggle row inside the settings panel
-// ---------------------------------------------------------------------------
-
 interface SettingRowProps {
-  /** Label displayed to the left of the toggle. */
+  // Label displayed to the left of the toggle.
   label: string;
-  /** Current state description shown to the right (e.g. "DAY" / "NIGHT"). */
+  // Current state description shown to the right (e.g. "DAY" / "NIGHT").
   value: string;
-  /** Accessible description of what the button does. */
+  // Accessible description of what the button does.
   ariaLabel: string;
-  /** Button label text. */
+  // Button label text.
   buttonLabel: string;
-  /** Button variant. */
+  // Button variant.
   variant: "coin" | "pipe" | "brick";
-  /** Called when the toggle button is clicked. */
+  // Called when the toggle button is clicked.
   onToggle: () => void;
-  /** Active theme for color tokens. */
+  // Active theme for color tokens.
   activeColors: typeof dayTheme.colors;
 }
 
@@ -85,17 +67,8 @@ function SettingRow({
   );
 }
 
-// ---------------------------------------------------------------------------
 // SettingsContent
-// ---------------------------------------------------------------------------
-
-/**
- * SettingsContent — the client-rendered body of the Settings page.
- *
- * Reads and mutates theme + sound state via `useThemeContext`. All colors
- * are derived from the currently active theme so the panel itself reflects
- * the chosen palette.
- */
+// SettingsContent — the client-rendered body of the Settings page.
 export function SettingsContent() {
   const { theme, toggleTheme, soundEnabled, toggleSound } = useThemeContext();
   const { playClick, playCoin, playBounce, playPipe } = useSound();

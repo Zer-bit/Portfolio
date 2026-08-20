@@ -2,10 +2,7 @@ import { MetadataRoute } from "next";
 import { projects, toSlug } from "./lib/data";
 import { ROUTES, SITE_URL } from "./lib/constants";
 
-/**
- * Dynamic sitemap generator for Next.js App Router.
- * Generates an up-to-date sitemap.xml dynamically during build and revalidation.
- */
+// Dynamic sitemap generator for Next.
 export default function sitemap(): MetadataRoute.Sitemap {
   // 1. Static site routes
   const staticRoutes = Object.values(ROUTES).map((route) => {

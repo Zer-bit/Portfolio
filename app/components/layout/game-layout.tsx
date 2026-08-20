@@ -1,33 +1,3 @@
-/**
- * @file game-layout.tsx — GameLayout Root Layout Wrapper
- *
- * The root layout component that manages the Mario-themed background,
- * parallax layers, and theme context for the entire portfolio site.
- *
- * Renders three parallax background layers (sky, clouds, ground) using
- * Framer Motion `useScroll` + `useTransform`, applies the active theme's
- * CSS custom properties to the root element, and wraps all page content
- * (including `<Navbar>`, `<ScrollProgress>`, `<Footer>`, and `children`)
- * within the `GameLayoutContext`.
- *
- * @example
- * ```tsx
- * import { GameLayout } from "@/components/layout/game-layout";
- *
- * export default function RootLayout({ children }) {
- *   return (
- *     <html>
- *       <body>
- *         <GameLayout theme="day">{children}</GameLayout>
- *       </body>
- *     </html>
- *   );
- * }
- * ```
- *
- * @module game-layout
- */
-
 "use client";
 
 import React, { createContext, useState, useEffect } from "react";
@@ -40,53 +10,27 @@ import Cloud from "../game/cloud";
 import { useProgressTracker } from "../../lib/progress-tracker";
 import { usePathname } from "next/navigation";
 
-// ---------------------------------------------------------------------------
 // Context
-// ---------------------------------------------------------------------------
-
-/**
- * Shape of the value provided by `GameLayoutContext`.
- *
- * Consumers can read the active theme name and the current vertical scroll
- * position (in pixels) to drive theme-aware or scroll-aware behavior.
- *
- * @example
- * ```tsx
- * const { theme, scrollY } = useContext(GameLayoutContext);
- * ```
- */
+// Shape of the value provided by `GameLayoutContext`.
 export interface GameLayoutContextType {
-  /** The currently active theme: `"day"` or `"night"`. */
+  // The currently active theme: `"day"` or `"night"`.
   theme: "day" | "night";
-  /** Current vertical scroll position in pixels. */
+  // Current vertical scroll position in pixels.
   scrollY: number;
 }
 
-/**
- * Context that exposes the active theme and scroll position to any descendant
- * component. Defaults to `"day"` theme and `scrollY: 0`.
- *
- * @satisfies Requirement 20.3 — GameLayout exposes a context API for future components
- */
 export const GameLayoutContext = createContext<GameLayoutContextType>({
   theme: "day",
   scrollY: 0,
 });
 
-// ---------------------------------------------------------------------------
 // Number of clouds to render
-// ---------------------------------------------------------------------------
-
-/** Total cloud count on desktop. */
+// Total cloud count on desktop.
 const CLOUD_COUNT_DESKTOP = 6;
-/** Maximum cloud count on mobile (viewport < 768px). */
+// Maximum cloud count on mobile (viewport < 768px).
 const CLOUD_COUNT_MOBILE = 3;
 
-/**
- * Pre-computed cloud positions so they are stable across renders.
- * Each entry defines the horizontal offset (left %) and vertical offset (top %)
- * for a cloud within the cloud parallax layer.
- */
+// Pre-computed cloud positions so they are stable across renders.
 const CLOUD_POSITIONS: Array<{ left: string; top: string; size: "sm" | "md" | "lg" }> = [
   { left: "5%",  top: "10%", size: "lg" },
   { left: "25%", top: "5%",  size: "md" },
@@ -96,38 +40,17 @@ const CLOUD_POSITIONS: Array<{ left: string; top: string; size: "sm" | "md" | "l
   { left: "92%", top: "5%",  size: "sm" },
 ];
 
-
-// ---------------------------------------------------------------------------
 // Props
-// ---------------------------------------------------------------------------
-
-/**
- * Props for the `GameLayout` component.
- */
+// Props for the `GameLayout` component.
 export interface GameLayoutProps {
-  /**
-   * The active theme to apply. Defaults to `"day"`.
-   * Switching to `"night"` applies the `nightTheme` palette across all
-   * CSS custom properties without requiring individual component edits.
-   */
+  // The active theme to apply.
   theme?: "day" | "night";
-  /** Page content to render inside the themed layout. */
+  // Page content to render inside the themed layout.
   children: React.ReactNode;
 }
 
-// ---------------------------------------------------------------------------
 // RouteTracker — marks the current route as visited on every navigation
-// ---------------------------------------------------------------------------
 
-/**
- * RouteTracker — invisible component that calls `markVisited` whenever the
- * pathname changes. Placed inside `GameLayout` so it runs on every page
- * without modifying any existing component.
- *
- * @satisfies Requirement 15.1 — Records each visited route
- * @satisfies Requirement 15.2 — Persisted via ProgressTrackerProvider → localStorage
- * @satisfies Requirement 15.5 — Does not modify any existing component's state or props
- */
 function RouteTracker() {
   const pathname = usePathname();
   const { markVisited } = useProgressTracker();
@@ -139,38 +62,8 @@ function RouteTracker() {
   return null;
 }
 
-// ---------------------------------------------------------------------------
 // Component
-// ---------------------------------------------------------------------------
 
-/**
- * GameLayout — Mario-themed root layout wrapper.
- *
- * Responsibilities:
- * - Applies the active theme's color tokens as CSS custom properties on the
- *   root `div` so any descendant can reference `var(--theme-sky)` etc.
- * - Renders three parallax background layers (sky, clouds, ground) that scroll
- *   at different speeds using Framer Motion `useScroll` + `useTransform`.
- * - Applies `will-change: transform` to all parallax layer `div` elements to
- *   promote them to GPU compositing layers for smooth 60fps animation.
- * - Limits visible Cloud components to ≤3 on mobile (viewport < 768px).
- * - Wraps `<Navbar>`, `<ScrollProgress>`, `<Footer>`, and `children` within
- *   `GameLayoutContext` so descendants can read the active theme and scrollY.
- *
- * @param props.theme    - `"day"` | `"night"` (default: `"day"`)
- * @param props.children - Page content
- *
- * @satisfies Requirement 7.1  — Applies active theme as CSS custom properties
- * @satisfies Requirement 7.2  — Multi-layer parallax background
- * @satisfies Requirement 7.3  — Accepts `theme` prop
- * @satisfies Requirement 7.4  — Defaults to `"day"` theme
- * @satisfies Requirement 7.5  — Uses Framer Motion scroll hook for 60fps parallax
- * @satisfies Requirement 7.6  — Preserves Navbar, ScrollProgress, Footer
- * @satisfies Requirement 6.7  — Renders Cloud components in parallax background layer
- * @satisfies Requirement 6.8  — Limits clouds to ≤3 on mobile
- * @satisfies Requirement 17.4 — `will-change: transform` on parallax layers
- * @satisfies Requirement 20.3 — Exposes GameLayoutContext for future consumers
- */
 export function GameLayout({ theme = "day", children }: GameLayoutProps) {
   // -------------------------------------------------------------------------
   // Theme resolution
@@ -217,7 +110,6 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
 
   // Cloud layer scrolls at 0.3× page scroll speed (middle).
   const cloudY = useTransform(motionScrollY, [0, 1000], [0, -300]);
-
 
   // -------------------------------------------------------------------------
   // Mobile cloud limiting
@@ -316,8 +208,5 @@ export function GameLayout({ theme = "day", children }: GameLayoutProps) {
   );
 }
 
-// ---------------------------------------------------------------------------
 // Default export
-// ---------------------------------------------------------------------------
-
 export default GameLayout;

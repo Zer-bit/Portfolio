@@ -1,24 +1,3 @@
-/**
- * @file GameMap.tsx — GameMap Game Component
- *
- * Renders the Mario-themed world map navigation hub for the portfolio site.
- * Displays each portfolio section as a clickable LevelNode styled with
- * existing `PixelCard` and `PixelButton` components. Supports responsive
- * layout (single column on mobile, grid on desktop) and optional visual
- * distinction for visited routes via the `visitedRoutes` prop.
- *
- * This file exports two things:
- * - `GameMapComponent` — the actual React implementation (named export)
- * - `default` — a `next/dynamic` wrapped version with `{ ssr: false }` for
- *   code splitting and to avoid SSR issues with Framer Motion animations.
- *
- * @example
- * ```tsx
- * import GameMap from "@/components/game/GameMap";
- * <GameMap routes={NAV_LINKS} visitedRoutes={["/about", "/skills"]} />
- * ```
- */
-
 "use client";
 
 import type React from "react";
@@ -30,49 +9,27 @@ import { fadeUpVariant } from "../../lib/animations";
 import { PixelCard } from "../ui/pixel-card";
 import { useSound } from "../../hooks/use-sound";
 
-// ---------------------------------------------------------------------------
 // Types
-// ---------------------------------------------------------------------------
-
-/**
- * A single route entry — matches the shape of items in `NAV_LINKS` from
- * `app/lib/constants.ts`.
- */
+// A single route entry — matches the shape of items in `NAV_LINKS` from `app/lib/c...
 export interface RouteEntry {
-  /** Display name for the level node (e.g. "About", "Projects"). */
+  // Display name for the level node (e.g. "About", "Projects").
   name: string;
-  /** URL path for the route (e.g. "/about", "/projects"). */
+  // URL path for the route (e.g. "/about", "/projects").
   href: string;
-  /** Unique identifier for the route (e.g. "about", "projects"). */
+  // Unique identifier for the route (e.g. "about", "projects").
   id: string;
 }
 
-/**
- * Props for the GameMap component.
- */
+// Props for the GameMap component.
 export interface GameMapProps {
-  /**
-   * Array of route entries to render as LevelNodes.
-   * Pass `NAV_LINKS` (excluding "World") or a filtered subset.
-   */
+  // Array of route entries to render as LevelNodes.
   routes: readonly RouteEntry[];
-  /**
-   * Optional array of route `href` strings that have already been visited.
-   * Visited nodes are visually marked as "completed" using `dayTheme.colors.coin`.
-   * Unvisited nodes use `dayTheme.colors.text`.
-   * Supports Requirement 15.3 (ProgressTracker integration).
-   */
+  // Optional array of route `href` strings that have already been visited.
   visitedRoutes?: string[];
 }
 
-// ---------------------------------------------------------------------------
 // Level number map — maps route id to a world-style level label
-// ---------------------------------------------------------------------------
-
-/**
- * Maps each route id to a Mario-style level label displayed inside the node.
- * Keeps the world-map aesthetic without hardcoding strings in JSX.
- */
+// Maps each route id to a Mario-style level label displayed inside the node.
 const LEVEL_LABELS: Record<string, string> = {
   about:      "WORLD 1-1",
   projects:   "WORLD 1-2",
@@ -83,26 +40,8 @@ const LEVEL_LABELS: Record<string, string> = {
   gallery:    "WORLD 1-7",
 };
 
-// ---------------------------------------------------------------------------
 // Implementation
-// ---------------------------------------------------------------------------
-
-/**
- * GameMapComponent — Mario-themed world map with clickable LevelNodes.
- *
- * Layout:
- * - Single column on mobile (< 768px) via CSS media query
- * - 2–3 column grid on desktop (≥ 768px)
- *
- * Each LevelNode is a `PixelCard` wrapped in a Next.js `<Link>` so keyboard
- * navigation (Tab → Enter) works natively. An `aria-label` on the link
- * describes the destination for screen readers.
- *
- * Visited routes (from `visitedRoutes` prop) are highlighted with
- * `dayTheme.colors.coin`; unvisited routes use `dayTheme.colors.text`.
- *
- * @param props - {@link GameMapProps}
- */
+// GameMapComponent — Mario-themed world map with clickable LevelNodes.
 export const GameMapComponent: React.FC<GameMapProps> = ({
   routes,
   visitedRoutes = [],

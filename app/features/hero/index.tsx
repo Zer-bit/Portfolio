@@ -1,21 +1,6 @@
 "use client";
 
-/**
- * @file features/hero/index.tsx — Hero Section
- *
- * The opening section of the Mario Pixel Portfolio. Displays the developer's
- * name as a Mario-style title card, a pixel-art character sprite, CTA buttons,
- * a ground platform of brick blocks, and a scroll-down indicator.
- *
- * Migrated from `app/components/sections/hero.tsx` and restyled to match the
- * Mario pixel-art game theme.
- *
- * @example
- * ```tsx
- * import HeroSection from "@/features/hero";
- * <HeroSection />
- * ```
- */
+// The opening section of the Mario Pixel Portfolio.
 
 import React from "react";
 import { motion } from "framer-motion";
@@ -25,14 +10,8 @@ import { PixelButton } from "../../components/ui/pixel-button";
 import { dayTheme } from "../../lib/theme";
 import { BRICK_SVG_BASE64 } from "../../lib/constants";
 
-// ---------------------------------------------------------------------------
 // Pixel-art Mario character SVG
-// ---------------------------------------------------------------------------
-
-/**
- * A simple inline pixel-art Mario-style character SVG.
- * Red hat, face, blue overalls, red shirt — 32×48 viewBox rendered at 120×180.
- */
+// A simple inline pixel-art Mario-style character SVG.
 function MarioSprite() {
   return (
     <svg
@@ -72,14 +51,8 @@ function MarioSprite() {
   );
 }
 
-// ---------------------------------------------------------------------------
 // Ground platform — row of brick blocks
-// ---------------------------------------------------------------------------
-
-/**
- * Renders a horizontal row of brick Block components as a ground platform
- * at the bottom of the hero section.
- */
+// Renders a horizontal row of brick Block components as a ground platform at the b...
 function GroundPlatform() {
   return (
     <div
@@ -101,13 +74,8 @@ function GroundPlatform() {
   );
 }
 
-// ---------------------------------------------------------------------------
 // Scroll handler
-// ---------------------------------------------------------------------------
-
-/**
- * Smoothly scrolls to the `#skills` section when called.
- */
+// Smoothly scrolls to the `#skills` section when called.
 function scrollToSkills() {
   const el = document.getElementById("skills");
   if (el) {
@@ -115,24 +83,8 @@ function scrollToSkills() {
   }
 }
 
-// ---------------------------------------------------------------------------
 // Hero Section
-// ---------------------------------------------------------------------------
-
-/**
- * HeroSection — The opening hero section of the Mario Pixel Portfolio.
- *
- * Displays:
- * - "Available for projects" pixel-art HUD badge
- * - Developer name in `.pixel-text` as a Mario title card
- * - Tagline and description
- * - "Hire Me" (coin variant) and "View Work" (pipe variant) CTA buttons
- * - Pixel-art Mario character sprite (right on desktop, centered on mobile)
- * - Ground platform of brick blocks at the bottom
- * - Scroll-down arrow that smooth-scrolls to `#skills`
- *
- * Wrapped in `<SectionWrapper id="home">` for anchor-link navigation.
- */
+// HeroSection — The opening hero section of the Mario Pixel Portfolio.
 export default function HeroSection() {
   return (
     <SectionWrapper

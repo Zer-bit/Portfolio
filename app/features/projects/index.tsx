@@ -1,24 +1,6 @@
 "use client";
 
-/**
- * @file features/projects/index.tsx — Projects Section
- *
- * Displays the portfolio's featured projects as pixel-art styled cards.
- * Each project card uses PixelCard (elevated variant) with the useTilt hook,
- * a hover overlay showing the full description, tech stack tags rendered as
- * non-interactive PixelButton (brick/sm), and a live/coming-soon link rendered
- * as PixelButton (coin/sm). Projects with link="#" trigger a NotificationToast
- * instead of navigating.
- *
- * Migrated from `app/components/sections/projects.tsx` and restyled to match
- * the Mario Pixel Portfolio design system.
- *
- * @example
- * ```tsx
- * import { ProjectsSection } from "@/features/projects";
- * <ProjectsSection />
- * ```
- */
+// Displays the portfolio's featured projects as pixel-art styled cards.
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -33,35 +15,20 @@ import PixelButton from "../../components/ui/pixel-button";
 import NotificationToast from "../../components/ui/notification-toast";
 import { SectionWrapper } from "../../components/layout/section-wrapper";
 
-// ---------------------------------------------------------------------------
 // Types
-// ---------------------------------------------------------------------------
-
 interface NotificationState {
   isVisible: boolean;
   message: string;
 }
 
-// ---------------------------------------------------------------------------
 // ProjectCard — individual project card
-// ---------------------------------------------------------------------------
-
 interface ProjectCardProps {
   project: (typeof projects)[number];
   index: number;
   onNotice: (message: string) => void;
 }
 
-/**
- * ProjectCard
- *
- * Renders a single project as a PixelCard (elevated) with:
- * - useTilt hook for 3-D tilt effect on mouse move
- * - Aspect-ratio image using Next.js <Image>
- * - Default view: truncated description + tech stack tags
- * - Hover overlay: full description with pixel-art scrollbar
- * - Footer: live/coming-soon PixelButton (coin/sm)
- */
+// ProjectCard Renders a single project as a PixelCard (elevated) with: - useTilt h...
 function ProjectCard({ project, index, onNotice }: ProjectCardProps) {
   const { ref, style: tiltStyle } = useTilt(8);
 
@@ -178,22 +145,8 @@ function ProjectCard({ project, index, onNotice }: ProjectCardProps) {
   );
 }
 
-// ---------------------------------------------------------------------------
 // ProjectsSection — main export
-// ---------------------------------------------------------------------------
-
-/**
- * ProjectsSection
- *
- * Renders the full Projects section wrapped in SectionWrapper (id="projects").
- * Displays a 3-col / 2-col / 1-col responsive grid of ProjectCard components.
- * Manages the NotificationToast state for coming-soon projects.
- *
- * @example
- * ```tsx
- * <ProjectsSection />
- * ```
- */
+// ProjectsSection Renders the full Projects section wrapped in SectionWrapper (id=...
 export function ProjectsSection() {
   const [notification, setNotification] = useState<NotificationState>({
     isVisible: false,

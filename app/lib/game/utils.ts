@@ -1,42 +1,21 @@
-/**
- * app/lib/game/utils.ts — Game Utility Module
- *
- * Pure helper functions for the Mario mini-game: AABB collision detection,
- * entity factory functions, and level layout generation.
- *
- * No React or Next.js imports — all exports are pure functions suitable for
- * independent unit and property-based testing.
- *
- * @module game/utils
- */
-
-// ---------------------------------------------------------------------------
 // Constants
-// ---------------------------------------------------------------------------
-
-/** Enemy horizontal speed in px/s. */
+// Enemy horizontal speed in px/s.
 export const ENEMY_SPEED = 80;
 
-/** Coin dimensions in pixels. */
+// Coin dimensions in pixels.
 export const COIN_SIZE = 16;
 
-/** Enemy dimensions in pixels. */
+// Enemy dimensions in pixels.
 export const ENEMY_SIZE = 32;
 
-/** Floating platform height in pixels. */
+// Floating platform height in pixels.
 export const PLATFORM_HEIGHT_FLOATING = 16;
 
-/** Ground platform height in pixels. */
+// Ground platform height in pixels.
 export const PLATFORM_HEIGHT_GROUND = 32;
 
-// ---------------------------------------------------------------------------
 // Interfaces
-// ---------------------------------------------------------------------------
-
-/**
- * Base axis-aligned bounding box used by all game entities and collision
- * detection functions.
- */
+// Base axis-aligned bounding box used by all game entities and collision detection...
 export interface Rect {
   x: number;
   y: number;
@@ -44,44 +23,32 @@ export interface Rect {
   height: number;
 }
 
-/**
- * A solid rectangular surface the player can stand on.
- * The ground platform spans the full canvas width; floating platforms are
- * narrower and positioned at varying heights.
- */
+// A solid rectangular surface the player can stand on.
 export interface Platform extends Rect {
   id: string;
-  /** `true` for the full-width ground platform, `false` for floating ones. */
+  // `true` for the full-width ground platform, `false` for floating ones.
   isGround: boolean;
 }
 
-/**
- * A collectible entity that increments the score when the player touches it.
- */
+// A collectible entity that increments the score when the player touches it.
 export interface Coin extends Rect {
   id: string;
-  /** `true` once the player has collected this coin. */
+  // `true` once the player has collected this coin.
   collected: boolean;
-  /** Seconds elapsed since last animation frame switch (for spin animation). */
+  // Seconds elapsed since last animation frame switch (for spin animation).
   animTimer: number;
 }
 
-/**
- * A simple moving obstacle. Reverses direction at platform edges and canvas
- * boundaries. Ends the game session on side/bottom collision with the player.
- */
+// A simple moving obstacle.
 export interface Enemy extends Rect {
   id: string;
-  /** Horizontal velocity in px/s (sign encodes direction). */
+  // Horizontal velocity in px/s (sign encodes direction).
   vx: number;
-  /** `false` once the player has defeated this enemy by landing on it. */
+  // `false` once the player has defeated this enemy by landing on it.
   alive: boolean;
 }
 
-/**
- * The complete set of entities returned by `layoutLevel()` to initialise a
- * fresh game world.
- */
+// The complete set of entities returned by `layoutLevel()` to initialise a fresh game world.
 export interface LevelLayout {
   platforms: Platform[];
   coins: Coin[];
@@ -89,22 +56,8 @@ export interface LevelLayout {
   playerStart: { x: number; y: number };
 }
 
-// ---------------------------------------------------------------------------
 // AABB Collision Detection
-// ---------------------------------------------------------------------------
-
-/**
- * Returns `true` if rectangles `a` and `b` overlap.
- *
- * Uses strict inequality so that touching edges (zero-width overlap) are NOT
- * considered a collision. This matches the requirement for exclusive-edge AABB.
- *
- * @example
- * ```ts
- * aabb({ x: 0, y: 0, width: 10, height: 10 }, { x: 5, y: 5, width: 10, height: 10 }); // true
- * aabb({ x: 0, y: 0, width: 10, height: 10 }, { x: 10, y: 0, width: 10, height: 10 }); // false (touching)
- * ```
- */
+// Returns `true` if rectangles `a` and `b` overlap.
 export function aabb(a: Rect, b: Rect): boolean {
   return (
     a.x < b.x + b.width &&
@@ -114,27 +67,16 @@ export function aabb(a: Rect, b: Rect): boolean {
   );
 }
 
-// ---------------------------------------------------------------------------
 // Entity Factory Functions
-// ---------------------------------------------------------------------------
-
-/** Internal counter for generating unique entity IDs. */
+// Internal counter for generating unique entity IDs.
 let _idCounter = 0;
 
-/** Resets the internal ID counter (useful in tests). */
+// Resets the internal ID counter (useful in tests).
 export function resetIdCounter(): void {
   _idCounter = 0;
 }
 
-/**
- * Creates a `Platform` entity with the given position and dimensions.
- *
- * @param x - Left edge in canvas pixels.
- * @param y - Top edge in canvas pixels.
- * @param w - Width in canvas pixels.
- * @param h - Height in canvas pixels.
- * @param isGround - Whether this is the full-width ground platform.
- */
+// Creates a `Platform` entity with the given position and dimensions.
 export function createPlatform(
   x: number,
   y: number,
@@ -152,14 +94,7 @@ export function createPlatform(
   };
 }
 
-/**
- * Creates a `Coin` entity centred at the given position.
- *
- * The coin is 16×16 px. The provided `x` and `y` are the top-left corner.
- *
- * @param x - Left edge in canvas pixels.
- * @param y - Top edge in canvas pixels.
- */
+// Creates a `Coin` entity centred at the given position.
 export function createCoin(x: number, y: number): Coin {
   return {
     id: `coin-${++_idCounter}`,
@@ -172,15 +107,7 @@ export function createCoin(x: number, y: number): Coin {
   };
 }
 
-/**
- * Creates an `Enemy` entity at the given position.
- *
- * The enemy is 32×32 px and starts moving in the positive-x direction.
- *
- * @param x - Left edge in canvas pixels.
- * @param y - Top edge in canvas pixels.
- * @param speed - Horizontal speed in px/s (defaults to `ENEMY_SPEED`).
- */
+// Creates an `Enemy` entity at the given position.
 export function createEnemy(x: number, y: number, speed = ENEMY_SPEED): Enemy {
   return {
     id: `enemy-${++_idCounter}`,
@@ -193,26 +120,8 @@ export function createEnemy(x: number, y: number, speed = ENEMY_SPEED): Enemy {
   };
 }
 
-// ---------------------------------------------------------------------------
 // Level Layout
-// ---------------------------------------------------------------------------
-
-/**
- * Generates a complete level layout proportional to the given canvas dimensions.
- *
- * Layout guarantees:
- * - 1 ground platform spanning the full canvas width at the bottom.
- * - ≥ 3 floating platforms at varying heights and horizontal positions.
- * - ≥ 5 coins distributed across the platforms.
- * - ≥ 1 enemy on the ground platform.
- * - Player start position above the ground platform, near the left edge.
- *
- * All positions are expressed as fractions of `canvasWidth`/`canvasHeight` so
- * the layout scales correctly when the canvas is resized.
- *
- * @param canvasWidth  - Logical canvas width in pixels.
- * @param canvasHeight - Logical canvas height in pixels.
- */
+// Generates a complete level layout proportional to the given canvas dimensions.
 export function layoutLevel(
   canvasWidth: number,
   canvasHeight: number

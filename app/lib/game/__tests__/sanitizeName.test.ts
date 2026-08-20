@@ -1,9 +1,3 @@
-/**
- * Tests for sanitizeName helper
- *
- * Validates: Requirements 11.4
- */
-
 import { describe, it, expect, vi } from "vitest";
 import fc from "fast-check";
 
